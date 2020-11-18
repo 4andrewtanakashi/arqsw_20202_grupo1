@@ -1,6 +1,4 @@
-# arqsw_20202_grupo1
-
-# NAP <img src="https://files.catbox.moe/5gba3z.png" width="30">
+# arqsw_20202_grupo1 <img src="https://files.catbox.moe/5gba3z.png" width="30">
 
 ## Nomes dos Alunos:
 ```
