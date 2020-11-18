@@ -74,10 +74,10 @@ Commits serão feitos de acordo com a seguinte tabela:
 | :bug:         | `:bug:`             | Problemas e erros                   |
 | :sparkles:    | `:sparkles:`        | Novas funcionalidades               |
 | :wrench:      | `:wrench:`          | Correções                           |
-| :file_folder: | `::file_folder::`   | Adição/modificação de diretórios    |
+| :file_folder: | `:file_folder:`   | Adição/modificação de diretórios    |
 
 ## Aviso legal
-Projeto feito para a disciplina PCC524 da Universidade Federal de Lavras, ministrada pelo professor Dr. Ricardo Vilela Terra. Sem fins comerciais, apenas fins institucionais.
+Projeto feito para a disciplina PCC524 da Universidade Federal de Lavras, ministrada pelo professor Dr. Ricardo Terra Nunes Bueno Villela. Sem fins comerciais, apenas fins institucionais.
 
 [<img src="https://files.catbox.moe/bf24uw.png" width="24">](https://unlicense.org)
 
