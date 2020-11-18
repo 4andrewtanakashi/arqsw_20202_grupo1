@@ -18,7 +18,7 @@ Análise Estática/Análise Dinâmica, ...
 
 ## Estrutura do diretório
 ```
-NAP/
+Arquitetura de Software/
 ├── TP1 - Análise Estática/Dinâmica
 │   └── src
 ├── TP2
@@ -72,10 +72,8 @@ Commits serão feitos de acordo com a seguinte tabela:
 | :bug:         | `:bug:`             | Problemas e erros                   |
 | :sparkles:    | `:sparkles:`        | Novas funcionalidades               |
 | :wrench:      | `:wrench:`          | Correções                           |
-| :file_folder: | `:file_folder:`   | Adição/modificação de diretórios    |
+| :file_folder: | `:file_folder:`     | Adição/modificação de diretórios    |
 
-## Aviso legal
-Projeto feito para a disciplina PCC524 da Universidade Federal de Lavras, ministrada pelo professor Dr. Ricardo Terra Nunes Bueno Villela. Sem fins comerciais, apenas fins institucionais.
-
-[<img src="https://files.catbox.moe/bf24uw.png" width="24">](https://unlicense.org)
+## Projeto feito para a disciplina PCC524 [<img src="https://files.catbox.moe/bf24uw.png" width="24">]
+  Universidade Federal de Lavras, ministrada pelo professor Dr. Ricardo Terra Nunes Bueno Villela.
 
