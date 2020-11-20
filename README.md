@@ -20,7 +20,12 @@ Análise Estática/Análise Dinâmica, ...
 ```
 Arquitetura de Software/
 ├── TP1 - Análise Estática/Dinâmica
-│   └── src
+│   └── src/
+│        ├── README.md
+│        └── codigo/
+│               ├── g4/
+│               ├── src/
+│               └── analisador.py
 ├── TP2
 │   └── src
 ├── TP3
@@ -68,7 +73,7 @@ Commits serão feitos de acordo com a seguinte tabela:
 | :x:           | `:x:`               | Erro de compilação                  |
 | :fire:        | `:fire:`            | Remoção de arquivos                 |
 | :pencil:      | `:pencil:`          | Documentação                        |
-| :hammer:      | `:hammer:`          | Conserto de bugs                    |
+| :hammer:      | `:hammer:`          | Novas adições                       |
 | :bug:         | `:bug:`             | Problemas e erros                   |
 | :sparkles:    | `:sparkles:`        | Novas funcionalidades               |
 | :wrench:      | `:wrench:`          | Correções                           |
