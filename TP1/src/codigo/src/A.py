@@ -1,5 +1,13 @@
-print("Hello !")
-print("Hello !")
+class Class_A:
 
-def first ():
-    iny = 1
+    @staticmethod
+    def first_method(self):
+        pass
+
+    @staticmethod
+    def second_method(self):
+        pass
+
+    @staticmethod
+    def third_method(self):
+        pass
