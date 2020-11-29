@@ -76,7 +76,7 @@ class Python3Listener(ParseTreeListener):
     # Enter a parse tree produced by Python3Parser#funcdef.
     def enterFuncdef(self, ctx:Python3Parser.FuncdefContext):
         funcdef = ctx.getChild(1)
-        if (re.fullmatch("^_? [a-z]+[_a-z]*$", funcdef.getText()) == None):
+        if ( (funcdef != None) and (re.fullmatch("^_?[a-z]+[\da-z]*(_[\da-z]+)*$", funcdef.getText()) == None)):
             print("Está fora do padrão lower_snake_case", funcdef.getText(), "Line: {}".format(str(funcdef.getSymbol().line)))
 
 
@@ -97,7 +97,7 @@ class Python3Listener(ParseTreeListener):
     # Enter a parse tree produced by Python3Parser#typedargslist.
     def enterTypedargslist(self, ctx:Python3Parser.TypedargslistContext):
         funcdef = ctx.getChild(1)
-        if (re.fullmatch("(   ^_? [A-Z]+[_A-Z]*$ |  ^_? [a-z]+[_a-z]*$  )", funcdef.getText()) == None):
+        if ((funcdef != None) and ((re.fullmatch("(   ^_?[A-Z]+[\dA-Z]*(_[\dA-Z]+)*$ |  ^_?[a-z]+[\da-z]*(_[\da-z]+)*$  )", funcdef.getText()) == None))):
             print("Está não está em padrão lower_snake_case ou UPPER_SNAKE_CASE", funcdef.getText(), "Line: {}".format(str(funcdef.getSymbol().line)))
 
 
@@ -712,8 +712,8 @@ class Python3Listener(ParseTreeListener):
     # Enter a parse tree produced by Python3Parser#classdef.
     def enterClassdef(self, ctx:Python3Parser.ClassdefContext):
         classDef = ctx.getChild(1)
-        if (re.fullmatch("^_?[A-Z][a-z]+(_[A-Z][a-z]+)*$", classDef.getText()) == None):
-            print("Está fora do padrão Upper_Snake_Case", classDef.getText(), "Line: {}".format(str(classDef.getSymbol().line)))
+        if ((classDef != None) and (re.fullmatch("^_?[A-Z][\da-z]*(_[A-Z][\da-z]*)*$", classDef.getText()) == None)):
+            print("Está fora do padrão Upper_Snake_Camel_Case", classDef.getText(), "Line: {}".format(str(classDef.getSymbol().line)))
 
     # Exit a parse tree produced by Python3Parser#classdef.
     def exitClassdef(self, ctx:Python3Parser.ClassdefContext):
