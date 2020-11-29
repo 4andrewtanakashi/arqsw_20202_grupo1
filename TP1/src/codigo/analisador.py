@@ -49,8 +49,9 @@ class RuleListener(Python3Listener):
             #print('Filho 2 da classe: ', ctx.getChild(1))
             class_name = ctx.getChild(1).getText()
             classes_methods[class_name] = []
-            ##print('ClassName ', class_name)
-            for i in range(ctx.getChildCount()):                
+            matrix[class_name] = []
+            print('ClassName ', class_name)
+            for i in range(ctx.getChildCount()):
                 if isinstance(ctx.getChild(i), Python3Parser.ArglistContext):
                     ##print('AquiArglist: \n', ctx.getChild(i).getText())
                     if ctx.getChild(i).getText():
@@ -75,7 +76,7 @@ class RuleListener(Python3Listener):
                                                     #print('Filho 2 Funcdef:', child_compound.getChild(1).getText())
                                                     if child_compound.getChild(1).getText() != '__init__':                                                            
                                                         classes_methods[class_name].append(child_compound.getChild(1).getText())
-                                                print('Metodos da classe', classes_methods)
+                                                print('Metodos da classe', classes_methods, "\n\n")
 
 
 def setup(path):
@@ -85,14 +86,14 @@ def setup(path):
 
     # print out the token parsing
     stream.fill()
-    print("TOKENS")
+    # print("TOKENS")
     for token in stream.tokens:
         if token.text != '<EOF>':
             type_name = Python3Parser.symbolicNames[token.type]
             tabs = 5 - len(type_name) // 4
             sep = "\t" * tabs
-            print("    %s%s%s" % (type_name, sep,
-                                  token.text.replace(" ", u'\u23B5').replace("\n", u'\u2936')))
+            # print("    %s%s%s" % (type_name, sep,
+            #                       token.text.replace(" ", u'\u23B5').replace("\n", u'\u2936')))
     parser = Python3Parser(stream)
 
     output = io.StringIO()

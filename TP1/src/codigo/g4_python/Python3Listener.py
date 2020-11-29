@@ -1,5 +1,7 @@
 # Generated from Python3.g4 by ANTLR 4.7.2
 from antlr4 import *
+import re
+
 if __name__ is not None and "." in __name__:
     from .Python3Parser import Python3Parser
 else:
@@ -73,7 +75,10 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#funcdef.
     def enterFuncdef(self, ctx:Python3Parser.FuncdefContext):
-        pass
+        funcdef = ctx.getChild(1)
+        if (re.fullmatch("^_? [a-z]+[_a-z]*$", funcdef.getText()) == None):
+            print("Está fora do padrão lower_snake_case", funcdef.getText(), "Line: {}".format(str(funcdef.getSymbol().line)))
+
 
     # Exit a parse tree produced by Python3Parser#funcdef.
     def exitFuncdef(self, ctx:Python3Parser.FuncdefContext):
@@ -91,7 +96,10 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#typedargslist.
     def enterTypedargslist(self, ctx:Python3Parser.TypedargslistContext):
-        pass
+        funcdef = ctx.getChild(1)
+        if (re.fullmatch("(   ^_? [A-Z]+[_A-Z]*$ |  ^_? [a-z]+[_a-z]*$  )", funcdef.getText()) == None):
+            print("Está não está em padrão lower_snake_case ou UPPER_SNAKE_CASE", funcdef.getText(), "Line: {}".format(str(funcdef.getSymbol().line)))
+
 
     # Exit a parse tree produced by Python3Parser#typedargslist.
     def exitTypedargslist(self, ctx:Python3Parser.TypedargslistContext):
@@ -703,7 +711,9 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#classdef.
     def enterClassdef(self, ctx:Python3Parser.ClassdefContext):
-        pass
+        classDef = ctx.getChild(1)
+        if (re.fullmatch("^_?[A-Z][a-z]+(_[A-Z][a-z]+)*$", classDef.getText()) == None):
+            print("Está fora do padrão Upper_Snake_Case", classDef.getText(), "Line: {}".format(str(classDef.getSymbol().line)))
 
     # Exit a parse tree produced by Python3Parser#classdef.
     def exitClassdef(self, ctx:Python3Parser.ClassdefContext):
