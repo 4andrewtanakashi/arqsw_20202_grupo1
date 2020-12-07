@@ -90,10 +90,8 @@ if __name__ == '__main__':
                 for i in range(len(parents_class) - 1):
                     for j in range(i+1, len(parents_class)):
                         ambig_methods = list(set(classes_methods[parents_class[i]]).intersection(classes_methods[parents_class[j]]))
-                        #print('Metodos ambiguos:', metodos_ambiguos)
                         if len(ambig_methods) > 0:
                             for metodo in ambig_methods:
-                                #print('Classes heranca ambigua:', classes_heranca_ambigua)
                                 if metodo in ambig_inherit_classes.keys():
                                     if parents_class[i] not in ambig_inherit_classes[metodo]:
                                         ambig_inherit_classes[metodo].append(parents_class[i])
