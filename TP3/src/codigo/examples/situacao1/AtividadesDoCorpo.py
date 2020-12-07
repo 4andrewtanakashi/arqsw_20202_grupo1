@@ -14,8 +14,8 @@ class Atividades_Do_Corpo:
         print("velocidade: {}". format(velocidade))
 
     def ver_horas(self):
-        self.utensilio.ligar()
         print(" Qualquer " + self.coracao)
+        self.utensilio.ligar()
 
 x = Atividades_Do_Corpo()
 x.ver_horas()
