@@ -28,7 +28,6 @@ from g4_python.Python3Listener import Python3Listener
 """
 variáveis globais:
 """
-matrix_inherit = {}
 classes_data = {}
 count_pass = 0
 
@@ -85,65 +84,46 @@ class RuleListener(Python3Listener):
 
         if isinstance(ctx, Python3Parser.Import_stmtContext):
             traverse(ctx)
-
+            
+        
         if isinstance(ctx, Python3Parser.ClassdefContext):
-            print("conj: ", conj)
+            traverse(ctx)
             class_name = ctx.getChild(1).getText()
             classes_data[class_name] = {}
-            matrix_inherit[class_name] = []
             attributes_by_class = []
             instance_attributes = {}
+            
+            suite_tree = walks(ctx, 'suite')
 
-            for i in range(ctx.getChildCount()):
-                if isinstance(ctx.getChild(i), Python3Parser.ArglistContext):
-                    if ctx.getChild(i).getText():
-                        class_args = ctx.getChild(i).getText().split(',')
-                        matrix_inherit[class_name] = [arg for arg in class_args]
+            for suite_child in suite_tree.getChildren():
+                funcdef_tree = walks(suite_child, 'funcdef')
+                
+                if funcdef_tree:
+                    method_name = funcdef_tree.getChild(1).getText()
 
-                if isinstance(ctx.getChild(i), Python3Parser.SuiteContext):
-                    for child_ctx in ctx.getChildren():
-                        for j in range(child_ctx.getChildCount()):
-                            if isinstance(child_ctx.getChild(j), Python3Parser.StmtContext):
-                                stmt = child_ctx.getChild(j)
+                    suite_func_tree = walks(funcdef_tree, 'suite')
 
-                                for child_stmt in stmt.getChildren():
-                                    if isinstance(child_stmt, Python3Parser.Compound_stmtContext):
-                                        for child_compound in child_stmt.getChildren():
-                                            if isinstance(child_compound, Python3Parser.FuncdefContext):
-                                                if child_compound.getChild(1):
-                                                    method_name = child_compound.getChild(1).getText()
-                                                    print("method_name: ", method_name)
-                                                    if isinstance(child_compound.getChild(1), TerminalNode):
-                                                        list_param = []
-                                                        for child_func in child_compound.getChildren():
-                                                            #Garantindo as variáveis presentes em funções da classe, principalmente (Instance Attribute)
-                                                            if isinstance(child_func, Python3Parser.SuiteContext):
-                                                                for suite_ctx_child in child_func.getChildren():
-                                                                    if (isinstance(suite_ctx_child, Python3Parser.StmtContext)) :
-                                                                        tempNameAtrr = suite_ctx_child.getChild(0).getText().split('=')[0].replace("\n", '')
-                                                                        line_func = suite_ctx_child.getChild(0).getText()
-                                                                        print("conj: {}".format(str(line_func )))
-                                                                        for elemConj in conj:
-                                                                            tuple_temp = sub_contains_key(instance_attributes, line_func)
-                                                                            if (elemConj in line_func) or tuple_temp[0]:
-                                                                                tempNameAtrr = tuple_temp[1] if tuple_temp[0] == True else tempNameAtrr
-                                                                                #Colocando na lista
-                                                                                if instance_attributes.get(tempNameAtrr) == None:
-                                                                                    instance_attributes[tempNameAtrr] = []
-                                                                                if not instance_attributes[tempNameAtrr].__contains__(method_name.replace(" ", "")):
-                                                                                    instance_attributes[tempNameAtrr].append(method_name.replace(" ", ""))
-                                                            #Pegando os paramêtros para o métodos correspondentes
-                                                            if isinstance(child_func, Python3Parser.ParametersContext):
-                                                                    for elements in child_func.getChild(1).getText().split(','):
-                                                                        if ((elements != "self") and (elements != ')')):
-                                                                            list_param.append(elements)
-                                                        classes_data[class_name][child_compound.getChild(1).getText()] = list_param
-                                                        classes_data[class_name]["instance_attribute"] = instance_attributes
-                                                        #classes_data[class_name]["class_attribute"] = attributes_by_class
+                    for suite_func_child in suite_func_tree.getChildren():
+                        if isinstance(suite_func_child, Python3Parser.StmtContext):
+                            tempNameAtrr = suite_func_child.getChild(0).getText().split('=')[0].replace("\n", '')
+                            line_func = suite_func_child.getChild(0).getText()
+                            #print("conj: {}".format(str(line_func )))
+                            for elemConj in conj:
+                                tuple_temp = sub_contains_key(instance_attributes, line_func)
+                                if (elemConj in line_func) or tuple_temp[0]:
+                                    tempNameAtrr = tuple_temp[1] if tuple_temp[0] == True else tempNameAtrr
+                                    #Colocando na lista
+                                    if instance_attributes.get(tempNameAtrr) == None:
+                                        instance_attributes[tempNameAtrr] = []
+                                    if not instance_attributes[tempNameAtrr].__contains__(method_name.replace(" ", "")):
+                                        instance_attributes[tempNameAtrr].append(method_name.replace(" ", ""))
+
+                        classes_data[class_name]["instance_attribute"] = instance_attributes
+        
 
             print('Nome da classe:', class_name)
-            print('Matriz de herança:', matrix_inherit)
             print('Metodos da classe:', classes_data, '\n')
+
 
 class MethodsListener(ParseTreeListener):
     def enterEveryRule(self, ctx):
@@ -172,20 +152,37 @@ class MethodsListener(ParseTreeListener):
                     method_name = funcdef_tree.getChild(1).getText()
 
                     print("Method Name: ", method_name)
-                    if method_name != '_init_':
+                    if method_name != '__init__':
                         suite_func_tree = walks(funcdef_tree, 'suite')
 
-                        print("linhas do método: {}, ".format(str(suite_func_tree.getChildCount()-3)))
-                        for child_suite_func_tree in suite_func_tree.getChildren():
-                            if (not child_suite_func_tree.getText().isspace()):
-                               print("child_SuiteContext: ", child_suite_func_tree.getChild(0).getText())
-                                #Salva lista de atributos que métodos o utilizam
-                                # for i in range(test[class_name]["instance_attribute"]):
-                                #     if list(test[class_name]["instance_attribute"][i].keys())[0] in child_suite_func_tree.getChild(0).getText():
-                                #         if not (list(test[class_name]["instance_attribute"][i].keys())[1].__contains__(method_name)):
-                                #             test[class_name]["instance_attribute"][i].append(method_name)
-                                #
-                                # #Porcentagem de uso de classes no corpo do método:
+                        print("Linhas do método: {}, ".format(str(suite_func_tree.getChildCount()-3)))
+                        print('Conteudo do método:\n', suite_func_tree.getText())
+                        
+                        line_cont = 1
+                        for instance_key in classes_data[class_name]["instance_attribute"]:
+                            method_name_list = []
+                            for method_name in classes_data[class_name]["instance_attribute"][instance_key]:
+                                if method_name != '__init__':
+                                    method_name_list.append(method_name)
+
+                            if len(method_name_list) == 1 and method_name == method_name_list[0]:
+                                for child_suite_func_tree in suite_func_tree.getChildren():
+                                    if (not child_suite_func_tree.getText().isspace()):                                        
+                                    #if isinstance(child_suite_func_tree, Python3Parser.StmtContext):
+                                        #Salva lista de atributos que métodos o utilizam
+                                        #for instance_key in classes_data[class_name]["instance_attribute"]:
+                                            #method_name_list = classes_data[class_name]["instance_attribute"][instance_key]
+                                        if instance_key in child_suite_func_tree.getText():
+                                            print('Nome do método que usa a instância', "'" + instance_key + "'", 'na linha', str(line_cont) + ':', method_name_list[0])
+                                            print('Linha:', child_suite_func_tree.getText())
+                                                
+                                    #print(list((classes_data[class_name]["instance_attribute"])[i].keys()))
+                                    #if list(classes_data[class_name]["instance_attribute"][i].keys())[0] in child_suite_func_tree.getChild(0).getText():
+                                        #print('Krai ->', list(classes_data[class_name]["instance_attribute"][i].keys())[1])
+                                        #if not list(classes_data[class_name]["instance_attribute"][i].keys())[1].__contains__(method_name):
+                                            #print('Linha' get
+                                        line_cont += 1
+                                # Porcentagem de uso de classes no corpo do método:
                                 # for
 
 
@@ -194,8 +191,6 @@ def sub_contains_key(dict_word, string_word):
         if key in string_word:
             return (True, key)
     return (False, "")
-
-
 
 
 def run(ClassListener):
