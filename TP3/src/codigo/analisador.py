@@ -84,20 +84,20 @@ class RuleListener(Python3Listener):
 
         if isinstance(ctx, Python3Parser.Import_stmtContext):
             traverse(ctx)
-            
-        
+
+
         if isinstance(ctx, Python3Parser.ClassdefContext):
             traverse(ctx)
             class_name = ctx.getChild(1).getText()
             classes_data[class_name] = {}
             attributes_by_class = []
             instance_attributes = {}
-            
+
             suite_tree = walks(ctx, 'suite')
 
             for suite_child in suite_tree.getChildren():
                 funcdef_tree = walks(suite_child, 'funcdef')
-                
+
                 if funcdef_tree:
                     method_name = funcdef_tree.getChild(1).getText()
 
@@ -119,7 +119,7 @@ class RuleListener(Python3Listener):
                                         instance_attributes[tempNameAtrr].append(method_name.replace(" ", ""))
 
                         classes_data[class_name]["instance_attribute"] = instance_attributes
-        
+
 
             print('Nome da classe:', class_name)
             print('Metodos da classe:', classes_data, '\n')
@@ -155,9 +155,10 @@ class MethodsListener(ParseTreeListener):
                     if method_name != '__init__':
                         suite_func_tree = walks(funcdef_tree, 'suite')
 
-                        print("Linhas do método: {}, ".format(str(suite_func_tree.getChildCount()-3)))
+                        lines_method = suite_func_tree.getChildCount()-3
+                        print("Linhas do método: {}, ".format(str(lines_method)))
                         print('Conteudo do método:\n', suite_func_tree.getText())
-                        
+
                         line_cont = 1
                         for instance_key in classes_data[class_name]["instance_attribute"]:
                             method_name_list = []
@@ -165,9 +166,11 @@ class MethodsListener(ParseTreeListener):
                                 if method_name != '__init__':
                                     method_name_list.append(method_name)
 
+                            count_ocr = 0
+                            instance_key_out = None
                             if len(method_name_list) == 1 and method_name == method_name_list[0]:
                                 for child_suite_func_tree in suite_func_tree.getChildren():
-                                    if (not child_suite_func_tree.getText().isspace()):                                        
+                                    if (not child_suite_func_tree.getText().isspace()):
                                     #if isinstance(child_suite_func_tree, Python3Parser.StmtContext):
                                         #Salva lista de atributos que métodos o utilizam
                                         #for instance_key in classes_data[class_name]["instance_attribute"]:
@@ -175,7 +178,9 @@ class MethodsListener(ParseTreeListener):
                                         if instance_key in child_suite_func_tree.getText():
                                             print('Nome do método que usa a instância', "'" + instance_key + "'", 'na linha', str(line_cont) + ':', method_name_list[0])
                                             print('Linha:', child_suite_func_tree.getText())
-                                                
+                                            count_ocr += 1
+                                            instance_key_out = instance_key
+                                            print("instance_key: ", instance_key)
                                     #print(list((classes_data[class_name]["instance_attribute"])[i].keys()))
                                     #if list(classes_data[class_name]["instance_attribute"][i].keys())[0] in child_suite_func_tree.getChild(0).getText():
                                         #print('Krai ->', list(classes_data[class_name]["instance_attribute"][i].keys())[1])
@@ -184,6 +189,14 @@ class MethodsListener(ParseTreeListener):
                                         line_cont += 1
                                 # Porcentagem de uso de classes no corpo do método:
                                 # for
+                                if instance_key_out != None and (len(classes_data[class_name]["instance_attribute"][instance_key_out]) > 1):
+                                    print("O método: {} é cadidato para Move Method por conta do atributo {}, com Porcentagem de {}% para classe {}".format(
+                                        str(method_name),
+                                        str(instance_key_out),
+                                        str(count_ocr/lines_method*100),
+                                        str(class_name)
+                                    ))
+                                    instance_key_out = None
 
 
 def sub_contains_key(dict_word, string_word):
