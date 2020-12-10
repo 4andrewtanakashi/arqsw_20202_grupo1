@@ -20,16 +20,38 @@ Análise Estática/Análise Dinâmica, ...
 ```
 Arquitetura de Software/
 ├── TP1 - Análise Estática/Dinâmica
+|   ├── apresentacao.mp4
+|   ├── apresentacao.mp4
 │   └── src/
 │        ├── README.md
 │        └── codigo/
 │               ├── g4/
-│               ├── src/
+│               ├── exaples/
+│               ├── requeriments.txt
 │               └── analisador.py
-├── TP2
-│   └── src
-├── TP3
-│   └── src
+|
+├── TP2 - Métricas
+|   ├── apresentacao.mp4
+|   ├── apresentacao.mp4
+│   └── src/
+│        ├── README.md
+│        └── codigo/
+│               ├── g4/
+│               ├── exaples/
+│               ├── requeriments.txt
+│               └── analisador.py
+|
+├── TP3 - Refatoração
+|   ├── apresentacao.mp4
+|   ├── apresentacao.mp4
+│   └── src/
+│        ├── README.md
+│        └── codigo/
+│               ├── g4/
+│               ├── exaples/
+│               ├── requeriments.txt
+│               └── analisador.py
+|
 ├── TP4
 │   └── src
 ├── TP5
@@ -48,12 +70,12 @@ Arquitetura de Software/
 │   └── src
 └── TP12
     └── src
-    
+
 ```
 ## Roteiro
-- [ ] TP1
-- [ ] TP2
-- [ ] TP3
+- [X] TP1
+- [X] TP2
+- [X] TP3
 - [ ] TP4
 - [ ] TP5
 - [ ] TP6
@@ -81,4 +103,3 @@ Commits serão feitos de acordo com a seguinte tabela:
 
 ## Projeto feito para a disciplina PCC524 [<img src="https://files.catbox.moe/bf24uw.png" width="24">]
   Universidade Federal de Lavras, ministrada pelo professor Dr. Ricardo Terra Nunes Bueno Villela.
-
