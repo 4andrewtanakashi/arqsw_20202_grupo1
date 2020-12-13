@@ -18,6 +18,9 @@ class TemplateImpostosCondicional(A, B, metaclass=ABCMeta):
     def minima_taxacao(self, orcamento):
         pass
 
+    def calculaAD(self, orcamento):
+        print("atual: {}".format(srt(ornamento)))
+
 
 class ISS:
     def calcula(self, orcamento):
