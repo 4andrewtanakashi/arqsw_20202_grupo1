@@ -6,6 +6,12 @@ class TemplateImpostosCondicional(A, B, metaclass=ABCMeta):
             return self.maxima_taxacao(orcamento)
         return self.minima_taxacao(orcamento)
 
+    def calculaII(self, orcamento):
+        if self.deve_usar_maxima_taxacao(orcamento):
+            return self.maxima_taxacao(orcamento)
+        return self.minima_taxacao(orcamento)
+        self.calculaAD(orcamento)
+
     @abstractmethod
     def deve_usar_maxima_taxacao(self, orcamento):
         pass
@@ -19,6 +25,9 @@ class TemplateImpostosCondicional(A, B, metaclass=ABCMeta):
         pass
 
     def calculaAD(self, orcamento):
+        print("atual: {}".format(srt(ornamento)))
+
+    def calculaADII(self, orcamento):
         print("atual: {}".format(srt(ornamento)))
 
 
