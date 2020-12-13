@@ -15,6 +15,7 @@ __credits__ = ["Desenvolvido para disciplina de Arquitetura de Software"]
 __devs__ = "@4andrewtanakashi & @ghamorim"
 __status__ = "Production"
 
+
 import os
 import sys
 import io
@@ -27,9 +28,30 @@ from g4_python.Python3Listener import Python3Listener
 
 
 # Variáveis globais:
-classes_data = {}
-classes_name = []
-class_instance = {}
+matrix_inherit = {}
+abstract_class_methods = {}
+template_class = ''
+
+def traverse(tree, indent = 0):
+    if tree.getText() == "<EOF>":
+        return
+    elif isinstance(tree, TerminalNode):
+        print("{0}TOKEN='{1}'".format("  " * indent, tree.getText()))
+    else:
+        print("{0}{1}".format("  " * indent, Python3Parser.ruleNames[tree.getRuleIndex()]))
+        for child in tree.children:
+            traverse(child, indent + 1)
+
+
+def check_method_call(tree, token):
+    if tree.getText() == "<EOF>":
+        return
+    elif isinstance(tree, TerminalNode):
+        if tree.getText() == token and tree.getParent().getChild(0).getText() == '.':
+            return True
+    else:
+        for child in tree.children:
+            check_method_call(child, token)
 
 
 def walks(tree, goal_rule):
@@ -43,114 +65,80 @@ def walks(tree, goal_rule):
                     return tree
 
 
-class ClassListener(Python3Listener):
-    def enterClassdef(self, ctx):
-        classes_name.append(ctx.getChild(1).getText())
-
-
 class RuleListener(Python3Listener):
     def enterEveryRule(self, ctx):
-        """ enterEveryRule: este método faz a coleta de dados essênciais para a indicação de refatoração:
-            * Nome da Classes
-                * Nome dos atributos (instanciados e da classe)
-                * Nome dos métodos
-                * Nome dos parâmetros dos métodos
-
-            entrada: ctx: São as regras da gramática, geradas por meio do árvore do Parse.
-        """
+        global template_class
 
         if isinstance(ctx, Python3Parser.ClassdefContext):
+            #traverse(ctx)
+
+            abstract_class_methods['abstract'] = []
+            abstract_class_methods['concrete'] = []
+
             class_name = ctx.getChild(1).getText()
-            classes_data[class_name] = {}
-            instance_attributes = {}
+            
+            class_arglist_tree = walks(ctx, 'arglist')
 
-            suite_tree = walks(ctx, 'suite')
+            matrix_inherit[class_name] = []
 
-            for suite_child in suite_tree.getChildren():
-                funcdef_tree = walks(suite_child, 'funcdef')
+            if class_arglist_tree:
+                for arglist_child in class_arglist_tree.getChildren():
+                    if isinstance(arglist_child, Python3Parser.ArgumentContext):
+                        for i in range(arglist_child.getChildCount()):
+                            if arglist_child.getChild(i).getText() == 'metaclass' and arglist_child.getChild(i+1).getText() == '=' and arglist_child.getChild(i+2).getText() == 'ABCMeta':
+                                template_class = class_name
+                                print('Classe template é:', class_name, 'com o argumento', arglist_child.getText())
 
-                if funcdef_tree:
-                    method_name = funcdef_tree.getChild(1).getText()
+                print('Arglist ->', arglist_child.getText())
+                #matrix_inherit[class_name].append(argument_child.getText())
 
-                    suite_func_tree = walks(funcdef_tree, 'suite')
+            if template_class == class_name:
+                suite_tree = walks(ctx, 'suite')
+                
+                for suite_child in suite_tree.getChildren():
+                    decorated_tree = walks(suite_child, 'decorated')
+                    
+                    if decorated_tree:                       
+                        decorator_tree = walks(decorated_tree, 'decorator')
 
-                    for suite_func_child in suite_func_tree.getChildren():
-                        if isinstance(suite_func_child, Python3Parser.StmtContext):
-                            tempNameAtrr = suite_func_child.getChild(0).getText().split('=')[0].replace("\n", '')
-                            line_func = suite_func_child.getChild(0).getText()
-                            for name in classes_name:
-                                tuple_temp = sub_contains_key(instance_attributes, line_func)
-                                if (name + '(' in line_func) or tuple_temp[0]:
-                                    tempNameAtrr = tuple_temp[1] if tuple_temp[0] == True else tempNameAtrr
-                                    class_instance[tempNameAtrr] = name
-                                    if instance_attributes.get(tempNameAtrr) == None:
-                                        instance_attributes[tempNameAtrr] = []
-                                    if not instance_attributes[tempNameAtrr].__contains__(method_name.replace(" ", "")):
-                                        instance_attributes[tempNameAtrr].append(method_name.replace(" ", ""))
+                        if decorator_tree and decorator_tree.getChild(1).getText() == 'abstractmethod':
+                            funcdef_tree = walks(suite_child, 'funcdef')
 
-                        classes_data[class_name]["instance_attribute"] = instance_attributes
+                            if funcdef_tree:
+                                print('Funcao com decorator ->\n', funcdef_tree.getText())
+                                abstract_class_methods['abstract'].append(funcdef_tree.getChild(1).getText())
 
+                        print('Filho suite ->\n', suite_child.getText())
 
-class MethodsListener(ParseTreeListener):
-    def enterEveryRule(self, ctx):
-        """ enterEveryRule (MethodsListener):
-            este método faz a análise em cada método utilizando os dados obtidos do último uso da árvore de sintaxe.
+                    else:
+                       funcdef_tree = walks(suite_child, 'funcdef')
+                       if funcdef_tree and funcdef_tree.getChild(1).getText() != '__init__':
+                           print('Funcao sem decorator ->\n', funcdef_tree.getText())
+                           abstract_class_methods['concrete'].append(funcdef_tree.getChild(1).getText())
 
-            entrada: ctx: São as regras da gramática, geradas por meio do árvore do Parse.
-        """
+                print('Metodos classe abstrata:', abstract_class_methods)
 
-        if isinstance(ctx, Python3Parser.ClassdefContext):
-            class_name = ctx.getChild(1).getText()
-            suite_tree = walks(ctx, 'suite')
-
-            for suite_child in suite_tree.getChildren():
-                funcdef_tree = walks(suite_child, 'funcdef')
-
-                if funcdef_tree:
-                    method_name = funcdef_tree.getChild(1).getText()
-
-                    if method_name != '__init__':
-                        print("Method Name: ", method_name)
-                        suite_func_tree = walks(funcdef_tree, 'suite')
-
-                        lines_method = suite_func_tree.getChildCount()-3
-                        print("Linhas do método: {} ".format(str(lines_method)))
-
-                        line_cont = 1
-                        for instance_key in classes_data[class_name]["instance_attribute"]:
-                            method_name_list = []
-                            for method_name in classes_data[class_name]["instance_attribute"][instance_key]:
-                                if method_name != '__init__':
-                                    method_name_list.append(method_name)
-
-                            count_ocr = 0
-                            instance_key_out = None
-                            if len(method_name_list) == 1 and method_name == method_name_list[0]:
-                                for child_suite_func_tree in suite_func_tree.getChildren():
-                                    if (not child_suite_func_tree.getText().isspace()):
-                                        if instance_key in child_suite_func_tree.getText():
-                                            print('Nome do método que usa a instância', "'" + instance_key + "'", 'na linha', str(line_cont) + ':', method_name_list[0])
-                                            print('Linha:', child_suite_func_tree.getText())
-                                            count_ocr += 1
-                                            instance_key_out = instance_key
-                                            print("instance_key: ", instance_key)
-                                        line_cont += 1
-
-                                if instance_key_out != None and (len(classes_data[class_name]["instance_attribute"][instance_key_out]) > 1):
-                                    print("O método: {} é cadidato para Move Method por conta do atributo {}, com Porcentagem de {}% para classe {}".format(
-                                        str(method_name),
-                                        str(instance_key_out),
-                                        str(count_ocr/lines_method*100),
-                                        str(class_instance[instance_key_out])
-                                    ))
-                                    instance_key_out = None
+                for method in abstract_class_methods['concrete']:
+                    if check_template_method(method, suite_tree):
+                        print('Existe um método template:', method, 'da classe:', class_name)
 
 
-def sub_contains_key(dict_word, string_word):
-    for key in dict_word:
-        if key in string_word:
-            return (True, key)
-    return (False, "")
+def check_template_method(method, suite_tree):
+    for suite_child in suite_tree.getChildren():
+        funcdef_tree = walks(suite_child, 'funcdef')
+
+        if funcdef_tree:
+            func_name = funcdef_tree.getChild(1).getText()
+            
+            if func_name == method:
+                for abstract_class_method in [*list(abstract_class_methods.values())[0], *list(abstract_class_methods.values())[1]]:       
+                    if abstract_class_method != method:
+                        if check_method_call(funcdef_tree, abstract_class_method) == False:
+                            return False
+                        else:
+                            print('O método', method, 'possui chamada ao método:', abstract_class_method)
+
+    return True
 
 
 def run(Listener):
@@ -184,9 +172,18 @@ if __name__ == '__main__':
     print('Nome dos arquivos:\n', files_name, '\n')
 
     try:
-        run(ClassListener)
-        # run(RuleListener)
-        # run(MethodsListener)
+        run(RuleListener)
+        
+        print('\nMatriz de herança:', matrix_inherit)
+        
+        abstract_class_childs = []
+        for class_name in matrix_inherit:
+            for parent_class in matrix_inherit[class_name]:
+                if parent_class == template_class:
+                    abstract_class_childs.append(class_name)
+                    
+        print('\nClasses filhas da classe abstrata', abstract_class_childs)
+                
 
     except OSError:
         print('Algum erro aconteceu')

@@ -12,7 +12,6 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#single_input.
     def enterSingle_input(self, ctx:Python3Parser.Single_inputContext):
-        print("enterSingle_input: {}".format(ctx.getText()))
         pass
 
     # Exit a parse tree produced by Python3Parser#single_input.
@@ -31,7 +30,6 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#eval_input.
     def enterEval_input(self, ctx:Python3Parser.Eval_inputContext):
-        print("enterEval_input: {}".format(ctx.getText()))
         pass
 
     # Exit a parse tree produced by Python3Parser#eval_input.
@@ -41,7 +39,6 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#decorator.
     def enterDecorator(self, ctx:Python3Parser.DecoratorContext):
-        print("enterDecorator: {}".format(ctx.getText()))
         pass
 
     # Exit a parse tree produced by Python3Parser#decorator.
@@ -51,7 +48,6 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#decorators.
     def enterDecorators(self, ctx:Python3Parser.DecoratorsContext):
-        print("enterDecorators: {}".format(ctx.getText()))
         pass
 
     # Exit a parse tree produced by Python3Parser#decorators.
@@ -61,7 +57,6 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#decorated.
     def enterDecorated(self, ctx:Python3Parser.DecoratedContext):
-        print("enterDecorated: {}".format(ctx.getText()))
         pass
 
     # Exit a parse tree produced by Python3Parser#decorated.
@@ -80,10 +75,7 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#funcdef.
     def enterFuncdef(self, ctx:Python3Parser.FuncdefContext):
-        funcdef = ctx.getChild(1)
-        if ( (funcdef != None) and (re.fullmatch("^_?[a-z]+[\da-z]*(_[\da-z]+)*$", funcdef.getText()) == None)):
-            print("Está fora do padrão lower_snake_case", funcdef.getText(), "Line: {}".format(str(funcdef.getSymbol().line)))
-
+        pass
 
     # Exit a parse tree produced by Python3Parser#funcdef.
     def exitFuncdef(self, ctx:Python3Parser.FuncdefContext):
@@ -281,7 +273,6 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#import_name.
     def enterImport_name(self, ctx:Python3Parser.Import_nameContext):
-        print("enterImport_name: {}".format(ctx.getText()))
         pass
 
     # Exit a parse tree produced by Python3Parser#import_name.
@@ -291,7 +282,6 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#import_from.
     def enterImport_from(self, ctx:Python3Parser.Import_fromContext):
-        print("enterImport_from: {}".format(ctx.getText()))
         pass
 
     # Exit a parse tree produced by Python3Parser#import_from.
@@ -301,7 +291,6 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#import_as_name.
     def enterImport_as_name(self, ctx:Python3Parser.Import_as_nameContext):
-        print("enterImport_as_name: {}".format(ctx.getText()))
         pass
 
     # Exit a parse tree produced by Python3Parser#import_as_name.
@@ -311,7 +300,6 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#dotted_as_name.
     def enterDotted_as_name(self, ctx:Python3Parser.Dotted_as_nameContext):
-        print("enterDotted_as_name: {}".format(ctx.getText()))
         pass
 
     # Exit a parse tree produced by Python3Parser#dotted_as_name.
@@ -321,7 +309,6 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#import_as_names.
     def enterImport_as_names(self, ctx:Python3Parser.Import_as_namesContext):
-        print("enterImport_as_names: {}".format(ctx.getText()))
         pass
 
     # Exit a parse tree produced by Python3Parser#import_as_names.
@@ -331,7 +318,6 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#dotted_as_names.
     def enterDotted_as_names(self, ctx:Python3Parser.Dotted_as_namesContext):
-        print("enterDotted_as_names: {}".format(ctx.getText()))
         pass
 
     # Exit a parse tree produced by Python3Parser#dotted_as_names.
@@ -341,7 +327,6 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#dotted_name.
     def enterDotted_name(self, ctx:Python3Parser.Dotted_nameContext):
-        print("enterDotted_name: {}".format(ctx.getText()))
         pass
 
     # Exit a parse tree produced by Python3Parser#dotted_name.
@@ -720,9 +705,7 @@ class Python3Listener(ParseTreeListener):
 
     # Enter a parse tree produced by Python3Parser#classdef.
     def enterClassdef(self, ctx:Python3Parser.ClassdefContext):
-        classDef = ctx.getChild(1)
-        if ((classDef != None) and (re.fullmatch("^_?[A-Z][\da-z]*(_[A-Z][\da-z]*)*$", classDef.getText()) == None)):
-            print("Está fora do padrão Upper_Snake_Camel_Case", classDef.getText(), "Line: {}".format(str(classDef.getSymbol().line)))
+        pass
 
     # Exit a parse tree produced by Python3Parser#classdef.
     def exitClassdef(self, ctx:Python3Parser.ClassdefContext):
@@ -799,3 +782,5 @@ class Python3Listener(ParseTreeListener):
     # Exit a parse tree produced by Python3Parser#yield_arg.
     def exitYield_arg(self, ctx:Python3Parser.Yield_argContext):
         pass
+
+

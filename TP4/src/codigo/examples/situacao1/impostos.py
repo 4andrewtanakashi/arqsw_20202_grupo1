@@ -1,7 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
-
-class TemplateImpostosCondicional(metaclass=ABCMeta):
+class TemplateImpostosCondicional(A, B, metaclass=ABCMeta):
     def calcula(self, orcamento):
         if self.deve_usar_maxima_taxacao(orcamento):
             return self.maxima_taxacao(orcamento)
