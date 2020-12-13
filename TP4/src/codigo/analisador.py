@@ -32,6 +32,7 @@ matrix_inherit = {}
 abstract_class_methods = {}
 template_class = ''
 
+'''
 def traverse(tree, indent = 0):
     if tree.getText() == "<EOF>":
         return
@@ -41,7 +42,7 @@ def traverse(tree, indent = 0):
         print("{0}{1}".format("  " * indent, Python3Parser.ruleNames[tree.getRuleIndex()]))
         for child in tree.children:
             traverse(child, indent + 1)
-
+'''
 
 def check_method_call(tree, token):
     if tree.getText() == "<EOF>":
@@ -71,31 +72,31 @@ class RuleListener(Python3Listener):
 
         if isinstance(ctx, Python3Parser.ClassdefContext):
             #traverse(ctx)
-
             abstract_class_methods['abstract'] = []
             abstract_class_methods['concrete'] = []
 
             class_name = ctx.getChild(1).getText()
-            
-            class_arglist_tree = walks(ctx, 'arglist')
 
             matrix_inherit[class_name] = []
 
-            if class_arglist_tree:
-                for arglist_child in class_arglist_tree.getChildren():
-                    if isinstance(arglist_child, Python3Parser.ArgumentContext):
-                        for i in range(arglist_child.getChildCount()):
-                            if arglist_child.getChild(i).getText() == 'metaclass' and arglist_child.getChild(i+1).getText() == '=' and arglist_child.getChild(i+2).getText() == 'ABCMeta':
-                                template_class = class_name
-                                print('Classe template é:', class_name, 'com o argumento', arglist_child.getText())
+            for class_child in ctx.getChildren():
+                if isinstance(class_child, Python3Parser.ArglistContext):
+                    for arglist_child in class_child.getChildren():
+                        if isinstance(arglist_child, Python3Parser.ArgumentContext):
+                            for i in range(arglist_child.getChildCount()):
+                                if arglist_child.getChild(i).getText() == 'metaclass' and arglist_child.getChild(i+1).getText() == '=' and arglist_child.getChild(i+2).getText() == 'ABCMeta':
+                                    template_class = class_name
+                                    print('Classe template é:', class_name, 'porque possui o argumento', arglist_child.getText(), '\n')
 
-                print('Arglist ->', arglist_child.getText())
-                #matrix_inherit[class_name].append(argument_child.getText())
+                            matrix_inherit[class_name].append(arglist_child.getText())
+
 
             if template_class == class_name:
                 suite_tree = walks(ctx, 'suite')
                 
                 for suite_child in suite_tree.getChildren():
+                    # if isinstance(suite_child, Python3Parser.StmtContext):
+                    #    print('Filho suite ->\n', suite_child.getText())
                     decorated_tree = walks(suite_child, 'decorated')
                     
                     if decorated_tree:                       
@@ -105,22 +106,20 @@ class RuleListener(Python3Listener):
                             funcdef_tree = walks(suite_child, 'funcdef')
 
                             if funcdef_tree:
-                                print('Funcao com decorator ->\n', funcdef_tree.getText())
+                                # print('Funcao com decorator ->\n', funcdef_tree.getText())
                                 abstract_class_methods['abstract'].append(funcdef_tree.getChild(1).getText())
-
-                        print('Filho suite ->\n', suite_child.getText())
 
                     else:
                        funcdef_tree = walks(suite_child, 'funcdef')
                        if funcdef_tree and funcdef_tree.getChild(1).getText() != '__init__':
-                           print('Funcao sem decorator ->\n', funcdef_tree.getText())
+                           # print('Funcao sem decorator ->\n', funcdef_tree.getText())
                            abstract_class_methods['concrete'].append(funcdef_tree.getChild(1).getText())
 
                 print('Metodos classe abstrata:', abstract_class_methods)
 
                 for method in abstract_class_methods['concrete']:
                     if check_template_method(method, suite_tree):
-                        print('Existe um método template:', method, 'da classe:', class_name)
+                        print('Na classe:', class_name, 'existe o método template:', method)
 
 
 def check_template_method(method, suite_tree):
