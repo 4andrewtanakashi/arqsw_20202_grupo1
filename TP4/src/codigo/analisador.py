@@ -50,11 +50,15 @@ def check_method_call(tree, token):
         return False
     elif isinstance(tree, TerminalNode):
         if tree.getText() == token and tree.getParent().getChild(0).getText() == '.':
-            print("tokenII: ", token , "treeII: ", tree.getText())
             return True
     else:
         for child in tree.children:
-            check_method_call(child, token)
+            log_tmp = check_method_call(child, token)
+            if log_tmp == True:
+                return True
+            elif log_tmp == False:
+                return False
+
 
 
 def walks(tree, goal_rule):
@@ -86,7 +90,8 @@ class RuleListener(Python3Listener):
                     for arglist_child in class_child.getChildren():
                         if isinstance(arglist_child, Python3Parser.ArgumentContext):
                             for i in range(arglist_child.getChildCount()):
-                                if arglist_child.getChild(i).getText() == 'metaclass' and arglist_child.getChild(i+1).getText() == '=' and arglist_child.getChild(i+2).getText() == 'ABCMeta':
+                                logic_large = arglist_child.getChild(i).getText() == 'metaclass' and arglist_child.getChild(i+1).getText() == '=' and arglist_child.getChild(i+2).getText() == 'ABCMeta'
+                                if logic_large or arglist_child.getChild(i).getText().__contains__("ABC"):
                                     template_class = class_name
                                     print('Classe template é:', class_name, 'porque possui o argumento', arglist_child.getText(), '\n')
 
@@ -126,28 +131,33 @@ class RuleListener(Python3Listener):
                     if check_template_method(method, suite_tree, methods_list):
                         list_template_method.append(method)
 
-                if (len(list_template_method) == 1):
-                    print('Na classe:', class_name, 'existe o método template:', list_template_method[0])
 
-                elif (len(list_template_method) > 1):
+                # print('Na classe:', class_name, 'existe o método template:', list_template_method)
+
+                if (len(list_template_method) > 1):
                     if len(list_template_method) > len(set(list_template_method)):
                         tmpStr = ""
                         for list_temp_met in list_template_method:
                             if list_template_method.count(list_temp_met) > 1 and tmpStr != list_temp_met:
-                                print('Na classe:', class_name, 'método template duplicado:', list_temp_met)
+                                print('[ERRO] Na classe:', class_name, 'método template duplicado:', list_temp_met)
                                 tmpStr = list_temp_met
                     else:
-                        print('Na classe:', class_name, 'existe mais de um método template:', list_template_method)
+                        print('[ERRO] Na classe:', class_name, 'existe mais de um método template:', list_template_method)
 
-                else:
+                elif (len(list_template_method) < 1):
                     not_call_met = None
-                    for concrete_method in concrete_method_dict:
-                        not_call_met = set(methods_list) - set(concrete_method_dict[concrete_method])
-                        not_call_met.discard(concrete_method)
-                    if not_call_met != None and list(not_call_met) > 1:
-                        print('Na classe:', class_name, ' o método: ', list_template_method[0], 'faltam esses métodos: ', not_call_met)
+                    concrete_method = []
+                    for concrete_method_child in concrete_method_dict:
+                        not_call_met = set(methods_list) - set(concrete_method_dict[concrete_method_child])
+                        not_call_met.discard(concrete_method_child)
+                        concrete_method.append(concrete_method_child)
+                    if not_call_met != None and len(list(not_call_met)) >= 1:
+                        if len(concrete_method) > 1:
+                            print('[ERRO] Na classe:', class_name, 'há mais de um método são cadidatos a Template Method: ', concrete_method)
+                        else:
+                            print('[ERRO] Na classe:', class_name, ' o método é cadidato a Template Method: ', concrete_method[0], 'faltam esses métodos: ', not_call_met)
                     else:
-                        print('Na classe:', class_name, 'não existe o método template')
+                        print('[ERRO] Na classe:', class_name, 'não existe o método template')
 
 def check_template_method(method, suite_tree, methods_list):
     for suite_child in suite_tree.getChildren():
@@ -156,19 +166,21 @@ def check_template_method(method, suite_tree, methods_list):
         if funcdef_tree:
             func_name = funcdef_tree.getChild(1).getText()
 
+            count = 0
             if func_name == method:
                 for abstract_class_method in methods_list:
                     if abstract_class_method != method:
-                        if check_method_call(funcdef_tree, abstract_class_method) == None or check_method_call(funcdef_tree, abstract_class_method) == False:
-                            return False
-                        else:
+                        logic_tmp_value = check_method_call(funcdef_tree, abstract_class_method)
+                        if logic_tmp_value != None and logic_tmp_value == True:
                             #traverse(funcdef_tree)
-                            print("funcdef_tree: ", funcdef_tree.getText())
-                            print("abstract_class_method: ", abstract_class_method)
                             if concrete_method_dict.get(method) == None:
                                 concrete_method_dict[method] = []
                             concrete_method_dict[method].append(abstract_class_method)
-                            print('O método: ', method, 'possui chamada ao método: ', abstract_class_method)
+                            # print('O método: ', method, 'possui chamada ao método: ', abstract_class_method)
+                        else:
+                            count += 1
+                if (count > 0):
+                    return False
 
     return True
 
@@ -206,7 +218,7 @@ if __name__ == '__main__':
     try:
         run(RuleListener)
 
-        print('\nMatriz de herança:', matrix_inherit)
+        # print('\nMatriz de herança:', matrix_inherit)
 
         abstract_class_childs = []
         for class_name in matrix_inherit:
@@ -214,7 +226,11 @@ if __name__ == '__main__':
                 if parent_class == template_class:
                     abstract_class_childs.append(class_name)
 
-        print('\nClasses filhas da classe abstrata', abstract_class_childs)
+        if len(abstract_class_childs) > 1:
+            print('\nClasses filhas: ', abstract_class_childs, "da classe abstrata: ", template_class)
+        else:
+            print('\n[WARNING] A classe template method: ', template_class, "Não contém Hooks (classes filhas para o Design Patterns)")
+
 
 
     except OSError:
