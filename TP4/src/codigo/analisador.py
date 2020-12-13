@@ -33,7 +33,7 @@ abstract_class_methods = {}
 template_class = ''
 concrete_method_dict = {}
 
-
+'''
 def traverse(tree, indent = 0):
     if tree.getText() == "<EOF>":
         return
@@ -43,7 +43,7 @@ def traverse(tree, indent = 0):
         print("{0}{1}".format("  " * indent, Python3Parser.ruleNames[tree.getRuleIndex()]))
         for child in tree.children:
             traverse(child, indent + 1)
-
+'''
 
 def check_method_call(tree, token):
     if tree.getText() == "<EOF>":
@@ -140,10 +140,11 @@ class RuleListener(Python3Listener):
                         print('Na classe:', class_name, 'existe mais de um método template:', list_template_method)
 
                 else:
+                    not_call_met = None
                     for concrete_method in concrete_method_dict:
                         not_call_met = set(methods_list) - set(concrete_method_dict[concrete_method])
                         not_call_met.discard(concrete_method)
-                    if list(not_call_met) > 1:
+                    if not_call_met != None and list(not_call_met) > 1:
                         print('Na classe:', class_name, ' o método: ', list_template_method[0], 'faltam esses métodos: ', not_call_met)
                     else:
                         print('Na classe:', class_name, 'não existe o método template')
@@ -158,10 +159,10 @@ def check_template_method(method, suite_tree, methods_list):
             if func_name == method:
                 for abstract_class_method in methods_list:
                     if abstract_class_method != method:
-                        if check_method_call(funcdef_tree, abstract_class_method) == False:
+                        if check_method_call(funcdef_tree, abstract_class_method) == None or check_method_call(funcdef_tree, abstract_class_method) == False:
                             return False
                         else:
-                            traverse(funcdef_tree)
+                            #traverse(funcdef_tree)
                             print("funcdef_tree: ", funcdef_tree.getText())
                             print("abstract_class_method: ", abstract_class_method)
                             if concrete_method_dict.get(method) == None:
