@@ -1,27 +1,19 @@
-from impostos import ICMS, ICPP, IKCV, ISS
+def client_code(abstract_class: AbstractClass) -> None:
+    """
+    The client code calls the template method to execute the algorithm. Client
+    code does not have to know the concrete class of an object it works with, as
+    long as it works with objects through the interface of their base class.
+    """
 
-class CalculadorImpostos:
-    def realiza_calculo(self, orcamento, imposto):
-        imposto_calculado = imposto.calcula(orcamento)
-        print(imposto_calculado)
+    # ...
+    abstract_class.template_method()
+    # ...
 
 
 if __name__ == "__main__":
+    print("Same client code can work with different subclasses:")
+    client_code(ConcreteClass1())
+    print("")
 
-    from orcamento import Orcamento, Item
-
-    orcamento = Orcamento()
-
-    orcamento.adiciona_item(Item("item 0", 50.0))
-    orcamento.adiciona_item(Item("item 1", 200.0))
-    orcamento.adiciona_item(Item("item 2", 250.0))
-
-    calculador = CalculadorImpostos()
-
-    print("ISS e ICMS")
-    calculador.realiza_calculo(orcamento, ISS())
-    calculador.realiza_calculo(orcamento, ICMS())
-
-    print("ICPP e IKCV")
-    calculador.realiza_calculo(orcamento, ICPP())
-    calculador.realiza_calculo(orcamento, IKCV()) 
+    print("Same client code can work with different subclasses:")
+    client_code(ConcreteClass2()) 

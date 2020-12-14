@@ -69,8 +69,8 @@ class RuleListener(Python3Listener):
 
             matrix_inherit[class_name] = []
 
-            # Verifica, pega nome da classe abstrata (contém o método template) e também armazena nome de
-            #   todos métodos de cada classe
+            # Pega o nome da classe abstrata (contém o método template) e armazena a herança de todas
+            #   as classes
             for class_child in ctx.getChildren():
                 if isinstance(class_child, Python3Parser.ArglistContext):
                     for arglist_child in class_child.getChildren():
@@ -81,15 +81,17 @@ class RuleListener(Python3Listener):
                                     template_class = class_name
 
                             matrix_inherit[class_name].append(arglist_child.getText())
-                            
-                            classes_methods[class_name] = []
-                            suite_tree = walks(ctx, 'suite')
-                            for suite_child in suite_tree.getChildren():
-                                funcdef_tree = walks(suite_child, 'funcdef')
-                                
-                                if funcdef_tree:
-                                    method_name = funcdef_tree.getChild(1).getText()
-                                    classes_methods[class_name].append(method_name)
+
+
+            # Armazena nome de todos métodos de cada classe
+            classes_methods[class_name] = []
+            suite_tree = walks(ctx, 'suite')
+            for suite_child in suite_tree.getChildren():
+                funcdef_tree = walks(suite_child, 'funcdef')
+                
+                if funcdef_tree:
+                    method_name = funcdef_tree.getChild(1).getText()
+                    classes_methods[class_name].append(method_name)
 
 
             # Armazena nome dos métodos abstratos e concretos da classe que possui o método template
@@ -124,9 +126,8 @@ class RuleListener(Python3Listener):
                         print('Na classe:', class_name, 'existe o método template:', method)
 
 
-                # Verifica se há erros como duplicação de método template ou existência de mais de um método
-                #   template. Caso não exista nenhum método template, verifica se há métodos concretos que
-                #   podem vir a ser
+                # Verifica se há erros como a existência de mais de um método template. Caso não exista nenhum
+                #   método template, verifica se há métodos concretos que podem vir a ser
                 if (len(list_template_method) > 1):
                     if len(list_template_method) > len(set(list_template_method)):
                         tmpStr = ""
@@ -146,7 +147,7 @@ class RuleListener(Python3Listener):
                         concrete_method.append(concrete_method_child)
                     if not_call_met != None and len(list(not_call_met)) >= 1:
                         if len(concrete_method) > 1:
-                            print('[ERRO] Na classe:', class_name, 'não existe método template, porém há métodos cadidatos a serem:', concrete_method)
+                            print('[ERRO] Na classe:', class_name, 'não existe método template, porém há métodos cadidatos que podem se tornar um:', concrete_method)
                         else:
                             print('[ERRO] Na classe:', class_name, 'não existe método template, porém o método:', concrete_method[0], 'é cadidato a ser um. Para isso, ele deve possuir chamada aos métodos:', not_call_met)
                     else:
@@ -212,6 +213,8 @@ if __name__ == '__main__':
 
         run(RuleListener)
 
+        # Se uma classe abstrata existir, verifica se possui classes filhas e se elas implementam os métodos
+        #   abstratos dela
         if template_class != '':
             abstract_class_children = []
             for class_name in matrix_inherit:
