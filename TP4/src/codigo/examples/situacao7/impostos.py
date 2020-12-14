@@ -9,8 +9,10 @@ class TemplateImpostosCondicional(metaclass=ABCMeta):
     def calculaII(self, orcamento):
         if self.deve_usar_maxima_taxacao(orcamento):
             return self.maxima_taxacao(orcamento)
-        return self.minima_taxacao(orcamento)
         self.calculaAD(orcamento)
+        self.calcula(orcamento)
+        self.calculaADII(orcamento)
+        return self.minima_taxacao(orcamento)
 
     @abstractmethod
     def deve_usar_maxima_taxacao(self, orcamento):
