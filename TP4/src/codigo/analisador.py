@@ -35,6 +35,12 @@ classes_methods = {}
 
 
 def check_method_call(tree, token):
+    """ check_method_call: este método percorre os nodos para saber se existe o token na derivação
+
+        entrada:
+            tree: Árvore de derivação do nodo.
+            token: token esperado.
+    """
     if tree.getText() == "<EOF>":
         return False
     elif isinstance(tree, TerminalNode):
@@ -50,6 +56,12 @@ def check_method_call(tree, token):
 
 
 def walks(tree, goal_rule):
+    """ walks: este método percorre a AST para chegar em uma determinada regra.
+
+        entrada:
+            tree: Árvore de derivação do nodo.
+            goal_rule: regra de chegada.
+    """
     if not isinstance(tree, TerminalNode):
         if Python3Parser.ruleNames[tree.getRuleIndex()] == goal_rule:
             return tree
@@ -62,6 +74,14 @@ def walks(tree, goal_rule):
 
 class RuleListener(Python3Listener):
     def enterEveryRule(self, ctx):
+        """ enterEveryRule: este método faz a coleta de dados w faz verificações de erros da classe abstrata.
+            * Nome da Classes
+                * Nome dos atributos (instanciados e da classe)
+                * Nome dos métodos
+                * Nome dos parâmetros dos métodos
+
+            entrada: ctx: São as regras da gramática, geradas por meio do árvore do Parse.
+        """
         global template_class
 
         if isinstance(ctx, Python3Parser.ClassdefContext):
@@ -81,12 +101,12 @@ class RuleListener(Python3Listener):
                                     template_class = class_name
 
                             matrix_inherit[class_name].append(arglist_child.getText())
-                            
+
                             classes_methods[class_name] = []
                             suite_tree = walks(ctx, 'suite')
                             for suite_child in suite_tree.getChildren():
                                 funcdef_tree = walks(suite_child, 'funcdef')
-                                
+
                                 if funcdef_tree:
                                     method_name = funcdef_tree.getChild(1).getText()
                                     classes_methods[class_name].append(method_name)
@@ -154,6 +174,13 @@ class RuleListener(Python3Listener):
 
 
 def check_template_method(method, suite_tree, methods_list):
+    """ check_template_method: Faz análise se um método é template method em uma classe.
+
+        entrada:
+            method: Métodos analisado.
+            suite_tree: Árvore abstrata para análise.
+            methods_list: Lista de candidatos a TM.
+    """
     for suite_child in suite_tree.getChildren():
         funcdef_tree = walks(suite_child, 'funcdef')
 
@@ -177,6 +204,11 @@ def check_template_method(method, suite_tree, methods_list):
 
 
 def run(Listener):
+    """ run: Executa a leitura dos arquivos do diretório e percorre a árvore de derivações.
+
+        entrada:
+            Listener: "capta" as regras da gramática quando em uso.
+    """
     for path in files_path:
         input = FileStream(path, "UTF-8")
         lexer = Python3Lexer(input)
@@ -236,4 +268,3 @@ if __name__ == '__main__':
 
     except OSError:
         print('Algum erro aconteceu')
-
