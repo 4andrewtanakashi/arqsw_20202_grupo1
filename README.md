@@ -8,13 +8,11 @@
 ## Assuntos relacionados
 Análise Estática/Análise Dinâmica, ...
 
-<!--## Ferramentas utilizadas
-| Ferramentas| Versão|
-|------------|-------|
-| SQLite 3   | 3.28.0|
-| Django     | 2.2.7 |
-| Python     | 3.7.3 |
-| HTML + CSS |-------|-->
+## Ferramentas utilizadas
+| Ferramentas|  Versão |
+|------------|---------|
+| Python     |  3.7.3  |
+| ANTLR4     |  4.9.1  |
 
 ## Estrutura do diretório
 ```
@@ -52,8 +50,17 @@ Arquitetura de Software/
 │               ├── requeriments.txt
 │               └── analisador.py
 |
-├── TP4
-│   └── src
+├── TP4 - Padrões de Projeto
+|   ├── apresentacao.mp4
+|   ├── apresentacao.mp4
+│   └── src/
+│        ├── README.md
+│        └── codigo/
+│               ├── g4/
+│               ├── exaples/
+│               ├── requeriments.txt
+│               └── analisador.py
+|
 ├── TP5
 │   └── src
 ├── TP6
@@ -76,7 +83,7 @@ Arquitetura de Software/
 - [X] TP1
 - [X] TP2
 - [X] TP3
-- [ ] TP4
+- [X] TP4
 - [ ] TP5
 - [ ] TP6
 - [ ] TP7
