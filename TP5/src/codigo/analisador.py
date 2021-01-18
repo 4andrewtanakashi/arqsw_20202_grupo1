@@ -121,6 +121,10 @@ class RuleListener(Python3Listener):
                                         files_dict[current_path]['file_viewer_functions'][function_name] = atom_expr_tree.getChild(0).getText()
 
 def resultado_analise():
+    """
+        resultado_analise: este método exibe se há erros ou avisos.
+    """
+
     view_exist = False
     model_exist = False
 
