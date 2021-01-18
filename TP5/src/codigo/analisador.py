@@ -30,26 +30,6 @@ from g4_python.Python3Listener import Python3Listener
 files_dict = {}
 template_exist = False
 
-def check_token(tree, token):
-    """ check_method_call: este método percorre os nodos para saber se existe o token na derivação
-
-        entrada:
-            tree: Árvore de derivação do nodo.
-            token: token esperado.
-    """
-    if tree.getText() == "<EOF>":
-        return False
-    elif isinstance(tree, TerminalNode):
-        if tree.getText() == token and tree.getParent().getChild(0).getText() == '.':
-            return True
-    else:
-        for child in tree.children:
-            log_tmp = check_token(child, token)
-            if log_tmp == True:
-                return True
-            elif log_tmp == False:
-                return False
-
 
 def walks(tree, goal_rule):
     """ walks: este método percorre a AST para chegar em uma determinada regra.
@@ -70,7 +50,7 @@ def walks(tree, goal_rule):
 
 class RuleListener(Python3Listener):
     def enterEveryRule(self, ctx):
-        """ enterEveryRule: este método faz a coleta de dados w faz verificações de erros da classe abstrata.
+        """ enterEveryRule: este método faz a coleta de dados faz verificações de erros da classe abstrata.
             * Nome da Classes
                 * Nome dos atributos (instanciados e da classe)
                 * Nome dos métodos
@@ -160,12 +140,15 @@ def resultado_analise():
                     notEmpty = True
 
             elem_dict = files_dict[file_path]['file_viewer_functions']
+
             for function in elem_dict:
                 if (len(elem_dict[function]) > 0):
                     notEmpty = True
 
+
             if (not notEmpty):
                 print("[WARNING] Importação de view sem uso {}".format(str(files_dict[file_path]['django_viewer_imports'])))
+                print("[ERROR] Não há acesso a templates neste arquivo view")
             else:
                 if (len(files_dict[file_path]['django_model_imports']) > 0):
                     if (len(files_dict[file_path]['parents_model_classes']) > 0):
@@ -173,6 +156,8 @@ def resultado_analise():
                             for elem_list in files_dict[file_path]['django_model_imports']:
                                 if (files_dict[file_path]['parents_model_classes'][key_classe_model].__contains__(elem_list)):
                                     print("[WARNING] Implementações de model no mesmo arquivo de views, recomenda-se separar para outro arquivo")
+                else:
+                    print("[ERROR] Não há importação de modelos no arquivo de view. É obrigatório o uso de pelo menos um modelo")
             view_exist = True
 
         if (len(files_dict[file_path]['django_model_imports']) > 0):
