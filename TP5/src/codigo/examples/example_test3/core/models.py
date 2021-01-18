@@ -11,6 +11,8 @@
 #     MotivationalText,
 # )
 
+from django.views.generic import ListView, FormView
+
 from django.db import models
 
 from core.models import (
