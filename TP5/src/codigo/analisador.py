@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Este programa indica erros de Template Method no projeto
+Este programa indica erros no padrão arquitetural MTV no projeto
 
 Obs.: Este programa pode gerar documentação com seguinte comando (no Linux):
     python3 -m pydoc -w analisador
@@ -68,17 +68,6 @@ def walks(tree, goal_rule):
                     return tree
 
 
-def traverse(tree, indent = 0):
-    if tree.getText() == "<EOF>":
-        return
-    elif isinstance(tree, TerminalNode):
-        print("{0}TOKEN='{1}'".format("  " * indent, tree.getText()))
-    else:
-        print("{0}{1}".format("  " * indent, Python3Parser.ruleNames[tree.getRuleIndex()]))
-        for child in tree.children:
-            traverse(child, indent + 1)
-
-
 class RuleListener(Python3Listener):
     def enterEveryRule(self, ctx):
         """ enterEveryRule: este método faz a coleta de dados w faz verificações de erros da classe abstrata.
@@ -103,14 +92,10 @@ class RuleListener(Python3Listener):
                 elif ctx.getChild(ctx.getChildCount()-1).getText() == 'models':
                     files_dict[current_path]['django_model_imports'].append(ctx.getChild(ctx.getChildCount()-1).getText())
 
-        # traverse(ctx)
         if isinstance(ctx, Python3Parser.Dotted_nameContext):
-            #print(ctx.getText());
             if ctx.getChild(2) and (ctx.getChild(2).getText() == 'views' or ctx.getChild(2).getText() == 'http'):
-                #print(ctx.parentCtx.getText());
                 if isinstance(ctx.parentCtx, Python3Parser.Import_fromContext):
                     for ctx_child in ctx.parentCtx.getChildren():
-                        #print(ctx_child.getText())
                         if isinstance(ctx_child, Python3Parser.Import_as_namesContext):
                             for import_as_name in ctx_child.getChildren():
                                 if import_as_name.getText() != ',':
