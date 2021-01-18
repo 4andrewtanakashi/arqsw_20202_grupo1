@@ -28,7 +28,7 @@ from g4_python.Python3Listener import Python3Listener
 
 
 files_dict = {}
-
+template_exist = False
 
 def check_token(tree, token):
     """ check_method_call: este método percorre os nodos para saber se existe o token na derivação
@@ -155,6 +155,61 @@ class RuleListener(Python3Listener):
                                     if atom_token in files_dict[current_path]['django_viewer_imports'] or atom_token == 'render' or atom_token == 'redirect':
                                         files_dict[current_path]['file_viewer_functions'][function_name] = atom_expr_tree.getChild(0).getText()
 
+def resultado_analise():
+    view_exist = False
+    model_exist = False
+
+    for file_path in files_dict:
+        print('\n', file_path)
+        print('  ', 'Importação viewers:', files_dict[file_path]['django_viewer_imports'])
+        print('  ', 'Classes viewers:', files_dict[file_path]['parents_viewer_classes'])
+        print('  ', 'Funções viewers:', files_dict[file_path]['file_viewer_functions'])
+        print('  ', 'Importação models:', files_dict[file_path]['django_model_imports'])
+        print('  ', 'Classes models:', files_dict[file_path]['parents_model_classes'])
+
+        if (len(files_dict[file_path]['django_viewer_imports']) > 0):
+            notEmpty = False
+            elem_dict = files_dict[file_path]['parents_viewer_classes']
+            for classe in elem_dict:
+                if (len(elem_dict[classe]) > 0):
+                    notEmpty = True
+
+            elem_dict = files_dict[file_path]['file_viewer_functions']
+            for function in elem_dict:
+                if (len(elem_dict[function]) > 0):
+                    notEmpty = True
+
+            if (not notEmpty):
+                print("[WARNING] Importação de view sem uso {}".format(str(files_dict[file_path]['django_viewer_imports'])))
+            else:
+                if (len(files_dict[file_path]['django_model_imports']) > 0):
+                    if (len(files_dict[file_path]['parents_model_classes']) > 0):
+                        for key_classe_model in files_dict[file_path]['parents_model_classes']:
+                            for elem_list in files_dict[file_path]['django_model_imports']:
+                                if (files_dict[file_path]['parents_model_classes'][key_classe_model].__contains__(elem_list)):
+                                    print("[WARNING] Implementações de model no mesmo arquivo de views, recomenda-se separar para outro arquivo")
+            view_exist = True
+
+        if (len(files_dict[file_path]['django_model_imports']) > 0):
+            model_exist = True
+
+    if (template_exist) and (not model_exist) and (not view_exist):
+        print("[ERROR] Violação de padrão arquitetural (MTV) não há model e view no projeto")
+    elif (model_exist) and (not template_exist) and (not view_exist):
+        print("[ERROR] Violação de padrão arquitetural (MTV) não há template e view no projeto")
+    elif (view_exist) and (not model_exist) and (not template_exist):
+        print("[ERROR] Violação de padrão arquitetural (MTV) não há template e model no projeto")
+    elif (not view_exist) and (not model_exist) and (not template_exist):
+        print("[ERROR] Não está padrão arquitetural MTV (sem Model, Template e View)")
+    else:
+        if (not model_exist):
+            print("[ERROR] Violação de padrão arquitetural (MTV) não há model no projeto")
+        elif (not view_exist):
+            print("[ERROR] Violação de padrão arquitetural (MTV) não há view no projeto")
+        elif (not template_exist):
+            print("[ERROR] Violação de padrão arquitetural (MTV) não há template no projeto")
+
+
 if __name__ == '__main__':
     global current_path
     directory = os.path.join(os.getcwd(), sys.argv[1])
@@ -162,12 +217,27 @@ if __name__ == '__main__':
     files_name = []
     files_path = []
 
+    dict_templates = {}
+
     for root, dirs, files in os.walk(directory):
         for name in files:
             if name.endswith(".py"):
                 files_name.append(name)
                 file_path = os.path.join(root, name)
                 files_path.append(file_path)
+            if name.endswith(".html"):
+                file_path = os.path.join(root, "")
+                aux = file_path.split("/")
+                if not aux[len(aux)-2] in dict_templates.keys(): #Colhendo apenas o diretório correspondente
+                    dict_templates[aux[len(aux)-2]] = True
+                if dict_templates[aux[len(aux)-2]]:
+                    for file in os.listdir(file_path):
+                        if not file.endswith(".html"):
+                            print("[WARNING] Arquivo não é de template {}, recomenda-se movê-lo para outro diretório".format(str(file)))
+                    dict_templates[aux[len(aux)-2]] = False
+                template_exist = True
+
+
 
     # path = 'examples/example_test2/core/views.py'
     print('Nome dos arquivos:\n', files_name, '\n')
@@ -194,13 +264,7 @@ if __name__ == '__main__':
             walker = ParseTreeWalker()
             walker.walk(listener, tree)
 
-        for file_path in files_dict:
-            print('\n', file_path)
-            print('  ', 'Importação viewers:', files_dict[file_path]['django_viewer_imports'])
-            print('  ', 'Classes viewers:', files_dict[file_path]['parents_viewer_classes'])
-            print('  ', 'Funções viewers:', files_dict[file_path]['file_viewer_functions'])
-            print('  ', 'Importação models:', files_dict[file_path]['django_model_imports'])
-            print('  ', 'Classes models:', files_dict[file_path]['parents_model_classes'])
+        resultado_analise()
 
     except OSError:
         print('Algum erro aconteceu')
