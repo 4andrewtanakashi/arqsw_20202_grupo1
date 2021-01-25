@@ -186,7 +186,7 @@ def analyser(directory):
     views_file.close()
     print('Arquivo de visão modificado')
 
-    print('Aplicação alterada para padrão REST')
+    print('Aplicação alterada para o padrão REST')
 
 if __name__ == '__main__':
     directory = os.path.join(os.getcwd(), sys.argv[1])
