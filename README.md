@@ -61,11 +61,29 @@ Arquitetura de Software/
 │               ├── requeriments.txt
 │               └── analisador.py
 |
-├── TP5
-│   └── src
-├── TP6
-│   └── src
-├── TP7
+├── TP5 - Padrão Arquitetural
+|   ├── apresentacao.mp4
+|   ├── apresentacao.mp4
+│   └── src/
+│        ├── README.md
+│        └── codigo/
+│               ├── g4/
+│               ├── exaples/
+│               ├── requeriments.txt
+│               └── analisador.py
+|
+├── TP6 - Remodularização
+|   ├── apresentacao.mp4
+|   ├── apresentacao.mp4
+│   └── src/
+│        ├── README.md
+│        └── codigo/
+│               ├── g4/
+│               ├── exaples/
+│               ├── requeriments.txt
+│               └── analisador.py
+|
+├── TP7 - Similaridade
 │   └── src
 ├── TP8
 │   └── src
