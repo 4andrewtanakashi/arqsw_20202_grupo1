@@ -1,60 +1,47 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
 
-"""
-***
-
-Obs.: Este programa pode gerar documentação com seguinte comando (no Linux):
-    python3 -m pydoc -w analisador
-
-    Para visualização no terminal: python3 -m pydoc analisador
-"""
-__author__ = "Andrew Takeshi and Gabriel Amorim"
-__copyright__ = "Copyright 2020, Por nós"
-__credits__ = ["Desenvolvido para disciplina de Arquitetura de Software"]
-__devs__ = "@4andrewtanakashi & @ghamorim"
-__status__ = "Production"
-
-
-import os
-import sys
-import io
-import ast
-import astor
+# """
+# ***
+#
+# Obs.: Este programa pode gerar documentação com seguinte comando (no Linux):
+#     python3 -m pydoc -w analisador
+#
+#     Para visualização no terminal: python3 -m pydoc analisador
+# """
+# __author__ = "Andrew Takeshi and Gabriel Amorim"
+# __copyright__ = "Copyright 2020, Por nós"
+# __credits__ = ["Desenvolvido para disciplina de Arquitetura de Software"]
+# __devs__ = "@4andrewtanakashi & @ghamorim"
+# __status__ = "Production"
+#
+#
+# import os
+# import sys
+# import io
+# import ast
+# import astor
 
 
 def analyser(directory):
-    with open(directory, "r") as file:
+    # Pegando classes modelos
+    model_file_path = directory + 'models.py'
+    test_var1 = "test1"
+    test_var2 = "test2"
+    test_var3.method1()
+    method2()
+    with open(model_file_path, "r") as file:
         tree = ast.parse(file.read())
 
-    # print(ast.dump(tree, annotate_fields=True, include_attributes=False))
-
-    block_dict = []
-    block_statements = []
-
+    model_classes = []
     for node in tree.body:
-        if isinstance(node, ast.FunctionDef):
-            for func_child in node.body:
-                print('\nAqui->\n', ast.dump(func_child, annotate_fields=True, include_attributes=False))
-                block_statements.append(func_child)
-                if hasattr(func_child, 'body'):
-                    print('Tem')
+        if isinstance(node, ast.ClassDef):
+            class_name = node.name
+            for class_args in node.bases:
+                if class_args.value.id == 'models' and class_args.attr == 'Model':
+                    model_classes.append(class_name)
 
 
-    # # Pegando classes modelos
-    # model_file_path = directory + 'models.py'
-    # with open(model_file_path, "r") as file:
-    #     tree = ast.parse(file.read())
-    #
-    # model_classes = []
-    # for node in tree.body:
-    #     if isinstance(node, ast.ClassDef):
-    #         class_name = node.name
-    #         for class_args in node.bases:
-    #             if class_args.value.id == 'models' and class_args.attr == 'Model':
-    #                 model_classes.append(class_name)
-    #
-    #
     # # Criando arquivo serializers.py
     # serializers_file_path = directory + 'serializers.py'
     # with open(serializers_file_path, "w+") as file:
@@ -205,12 +192,11 @@ def analyser(directory):
     #
     # print('Aplicação alterada para o padrão REST')
 
-if __name__ == '__main__':
-    # directory = os.path.join(os.getcwd(), sys.argv[1])
-    directory = 'examples/analisador_test.py'
-
-    try:
-        analyser(directory)
-
-    except OSError:
-        print('Algum erro aconteceu')
+# if __name__ == '__main__':
+#     directory = os.path.join(os.getcwd(), sys.argv[1])
+#
+#     try:
+#         analyser(directory)
+#
+#     except OSError:
+#         print('Algum erro aconteceu')
