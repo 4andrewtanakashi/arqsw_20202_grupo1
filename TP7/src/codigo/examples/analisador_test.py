@@ -23,24 +23,50 @@
 # import astor
 
 
-def analyser(directory):
-    # Pegando classes modelos
-    model_file_path = directory + 'models.py'
-    test_var1 = "test1"
-    test_var2 = "test2"
-    test_var3.method1()
-    method2()
-    with open(model_file_path, "r") as file:
-        tree = ast.parse(file.read())
 
-    model_classes = []
-    for node in tree.body:
-        if isinstance(node, ast.ClassDef):
-            class_name = node.name
-            for class_args in node.bases:
-                if class_args.value.id == 'models' and class_args.attr == 'Model':
-                    model_classes.append(class_name)
+# p1 = getPoint(0, 0)
+# p2 = getPoint(1, 0)
+# r.add(START.get().getBounds(p1, p2))
+#
+#
+#
+# p2 = getPoint(1, 0)
+# r.add(START.get().getBounds(p1, p2))
+#
+#
+#
+# r.add(START.get().getBounds(p1, p2))
 
+
+
+def getFigureDrawBounds():
+    r = super.getFigDrawBounds()
+    if getNodeCount() > 1:
+        if START.get() != None:
+            p1 = getPoint(0, 0)
+            p2 = getPoint(1, 0)
+            r.add(START.get().getBounds(p1, p2))
+        if END.get() != None:
+            p1 = getPoint(getNodeCount()-1, 0)
+            p2 = getPoint(getNodeCount()-2, 0)
+            r.add(END.get().getBounds(p1, p2))
+    return r
+
+
+# def analyser(directory):
+#     # Pegando classes modelos
+#     model_file_path = directory + 'models.py'
+#     with open(model_file_path, "r") as file:
+#         tree = ast.parse(file.read())
+#
+#     model_classes = []
+#     for node in tree.body:
+#         if isinstance(node, ast.ClassDef):
+#             class_name = node.name
+#             for class_args in node.bases:
+#                 if class_args.value.id == 'models' and class_args.attr == 'Model':
+#                     model_classes.append(class_name)
+#
 
     # # Criando arquivo serializers.py
     # serializers_file_path = directory + 'serializers.py'

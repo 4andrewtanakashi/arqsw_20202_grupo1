@@ -21,189 +21,141 @@ import sys
 import io
 import ast
 import astor
+from copy import deepcopy
 
+
+def walks(tree, block_list):
+    if hasattr(tree, 'body'):
+        block_list.append(tree.body)
+        for child in tree.body:
+            walks(child, block_list)
+
+
+def subset(block, start, end):
+    candidate = []
+    if start == end:
+        candidate.append(block[start])
+    else:
+        for i in range(start, end+1):
+            candidate.append(block[i])
+    return candidate
+
+
+def isValid(block, candidate):
+    for stmt in candidate:
+        if isinstance(stmt, ast.Return):
+            return False
+        if isinstance(stmt, ast.Assign):
+            for block_stmt in block:
+                if not block_stmt in candidate:
+                    for node in ast.walk(block_stmt):
+                        if isinstance(node, ast.Name):
+                            if stmt.targets[0].id == node.id:
+                                return False
+    return True
+
+
+def distance_calc(first_dep, second_dep):
+    print(second_dep)
+    sys.exit()
 
 def analyser(directory):
     with open(directory, "r") as file:
         tree = ast.parse(file.read())
 
-    # print(ast.dump(tree, annotate_fields=True, include_attributes=False))
+    for child_tree in tree.body:
+        block_list = []
+        block_statements = []
 
-    block_dict = []
-    block_statements = []
+        if isinstance(child_tree, ast.FunctionDef):
+            walks(child_tree, block_list)
 
-    for node in tree.body:
-        if isinstance(node, ast.FunctionDef):
-            for func_child in node.body:
-                print('\nAqui->\n', ast.dump(func_child, annotate_fields=True, include_attributes=False))
-                block_statements.append(func_child)
-                if hasattr(func_child, 'body'):
-                    print('Tem')
+            # for block in block_list:
+            for statement in block_list[0]:
+                print(ast.dump(statement, annotate_fields=True, include_attributes=False))
+                print()
+            print('--------------------------------------------')
+            print('++++++++++++++++++++++++++++++++++++++++++++')
 
+            candidates = []
+            for block in block_list:
+                n = len(block)
+                for i in range(n):
+                    # print('******************')
+                    for j in range(i, n):
+                        candidate = subset(block, i, j)
+                        if isValid(block, candidate):
+                            candidates.append(candidate)
+                        #     print('Valid ->\n')
+                        #     for candidate_stmt in candidate:
+                        #         print(ast.dump(candidate_stmt, annotate_fields=True, include_attributes=False))
+                        # print('--------------')
 
-    # # Pegando classes modelos
-    # model_file_path = directory + 'models.py'
-    # with open(model_file_path, "r") as file:
-    #     tree = ast.parse(file.read())
-    #
-    # model_classes = []
-    # for node in tree.body:
-    #     if isinstance(node, ast.ClassDef):
-    #         class_name = node.name
-    #         for class_args in node.bases:
-    #             if class_args.value.id == 'models' and class_args.attr == 'Model':
-    #                 model_classes.append(class_name)
-    #
-    #
-    # # Criando arquivo serializers.py
-    # serializers_file_path = directory + 'serializers.py'
-    # with open(serializers_file_path, "w+") as file:
-    #     serializers_file_tree = ast.parse(file.read())
-    # file.close()
-    #
-    # import_from_node1 = ast.ImportFrom\
-    #         (module='rest_framework',\
-    #         names=[ast.alias(name='serializers', asname=None)],\
-    #         level=0)
-    #
-    # import_from_node2 = ast.ImportFrom\
-    #         (module='models',\
-    #         names=[(ast.alias(name=class_name, asname=None)) for class_name in model_classes],\
-    #         level=1)
-    #
-    # serializers_file_tree.body.append(import_from_node1)
-    # serializers_file_tree.body.append(import_from_node2)
-    #
-    # for class_name in model_classes:
-    #     class_node = ast.ClassDef\
-    #             (name=class_name+'Serializer',\
-    #             bases=[ast.Attribute(value=ast.Name(id='serializers', ctx=ast.Load()),\
-    #                     attr='ModelSerializer', ctx=ast.Load())],\
-    #             keywords=[],\
-    #             body=[ast.ClassDef(name='Meta', bases=[], keywords=[],\
-    #                     body=[ast.Assign(targets=[ast.Name(id='model', ctx=ast.Store())],\
-    #                             value=ast.Name(id=class_name, ctx=ast.Load())),\
-    #                             ast.Assign(targets=[ast.Name(id='fields', ctx=ast.Store())],\
-    #                             value=ast.Str(s='__all__'))],\
-    #                     decorator_list=[])],\
-    #             decorator_list=[])
-    #
-    #     serializers_file_tree.body.append(class_node)
-    #
-    # source_code = astor.to_source(serializers_file_tree)
-    # serializers_file = open(serializers_file_path, 'w')
-    # serializers_file.writelines(source_code)
-    # serializers_file.close()
-    # print('Arquivo de serialização criado')
-    #
-    #
-    # # Modificando arquivo views.py
-    # views_file_path = directory + 'views.py'
-    # with open(views_file_path, "r") as file:
-    #     views_file_tree = ast.parse(file.read())
-    # file.close()
-    #
-    # forms_imports = []
-    # model_imports = []
-    # for node in views_file_tree.body:
-    #     if isinstance(node, ast.ImportFrom):
-    #         if node.module == 'forms':
-    #             for alias_node in node.names:
-    #                 forms_imports.append(alias_node.name)
-    #             views_file_tree.body.remove(node)
-    #         elif node.module == 'models':
-    #             for alias_node in node.names:
-    #                 model_imports.append(alias_node.name)
-    #
-    #
-    # import_from_node1 = ast.ImportFrom\
-    #         (module='rest_framework.response',\
-    #         names=[ast.alias(name='Response', asname=None)],\
-    #         level=0)
-    #
-    # import_from_node2 = ast.ImportFrom\
-    #         (module='serializers',\
-    #         names=[(ast.alias(name=class_name+'Serializer', asname=None)) for class_name in model_classes],\
-    #         level=1)
-    #
-    # import_from_node3 = ast.ImportFrom\
-    #         (module='rest_framework.decorators',\
-    #         names=[ast.alias(name='api_view', asname=None)],\
-    #         level=0)
-    #
-    # views_file_tree.body.insert(0, import_from_node1)
-    # views_file_tree.body.insert(1, import_from_node2)
-    # views_file_tree.body.insert(2, import_from_node3)
-    #
-    # for node in views_file_tree.body:
-    #     delete_attr = False
-    #     if isinstance(node, ast.FunctionDef):
-    #         for func_child in node.body:
-    #             if isinstance(func_child, ast.Assign):
-    #                 if not isinstance(func_child.value.func, ast.Attribute):
-    #                     if func_child.value.func.id in forms_imports:
-    #                         node.decorator_list.append(ast.Call\
-    #                                 (func=ast.Name(id='api_view',\
-    #                                 ctx=ast.Load()), args=[ast.List(elts=[ast.Str(s='POST')], ctx=ast.Load())],\
-    #                                 keywords=[]))
-    #                 elif func_child.value.func.value.value.id in model_imports:
-    #                     if func_child.value.func.attr == 'all':
-    #                         node.decorator_list.append(ast.Call\
-    #                                 (func=ast.Name(id='api_view',\
-    #                                 ctx=ast.Load()), args=[ast.List(elts=[ast.Str(s='GET')], ctx=ast.Load())],\
-    #                                 keywords=[]))
-    #                         index_insert_serializer = node.body.index(func_child) + 1
-    #                         node.body.insert(index_insert_serializer, ast.Assign\
-    #                                 (targets=[ast.Name(id='serializer', ctx=ast.Store())],
-    #                                 value=ast.Call(func=ast.Name(id='ProductSerializer', ctx=ast.Load()),
-    #                                 args=[ast.Name(id='products', ctx=ast.Load())],
-    #                                 keywords=[ast.keyword(arg='many', value=ast.NameConstant(value=True))])))
-    #
-    #                     elif func_child.value.func.attr == 'get':
-    #                         stmt = func_child.targets[0].id
-    #                         for node_child in ast.walk(node):
-    #                             if isinstance(node_child, ast.Call):
-    #                                 for call_node_child in ast.walk(node_child):
-    #                                     if isinstance(call_node_child, ast.Attribute):
-    #                                         for attribute_node_child in ast.walk(call_node_child):
-    #                                             if isinstance(attribute_node_child, ast.Name):
-    #                                                 if attribute_node_child.id == stmt and call_node_child.attr == 'delete':
-    #                                                     node.decorator_list.append(ast.Call\
-    #                                                             (func=ast.Name(id='api_view',\
-    #                                                             ctx=ast.Load()), args=[ast.List(elts=[ast.Str(s='DELETE')], ctx=ast.Load())],\
-    #                                                             keywords=[]))
-    #                                                     index_insert_delete = node.body.index(func_child) + 1
-    #                                                     node.body.insert(index_insert_delete, ast.Expr\
-    #                                                             (value=ast.Call(func=ast.Attribute(value=ast.Name(id=stmt, ctx=ast.Load()),\
-    #                                                             attr='delete', ctx=ast.Load()), args=[], keywords=[])))
-    #
-    #                                                     delete_attr = True
-    #
-    #             if isinstance(func_child, ast.Return):
-    #                 func_child.value = ast.Call\
-    #                         (func=ast.Name(id='Response', ctx=ast.Load()),\
-    #                         args=[ast.Attribute(value=ast.Name(id='serializer', ctx=ast.Load()), attr='data', ctx=ast.Load())],\
-    #                         keywords=[])
-    #
-    #         if delete_attr:
-    #             for node_child in ast.walk(node):
-    #                 if isinstance(node_child, ast.If):
-    #                     node.body.remove(node_child)
-    #
-    #                 if isinstance(node_child, ast.Return):
-    #                     node_child.value = ast.Call\
-    #                             (func=ast.Name(id='Response', ctx=ast.Load()),\
-    #                             args=[ast.Str(s='Product has been deleted')],\
-    #                             keywords=[])
-    #
-    #
-    # source_code = astor.to_source(views_file_tree)
-    # views_file = open(views_file_path, 'w')
-    # views_file.writelines(source_code)
-    # views_file.close()
-    # print('Arquivo de visão modificado')
-    #
-    # print('Aplicação alterada para o padrão REST')
+            cont = 1
+            for candidate in candidates:
+                print('\nCandidato', cont)
+                for candidate_stmt in candidate:
+                    print(ast.dump(candidate_stmt, annotate_fields=True, include_attributes=False))
+                cont += 1
+
+            candidates_dep = []
+            candidates_score = []
+            for candidate in candidates:
+                dependencies = set()
+                # function_tree_copy = deepcopy(child_tree)
+                function_tree_copy = type(child_tree).__new__(type(child_tree))
+                function_tree_copy.__dict__.update(child_tree.__dict__)
+                for candidate_stmt in candidate:
+                    for node in ast.walk(candidate_stmt):
+                        for child in ast.iter_child_nodes(node):
+                            if isinstance(child, ast.Name):
+                                if not isinstance(node, ast.Call):
+                                    dependencies.add(child.id)
+                                    child.parent = node
+
+                    i = 0
+                    j = 0
+                    for node in ast.walk(function_tree_copy):
+                        for child in ast.iter_child_nodes(node):
+                            if child == candidate_stmt:
+                                node.body.remove(child)
+                            j += 1
+                        i += 1
+
+                # mod_method_depend = set()
+                # for node in ast.walk(function_tree_copy):
+                #     for child in ast.iter_child_nodes(node):
+                #         if isinstance(child, ast.Name):
+                #             if not isinstance(node, ast.Call):
+                #                 mod_method_depend.add(child.id)
+                #                 child.parent = node
+                #
+                # score = distance_calc(dependencies, mod_method_depend)
+                #
+                # candidates_dep.append(dependencies)
+
+                k = 0
+                l = 0
+                for candidate_stmt in candidate:
+                    for node in ast.walk(function_tree_copy):
+                        for child in ast.iter_child_nodes(node):
+                            if k == i and l == j-1:
+                                node.body.insert(k, candidate_stmt)
+                            k += 1
+                        l += 1
+
+                print('\nAqui')
+                print(ast.dump(child_tree, annotate_fields=True, include_attributes=False))
+                sys.exit()
+
+            print('\nDeps:')
+            for cand_deps in candidates_dep:
+                print(cand_deps)
+
+            print(list(zip(candidates, candidates_dep)))
+
+            # print('\nMethod Deps:', mod_method_depend)
+
 
 if __name__ == '__main__':
     # directory = os.path.join(os.getcwd(), sys.argv[1])
