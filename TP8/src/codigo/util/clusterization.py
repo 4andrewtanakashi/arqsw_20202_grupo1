@@ -32,7 +32,8 @@ def calculate_similarity_Jaccard(x1, x2):
                 array_all.append(elem_diff)
     c = len(array_all)
 
-    jaccard = a/(a+b+c)
+    quotient = (a+b+c)
+    jaccard = a/quotient if quotient != 0 else 0
 
     return jaccard
 
@@ -82,14 +83,18 @@ def use_database(file):
 
 
 
-def knn_algorithm(file):
-    X_train, y_train = use_database(file)
+def knn_algorithm(X_train, y_train):
 
     predictions = []
     nearest_neighbors = ""
     for x in X_train:
         nearest_neighbors = get_nearest_neighbors(X_train, y_train, x, k = len(y_train))
+    return nearest_neighbors
 
+
+def clusterization(file):
+    X_train, y_train = use_database(file)
+    nearest_neighbors = knn_algorithm(X_train, y_train)
 
     print('Vizinhos mais próximos :', nearest_neighbors)
     list_Model = []

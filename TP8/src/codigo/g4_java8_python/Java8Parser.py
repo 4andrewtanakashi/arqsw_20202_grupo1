@@ -2122,6 +2122,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitLiteral" ):
                 listener.exitLiteral(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLiteral" ):
+                return visitor.visitLiteral(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2177,6 +2183,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPrimitiveType" ):
                 listener.exitPrimitiveType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrimitiveType" ):
+                return visitor.visitPrimitiveType(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2256,6 +2268,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitNumericType" ):
                 listener.exitNumericType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNumericType" ):
+                return visitor.visitNumericType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2320,6 +2338,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitIntegralType" ):
                 listener.exitIntegralType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIntegralType" ):
+                return visitor.visitIntegralType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2367,6 +2391,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitFloatingPointType" ):
                 listener.exitFloatingPointType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFloatingPointType" ):
+                return visitor.visitFloatingPointType(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2421,6 +2451,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitReferenceType" ):
                 listener.exitReferenceType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitReferenceType" ):
+                return visitor.visitReferenceType(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2498,6 +2534,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitClassOrInterfaceType" ):
                 listener.exitClassOrInterfaceType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClassOrInterfaceType" ):
+                return visitor.visitClassOrInterfaceType(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2590,6 +2632,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitClassType" ):
                 listener.exitClassType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClassType" ):
+                return visitor.visitClassType(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2698,6 +2746,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitClassType_lf_classOrInterfaceType" ):
                 listener.exitClassType_lf_classOrInterfaceType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClassType_lf_classOrInterfaceType" ):
+                return visitor.visitClassType_lf_classOrInterfaceType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2769,6 +2823,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitClassType_lfno_classOrInterfaceType" ):
                 listener.exitClassType_lfno_classOrInterfaceType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClassType_lfno_classOrInterfaceType" ):
+                return visitor.visitClassType_lfno_classOrInterfaceType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2828,6 +2888,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitInterfaceType" ):
                 listener.exitInterfaceType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInterfaceType" ):
+                return visitor.visitInterfaceType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2868,6 +2934,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitInterfaceType_lf_classOrInterfaceType" ):
                 listener.exitInterfaceType_lf_classOrInterfaceType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInterfaceType_lf_classOrInterfaceType" ):
+                return visitor.visitInterfaceType_lf_classOrInterfaceType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2907,6 +2979,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInterfaceType_lfno_classOrInterfaceType" ):
                 listener.exitInterfaceType_lfno_classOrInterfaceType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInterfaceType_lfno_classOrInterfaceType" ):
+                return visitor.visitInterfaceType_lfno_classOrInterfaceType(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2953,6 +3031,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTypeVariable" ):
                 listener.exitTypeVariable(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeVariable" ):
+                return visitor.visitTypeVariable(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3016,6 +3100,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitArrayType" ):
                 listener.exitArrayType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArrayType" ):
+                return visitor.visitArrayType(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3096,6 +3186,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitDims" ):
                 listener.exitDims(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDims" ):
+                return visitor.visitDims(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3183,6 +3279,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitTypeParameter" ):
                 listener.exitTypeParameter(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeParameter" ):
+                return visitor.visitTypeParameter(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -3242,6 +3344,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitTypeParameterModifier" ):
                 listener.exitTypeParameterModifier(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeParameterModifier" ):
+                return visitor.visitTypeParameterModifier(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -3295,6 +3403,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTypeBound" ):
                 listener.exitTypeBound(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeBound" ):
+                return visitor.visitTypeBound(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3367,6 +3481,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitAdditionalBound" ):
                 listener.exitAdditionalBound(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAdditionalBound" ):
+                return visitor.visitAdditionalBound(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -3414,6 +3534,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTypeArguments" ):
                 listener.exitTypeArguments(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeArguments" ):
+                return visitor.visitTypeArguments(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3467,6 +3593,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTypeArgumentList" ):
                 listener.exitTypeArgumentList(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeArgumentList" ):
+                return visitor.visitTypeArgumentList(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3524,6 +3656,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTypeArgument" ):
                 listener.exitTypeArgument(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeArgument" ):
+                return visitor.visitTypeArgument(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3587,6 +3725,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitWildcard" ):
                 listener.exitWildcard(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWildcard" ):
+                return visitor.visitWildcard(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3653,6 +3797,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitWildcardBounds" ):
                 listener.exitWildcardBounds(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWildcardBounds" ):
+                return visitor.visitWildcardBounds(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -3715,6 +3865,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPackageName" ):
                 listener.exitPackageName(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPackageName" ):
+                return visitor.visitPackageName(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3787,6 +3943,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitTypeName" ):
                 listener.exitTypeName(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeName" ):
+                return visitor.visitTypeName(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -3849,6 +4011,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPackageOrTypeName" ):
                 listener.exitPackageOrTypeName(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPackageOrTypeName" ):
+                return visitor.visitPackageOrTypeName(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3921,6 +4089,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitExpressionName" ):
                 listener.exitExpressionName(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpressionName" ):
+                return visitor.visitExpressionName(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -3977,6 +4151,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitMethodName" ):
                 listener.exitMethodName(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethodName" ):
+                return visitor.visitMethodName(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4022,6 +4202,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAmbiguousName" ):
                 listener.exitAmbiguousName(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAmbiguousName" ):
+                return visitor.visitAmbiguousName(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -4105,6 +4291,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitCompilationUnit" ):
                 listener.exitCompilationUnit(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCompilationUnit" ):
+                return visitor.visitCompilationUnit(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4187,6 +4379,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitPackageDeclaration" ):
                 listener.exitPackageDeclaration(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPackageDeclaration" ):
+                return visitor.visitPackageDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4242,6 +4440,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitPackageModifier" ):
                 listener.exitPackageModifier(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPackageModifier" ):
+                return visitor.visitPackageModifier(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4293,6 +4497,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitImportDeclaration" ):
                 listener.exitImportDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitImportDeclaration" ):
+                return visitor.visitImportDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -4365,6 +4575,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitSingleTypeImportDeclaration" ):
                 listener.exitSingleTypeImportDeclaration(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSingleTypeImportDeclaration" ):
+                return visitor.visitSingleTypeImportDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4420,6 +4636,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTypeImportOnDemandDeclaration" ):
                 listener.exitTypeImportOnDemandDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeImportOnDemandDeclaration" ):
+                return visitor.visitTypeImportOnDemandDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -4483,6 +4705,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitSingleStaticImportDeclaration" ):
                 listener.exitSingleStaticImportDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSingleStaticImportDeclaration" ):
+                return visitor.visitSingleStaticImportDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -4549,6 +4777,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitStaticImportOnDemandDeclaration" ):
                 listener.exitStaticImportOnDemandDeclaration(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStaticImportOnDemandDeclaration" ):
+                return visitor.visitStaticImportOnDemandDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4605,6 +4839,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTypeDeclaration" ):
                 listener.exitTypeDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeDeclaration" ):
+                return visitor.visitTypeDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -4668,6 +4908,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitClassDeclaration" ):
                 listener.exitClassDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClassDeclaration" ):
+                return visitor.visitClassDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -4746,6 +4992,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitNormalClassDeclaration" ):
                 listener.exitNormalClassDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNormalClassDeclaration" ):
+                return visitor.visitNormalClassDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -4847,6 +5099,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitClassModifier" ):
                 listener.exitClassModifier(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClassModifier" ):
+                return visitor.visitClassModifier(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4936,6 +5194,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitTypeParameters" ):
                 listener.exitTypeParameters(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeParameters" ):
+                return visitor.visitTypeParameters(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4988,6 +5252,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTypeParameterList" ):
                 listener.exitTypeParameterList(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeParameterList" ):
+                return visitor.visitTypeParameterList(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -5045,6 +5315,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitSuperclass" ):
                 listener.exitSuperclass(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSuperclass" ):
+                return visitor.visitSuperclass(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -5089,6 +5365,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitSuperinterfaces" ):
                 listener.exitSuperinterfaces(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSuperinterfaces" ):
+                return visitor.visitSuperinterfaces(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -5140,6 +5422,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInterfaceTypeList" ):
                 listener.exitInterfaceTypeList(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInterfaceTypeList" ):
+                return visitor.visitInterfaceTypeList(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -5202,6 +5490,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitClassBody" ):
                 listener.exitClassBody(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClassBody" ):
+                return visitor.visitClassBody(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -5267,6 +5561,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitClassBodyDeclaration" ):
                 listener.exitClassBodyDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClassBodyDeclaration" ):
+                return visitor.visitClassBodyDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -5347,6 +5647,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitClassMemberDeclaration" ):
                 listener.exitClassMemberDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClassMemberDeclaration" ):
+                return visitor.visitClassMemberDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -5433,6 +5739,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitFieldDeclaration" ):
                 listener.exitFieldDeclaration(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFieldDeclaration" ):
+                return visitor.visitFieldDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -5508,6 +5820,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitFieldModifier" ):
                 listener.exitFieldModifier(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFieldModifier" ):
+                return visitor.visitFieldModifier(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -5601,6 +5919,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitVariableDeclaratorList" ):
                 listener.exitVariableDeclaratorList(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVariableDeclaratorList" ):
+                return visitor.visitVariableDeclaratorList(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -5661,6 +5985,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitVariableDeclarator" ):
                 listener.exitVariableDeclarator(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVariableDeclarator" ):
+                return visitor.visitVariableDeclarator(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -5715,6 +6045,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitVariableDeclaratorId" ):
                 listener.exitVariableDeclaratorId(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVariableDeclaratorId" ):
+                return visitor.visitVariableDeclaratorId(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -5767,6 +6103,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitVariableInitializer" ):
                 listener.exitVariableInitializer(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVariableInitializer" ):
+                return visitor.visitVariableInitializer(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -5825,6 +6167,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitUnannType" ):
                 listener.exitUnannType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnannType" ):
+                return visitor.visitUnannType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -5880,6 +6228,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitUnannPrimitiveType" ):
                 listener.exitUnannPrimitiveType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnannPrimitiveType" ):
+                return visitor.visitUnannPrimitiveType(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -5941,6 +6295,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitUnannReferenceType" ):
                 listener.exitUnannReferenceType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnannReferenceType" ):
+                return visitor.visitUnannReferenceType(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -6018,6 +6378,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitUnannClassOrInterfaceType" ):
                 listener.exitUnannClassOrInterfaceType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnannClassOrInterfaceType" ):
+                return visitor.visitUnannClassOrInterfaceType(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -6110,6 +6476,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitUnannClassType" ):
                 listener.exitUnannClassType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnannClassType" ):
+                return visitor.visitUnannClassType(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -6208,6 +6580,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitUnannClassType_lf_unannClassOrInterfaceType" ):
                 listener.exitUnannClassType_lf_unannClassOrInterfaceType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnannClassType_lf_unannClassOrInterfaceType" ):
+                return visitor.visitUnannClassType_lf_unannClassOrInterfaceType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -6272,6 +6650,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitUnannClassType_lfno_unannClassOrInterfaceType" ):
                 listener.exitUnannClassType_lfno_unannClassOrInterfaceType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnannClassType_lfno_unannClassOrInterfaceType" ):
+                return visitor.visitUnannClassType_lfno_unannClassOrInterfaceType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -6321,6 +6705,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitUnannInterfaceType" ):
                 listener.exitUnannInterfaceType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnannInterfaceType" ):
+                return visitor.visitUnannInterfaceType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -6360,6 +6750,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitUnannInterfaceType_lf_unannClassOrInterfaceType" ):
                 listener.exitUnannInterfaceType_lf_unannClassOrInterfaceType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnannInterfaceType_lf_unannClassOrInterfaceType" ):
+                return visitor.visitUnannInterfaceType_lf_unannClassOrInterfaceType(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -6401,6 +6797,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitUnannInterfaceType_lfno_unannClassOrInterfaceType" ):
                 listener.exitUnannInterfaceType_lfno_unannClassOrInterfaceType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnannInterfaceType_lfno_unannClassOrInterfaceType" ):
+                return visitor.visitUnannInterfaceType_lfno_unannClassOrInterfaceType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -6439,6 +6841,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitUnannTypeVariable" ):
                 listener.exitUnannTypeVariable(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnannTypeVariable" ):
+                return visitor.visitUnannTypeVariable(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -6491,6 +6899,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitUnannArrayType" ):
                 listener.exitUnannArrayType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnannArrayType" ):
+                return visitor.visitUnannArrayType(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -6567,6 +6981,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitMethodDeclaration" ):
                 listener.exitMethodDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethodDeclaration" ):
+                return visitor.visitMethodDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -6647,6 +7067,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitMethodModifier" ):
                 listener.exitMethodModifier(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethodModifier" ):
+                return visitor.visitMethodModifier(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -6760,6 +7186,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitMethodHeader" ):
                 listener.exitMethodHeader(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethodHeader" ):
+                return visitor.visitMethodHeader(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -6849,6 +7281,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitResult" ):
                 listener.exitResult(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitResult" ):
+                return visitor.visitResult(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -6914,6 +7352,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitMethodDeclarator" ):
                 listener.exitMethodDeclarator(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethodDeclarator" ):
+                return visitor.visitMethodDeclarator(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -6986,6 +7430,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitFormalParameterList" ):
                 listener.exitFormalParameterList(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFormalParameterList" ):
+                return visitor.visitFormalParameterList(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -7062,6 +7512,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitFormalParameters" ):
                 listener.exitFormalParameters(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFormalParameters" ):
+                return visitor.visitFormalParameters(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -7153,6 +7609,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitFormalParameter" ):
                 listener.exitFormalParameter(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFormalParameter" ):
+                return visitor.visitFormalParameter(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -7208,6 +7670,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitVariableModifier" ):
                 listener.exitVariableModifier(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVariableModifier" ):
+                return visitor.visitVariableModifier(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -7286,6 +7754,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitLastFormalParameter" ):
                 listener.exitLastFormalParameter(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLastFormalParameter" ):
+                return visitor.visitLastFormalParameter(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -7381,6 +7855,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitReceiverParameter" ):
                 listener.exitReceiverParameter(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitReceiverParameter" ):
+                return visitor.visitReceiverParameter(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -7447,6 +7927,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitThrows_" ):
                 listener.exitThrows_(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitThrows_" ):
+                return visitor.visitThrows_(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -7497,6 +7983,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitExceptionTypeList" ):
                 listener.exitExceptionTypeList(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExceptionTypeList" ):
+                return visitor.visitExceptionTypeList(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -7555,6 +8047,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitExceptionType" ):
                 listener.exitExceptionType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExceptionType" ):
+                return visitor.visitExceptionType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -7611,6 +8109,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitMethodBody" ):
                 listener.exitMethodBody(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethodBody" ):
+                return visitor.visitMethodBody(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -7664,6 +8168,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitInstanceInitializer" ):
                 listener.exitInstanceInitializer(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInstanceInitializer" ):
+                return visitor.visitInstanceInitializer(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -7706,6 +8216,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitStaticInitializer" ):
                 listener.exitStaticInitializer(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStaticInitializer" ):
+                return visitor.visitStaticInitializer(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -7763,6 +8279,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitConstructorDeclaration" ):
                 listener.exitConstructorDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConstructorDeclaration" ):
+                return visitor.visitConstructorDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -7833,6 +8355,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitConstructorModifier" ):
                 listener.exitConstructorModifier(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConstructorModifier" ):
+                return visitor.visitConstructorModifier(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -7911,6 +8439,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitConstructorDeclarator" ):
                 listener.exitConstructorDeclarator(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConstructorDeclarator" ):
+                return visitor.visitConstructorDeclarator(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -7971,6 +8505,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitSimpleTypeName" ):
                 listener.exitSimpleTypeName(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSimpleTypeName" ):
+                return visitor.visitSimpleTypeName(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -8020,6 +8560,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitConstructorBody" ):
                 listener.exitConstructorBody(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConstructorBody" ):
+                return visitor.visitConstructorBody(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -8109,6 +8655,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitExplicitConstructorInvocation" ):
                 listener.exitExplicitConstructorInvocation(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExplicitConstructorInvocation" ):
+                return visitor.visitExplicitConstructorInvocation(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -8289,6 +8841,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitEnumDeclaration" ):
                 listener.exitEnumDeclaration(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEnumDeclaration" ):
+                return visitor.visitEnumDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -8364,6 +8922,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitEnumBody" ):
                 listener.exitEnumBody(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEnumBody" ):
+                return visitor.visitEnumBody(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -8441,6 +9005,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitEnumConstantList" ):
                 listener.exitEnumConstantList(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEnumConstantList" ):
+                return visitor.visitEnumConstantList(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -8513,6 +9083,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitEnumConstant" ):
                 listener.exitEnumConstant(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEnumConstant" ):
+                return visitor.visitEnumConstant(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -8591,6 +9167,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitEnumConstantModifier" ):
                 listener.exitEnumConstantModifier(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEnumConstantModifier" ):
+                return visitor.visitEnumConstantModifier(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -8636,6 +9218,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitEnumBodyDeclarations" ):
                 listener.exitEnumBodyDeclarations(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEnumBodyDeclarations" ):
+                return visitor.visitEnumBodyDeclarations(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -8691,6 +9279,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInterfaceDeclaration" ):
                 listener.exitInterfaceDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInterfaceDeclaration" ):
+                return visitor.visitInterfaceDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -8765,6 +9359,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitNormalInterfaceDeclaration" ):
                 listener.exitNormalInterfaceDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNormalInterfaceDeclaration" ):
+                return visitor.visitNormalInterfaceDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -8855,6 +9455,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitInterfaceModifier" ):
                 listener.exitInterfaceModifier(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInterfaceModifier" ):
+                return visitor.visitInterfaceModifier(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -8936,6 +9542,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitExtendsInterfaces" ):
                 listener.exitExtendsInterfaces(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExtendsInterfaces" ):
+                return visitor.visitExtendsInterfaces(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -8986,6 +9598,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInterfaceBody" ):
                 listener.exitInterfaceBody(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInterfaceBody" ):
+                return visitor.visitInterfaceBody(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -9054,6 +9672,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInterfaceMemberDeclaration" ):
                 listener.exitInterfaceMemberDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInterfaceMemberDeclaration" ):
+                return visitor.visitInterfaceMemberDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -9140,6 +9764,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitConstantDeclaration" ):
                 listener.exitConstantDeclaration(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConstantDeclaration" ):
+                return visitor.visitConstantDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -9203,6 +9833,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitConstantModifier" ):
                 listener.exitConstantModifier(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConstantModifier" ):
+                return visitor.visitConstantModifier(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -9278,6 +9914,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitInterfaceMethodDeclaration" ):
                 listener.exitInterfaceMethodDeclaration(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInterfaceMethodDeclaration" ):
+                return visitor.visitInterfaceMethodDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -9345,6 +9987,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInterfaceMethodModifier" ):
                 listener.exitInterfaceMethodModifier(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInterfaceMethodModifier" ):
+                return visitor.visitInterfaceMethodModifier(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -9435,6 +10083,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitAnnotationTypeDeclaration" ):
                 listener.exitAnnotationTypeDeclaration(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAnnotationTypeDeclaration" ):
+                return visitor.visitAnnotationTypeDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -9500,6 +10154,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAnnotationTypeBody" ):
                 listener.exitAnnotationTypeBody(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAnnotationTypeBody" ):
+                return visitor.visitAnnotationTypeBody(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -9568,6 +10228,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAnnotationTypeMemberDeclaration" ):
                 listener.exitAnnotationTypeMemberDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAnnotationTypeMemberDeclaration" ):
+                return visitor.visitAnnotationTypeMemberDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -9667,6 +10333,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitAnnotationTypeElementDeclaration" ):
                 listener.exitAnnotationTypeElementDeclaration(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAnnotationTypeElementDeclaration" ):
+                return visitor.visitAnnotationTypeElementDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -9748,6 +10420,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitAnnotationTypeElementModifier" ):
                 listener.exitAnnotationTypeElementModifier(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAnnotationTypeElementModifier" ):
+                return visitor.visitAnnotationTypeElementModifier(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -9809,6 +10487,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitDefaultValue" ):
                 listener.exitDefaultValue(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDefaultValue" ):
+                return visitor.visitDefaultValue(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -9858,6 +10542,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAnnotation" ):
                 listener.exitAnnotation(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAnnotation" ):
+                return visitor.visitAnnotation(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -9931,6 +10621,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitNormalAnnotation" ):
                 listener.exitNormalAnnotation(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNormalAnnotation" ):
+                return visitor.visitNormalAnnotation(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -9995,6 +10691,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitElementValuePairList" ):
                 listener.exitElementValuePairList(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitElementValuePairList" ):
+                return visitor.visitElementValuePairList(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -10054,6 +10756,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitElementValuePair" ):
                 listener.exitElementValuePair(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitElementValuePair" ):
+                return visitor.visitElementValuePair(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -10105,6 +10813,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitElementValue" ):
                 listener.exitElementValue(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitElementValue" ):
+                return visitor.visitElementValue(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -10174,6 +10888,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitElementValueArrayInitializer" ):
                 listener.exitElementValueArrayInitializer(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitElementValueArrayInitializer" ):
+                return visitor.visitElementValueArrayInitializer(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -10242,6 +10962,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitElementValueList" ):
                 listener.exitElementValueList(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitElementValueList" ):
+                return visitor.visitElementValueList(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -10298,6 +11024,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitMarkerAnnotation" ):
                 listener.exitMarkerAnnotation(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMarkerAnnotation" ):
+                return visitor.visitMarkerAnnotation(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -10352,6 +11084,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitSingleElementAnnotation" ):
                 listener.exitSingleElementAnnotation(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSingleElementAnnotation" ):
+                return visitor.visitSingleElementAnnotation(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -10409,6 +11147,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitArrayInitializer" ):
                 listener.exitArrayInitializer(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArrayInitializer" ):
+                return visitor.visitArrayInitializer(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -10478,6 +11222,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitVariableInitializerList" ):
                 listener.exitVariableInitializerList(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVariableInitializerList" ):
+                return visitor.visitVariableInitializerList(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -10537,6 +11287,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitBlock" ):
                 listener.exitBlock(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBlock" ):
+                return visitor.visitBlock(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -10590,6 +11346,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitBlockStatements" ):
                 listener.exitBlockStatements(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBlockStatements" ):
+                return visitor.visitBlockStatements(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -10649,6 +11411,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitBlockStatement" ):
                 listener.exitBlockStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBlockStatement" ):
+                return visitor.visitBlockStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -10712,6 +11480,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitLocalVariableDeclarationStatement" ):
                 listener.exitLocalVariableDeclarationStatement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLocalVariableDeclarationStatement" ):
+                return visitor.visitLocalVariableDeclarationStatement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -10764,6 +11538,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitLocalVariableDeclaration" ):
                 listener.exitLocalVariableDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLocalVariableDeclaration" ):
+                return visitor.visitLocalVariableDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -10837,6 +11617,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitStatement" ):
                 listener.exitStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStatement" ):
+                return visitor.visitStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -10930,6 +11716,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitStatementNoShortIf" ):
                 listener.exitStatementNoShortIf(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStatementNoShortIf" ):
+                return visitor.visitStatementNoShortIf(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -11046,6 +11838,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitStatementWithoutTrailingSubstatement" ):
                 listener.exitStatementWithoutTrailingSubstatement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStatementWithoutTrailingSubstatement" ):
+                return visitor.visitStatementWithoutTrailingSubstatement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -11148,6 +11946,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitEmptyStatement" ):
                 listener.exitEmptyStatement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEmptyStatement" ):
+                return visitor.visitEmptyStatement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -11193,6 +11997,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitLabeledStatement" ):
                 listener.exitLabeledStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLabeledStatement" ):
+                return visitor.visitLabeledStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -11244,6 +12054,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitLabeledStatementNoShortIf" ):
                 listener.exitLabeledStatementNoShortIf(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLabeledStatementNoShortIf" ):
+                return visitor.visitLabeledStatementNoShortIf(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -11290,6 +12106,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitExpressionStatement" ):
                 listener.exitExpressionStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpressionStatement" ):
+                return visitor.visitExpressionStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -11356,6 +12178,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitStatementExpression" ):
                 listener.exitStatementExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStatementExpression" ):
+                return visitor.visitStatementExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -11453,6 +12281,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitIfThenStatement" ):
                 listener.exitIfThenStatement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIfThenStatement" ):
+                return visitor.visitIfThenStatement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -11520,6 +12354,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitIfThenElseStatement" ):
                 listener.exitIfThenElseStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIfThenElseStatement" ):
+                return visitor.visitIfThenElseStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -11592,6 +12432,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitIfThenElseStatementNoShortIf" ):
                 listener.exitIfThenElseStatementNoShortIf(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIfThenElseStatementNoShortIf" ):
+                return visitor.visitIfThenElseStatementNoShortIf(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -11655,6 +12501,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAssertStatement" ):
                 listener.exitAssertStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAssertStatement" ):
+                return visitor.visitAssertStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -11734,6 +12586,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitSwitchStatement" ):
                 listener.exitSwitchStatement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSwitchStatement" ):
+                return visitor.visitSwitchStatement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -11797,6 +12655,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitSwitchBlock" ):
                 listener.exitSwitchBlock(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSwitchBlock" ):
+                return visitor.visitSwitchBlock(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -11866,6 +12730,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitSwitchBlockStatementGroup" ):
                 listener.exitSwitchBlockStatementGroup(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSwitchBlockStatementGroup" ):
+                return visitor.visitSwitchBlockStatementGroup(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -11910,6 +12780,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitSwitchLabels" ):
                 listener.exitSwitchLabels(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSwitchLabels" ):
+                return visitor.visitSwitchLabels(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -11974,6 +12850,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitSwitchLabel" ):
                 listener.exitSwitchLabel(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSwitchLabel" ):
+                return visitor.visitSwitchLabel(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -12043,6 +12925,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitEnumConstantName" ):
                 listener.exitEnumConstantName(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEnumConstantName" ):
+                return visitor.visitEnumConstantName(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -12095,6 +12983,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitWhileStatement" ):
                 listener.exitWhileStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWhileStatement" ):
+                return visitor.visitWhileStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -12156,6 +13050,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitWhileStatementNoShortIf" ):
                 listener.exitWhileStatementNoShortIf(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWhileStatementNoShortIf" ):
+                return visitor.visitWhileStatementNoShortIf(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -12224,6 +13124,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitDoStatement" ):
                 listener.exitDoStatement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDoStatement" ):
+                return visitor.visitDoStatement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -12279,6 +13185,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitForStatement" ):
                 listener.exitForStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitForStatement" ):
+                return visitor.visitForStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -12336,6 +13248,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitForStatementNoShortIf" ):
                 listener.exitForStatementNoShortIf(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitForStatementNoShortIf" ):
+                return visitor.visitForStatementNoShortIf(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -12416,6 +13334,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitBasicForStatement" ):
                 listener.exitBasicForStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBasicForStatement" ):
+                return visitor.visitBasicForStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -12519,6 +13443,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitBasicForStatementNoShortIf" ):
                 listener.exitBasicForStatementNoShortIf(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBasicForStatementNoShortIf" ):
+                return visitor.visitBasicForStatementNoShortIf(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -12598,6 +13528,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitForInit" ):
                 listener.exitForInit(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitForInit" ):
+                return visitor.visitForInit(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -12651,6 +13587,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitForUpdate" ):
                 listener.exitForUpdate(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitForUpdate" ):
+                return visitor.visitForUpdate(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -12699,6 +13641,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitStatementExpressionList" ):
                 listener.exitStatementExpressionList(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStatementExpressionList" ):
+                return visitor.visitStatementExpressionList(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -12783,6 +13731,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitEnhancedForStatement" ):
                 listener.exitEnhancedForStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEnhancedForStatement" ):
+                return visitor.visitEnhancedForStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -12880,6 +13834,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitEnhancedForStatementNoShortIf" ):
                 listener.exitEnhancedForStatementNoShortIf(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEnhancedForStatementNoShortIf" ):
+                return visitor.visitEnhancedForStatementNoShortIf(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -12950,6 +13910,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitBreakStatement" ):
                 listener.exitBreakStatement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBreakStatement" ):
+                return visitor.visitBreakStatement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -13005,6 +13971,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitContinueStatement" ):
                 listener.exitContinueStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitContinueStatement" ):
+                return visitor.visitContinueStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -13063,6 +14035,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitReturnStatement" ):
                 listener.exitReturnStatement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitReturnStatement" ):
+                return visitor.visitReturnStatement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -13120,6 +14098,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitThrowStatement" ):
                 listener.exitThrowStatement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitThrowStatement" ):
+                return visitor.visitThrowStatement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -13176,6 +14160,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitSynchronizedStatement" ):
                 listener.exitSynchronizedStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSynchronizedStatement" ):
+                return visitor.visitSynchronizedStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -13239,6 +14229,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTryStatement" ):
                 listener.exitTryStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTryStatement" ):
+                return visitor.visitTryStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -13319,6 +14315,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitCatches" ):
                 listener.exitCatches(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCatches" ):
+                return visitor.visitCatches(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -13383,6 +14385,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitCatchClause" ):
                 listener.exitCatchClause(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCatchClause" ):
+                return visitor.visitCatchClause(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -13441,6 +14449,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitCatchFormalParameter" ):
                 listener.exitCatchFormalParameter(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCatchFormalParameter" ):
+                return visitor.visitCatchFormalParameter(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -13508,6 +14522,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitCatchType" ):
                 listener.exitCatchType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCatchType" ):
+                return visitor.visitCatchType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -13563,6 +14583,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitFinally_" ):
                 listener.exitFinally_(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFinally_" ):
+                return visitor.visitFinally_(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -13620,6 +14646,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTryWithResourcesStatement" ):
                 listener.exitTryWithResourcesStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTryWithResourcesStatement" ):
+                return visitor.visitTryWithResourcesStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -13691,6 +14723,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitResourceSpecification" ):
                 listener.exitResourceSpecification(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitResourceSpecification" ):
+                return visitor.visitResourceSpecification(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -13752,6 +14790,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitResourceList" ):
                 listener.exitResourceList(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitResourceList" ):
+                return visitor.visitResourceList(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -13824,6 +14868,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitResource" ):
                 listener.exitResource(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitResource" ):
+                return visitor.visitResource(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -13891,6 +14941,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPrimary" ):
                 listener.exitPrimary(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrimary" ):
+                return visitor.visitPrimary(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -14012,6 +15068,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPrimaryNoNewArray" ):
                 listener.exitPrimaryNoNewArray(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrimaryNoNewArray" ):
+                return visitor.visitPrimaryNoNewArray(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -14146,6 +15208,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitPrimaryNoNewArray_lf_arrayAccess" ):
                 listener.exitPrimaryNoNewArray_lf_arrayAccess(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrimaryNoNewArray_lf_arrayAccess" ):
+                return visitor.visitPrimaryNoNewArray_lf_arrayAccess(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -14238,6 +15306,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPrimaryNoNewArray_lfno_arrayAccess" ):
                 listener.exitPrimaryNoNewArray_lfno_arrayAccess(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrimaryNoNewArray_lfno_arrayAccess" ):
+                return visitor.visitPrimaryNoNewArray_lfno_arrayAccess(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -14385,6 +15459,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitPrimaryNoNewArray_lf_primary" ):
                 listener.exitPrimaryNoNewArray_lf_primary(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrimaryNoNewArray_lf_primary" ):
+                return visitor.visitPrimaryNoNewArray_lf_primary(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -14453,6 +15533,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitPrimaryNoNewArray_lf_primary_lf_arrayAccess_lf_primary" ):
                 listener.exitPrimaryNoNewArray_lf_primary_lf_arrayAccess_lf_primary(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrimaryNoNewArray_lf_primary_lf_arrayAccess_lf_primary" ):
+                return visitor.visitPrimaryNoNewArray_lf_primary_lf_arrayAccess_lf_primary(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -14503,6 +15589,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPrimaryNoNewArray_lf_primary_lfno_arrayAccess_lf_primary" ):
                 listener.exitPrimaryNoNewArray_lf_primary_lfno_arrayAccess_lf_primary(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrimaryNoNewArray_lf_primary_lfno_arrayAccess_lf_primary" ):
+                return visitor.visitPrimaryNoNewArray_lf_primary_lfno_arrayAccess_lf_primary(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -14630,6 +15722,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPrimaryNoNewArray_lfno_primary" ):
                 listener.exitPrimaryNoNewArray_lfno_primary(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrimaryNoNewArray_lfno_primary" ):
+                return visitor.visitPrimaryNoNewArray_lfno_primary(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -14786,6 +15884,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitPrimaryNoNewArray_lfno_primary_lf_arrayAccess_lfno_primary" ):
                 listener.exitPrimaryNoNewArray_lfno_primary_lf_arrayAccess_lfno_primary(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrimaryNoNewArray_lfno_primary_lf_arrayAccess_lfno_primary" ):
+                return visitor.visitPrimaryNoNewArray_lfno_primary_lf_arrayAccess_lfno_primary(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -14882,6 +15986,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPrimaryNoNewArray_lfno_primary_lfno_arrayAccess_lfno_primary" ):
                 listener.exitPrimaryNoNewArray_lfno_primary_lfno_arrayAccess_lfno_primary(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrimaryNoNewArray_lfno_primary_lfno_arrayAccess_lfno_primary" ):
+                return visitor.visitPrimaryNoNewArray_lfno_primary_lfno_arrayAccess_lfno_primary(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -15082,6 +16192,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitClassInstanceCreationExpression" ):
                 listener.exitClassInstanceCreationExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClassInstanceCreationExpression" ):
+                return visitor.visitClassInstanceCreationExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -15351,6 +16467,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitClassInstanceCreationExpression_lf_primary" ):
                 listener.exitClassInstanceCreationExpression_lf_primary(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClassInstanceCreationExpression_lf_primary" ):
+                return visitor.visitClassInstanceCreationExpression_lf_primary(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -15485,6 +16607,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitClassInstanceCreationExpression_lfno_primary" ):
                 listener.exitClassInstanceCreationExpression_lfno_primary(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClassInstanceCreationExpression_lfno_primary" ):
+                return visitor.visitClassInstanceCreationExpression_lfno_primary(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -15668,6 +16796,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitTypeArgumentsOrDiamond" ):
                 listener.exitTypeArgumentsOrDiamond(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeArgumentsOrDiamond" ):
+                return visitor.visitTypeArgumentsOrDiamond(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -15738,6 +16872,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitFieldAccess" ):
                 listener.exitFieldAccess(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFieldAccess" ):
+                return visitor.visitFieldAccess(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -15816,6 +16956,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitFieldAccess_lf_primary" ):
                 listener.exitFieldAccess_lf_primary(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFieldAccess_lf_primary" ):
+                return visitor.visitFieldAccess_lf_primary(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -15869,6 +17015,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitFieldAccess_lfno_primary" ):
                 listener.exitFieldAccess_lfno_primary(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFieldAccess_lfno_primary" ):
+                return visitor.visitFieldAccess_lfno_primary(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -15964,6 +17116,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitArrayAccess" ):
                 listener.exitArrayAccess(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArrayAccess" ):
+                return visitor.visitArrayAccess(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -16072,6 +17230,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitArrayAccess_lf_primary" ):
                 listener.exitArrayAccess_lf_primary(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArrayAccess_lf_primary" ):
+                return visitor.visitArrayAccess_lf_primary(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -16164,6 +17328,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitArrayAccess_lfno_primary" ):
                 listener.exitArrayAccess_lfno_primary(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArrayAccess_lfno_primary" ):
+                return visitor.visitArrayAccess_lfno_primary(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -16283,6 +17453,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitMethodInvocation" ):
                 listener.exitMethodInvocation(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethodInvocation" ):
+                return visitor.visitMethodInvocation(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -16514,6 +17690,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitMethodInvocation_lf_primary" ):
                 listener.exitMethodInvocation_lf_primary(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethodInvocation_lf_primary" ):
+                return visitor.visitMethodInvocation_lf_primary(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -16610,6 +17792,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitMethodInvocation_lfno_primary" ):
                 listener.exitMethodInvocation_lfno_primary(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethodInvocation_lfno_primary" ):
+                return visitor.visitMethodInvocation_lfno_primary(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -16804,6 +17992,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitArgumentList" ):
                 listener.exitArgumentList(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArgumentList" ):
+                return visitor.visitArgumentList(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -16895,6 +18089,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitMethodReference" ):
                 listener.exitMethodReference(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethodReference" ):
+                return visitor.visitMethodReference(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -17066,6 +18266,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitMethodReference_lf_primary" ):
                 listener.exitMethodReference_lf_primary(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethodReference_lf_primary" ):
+                return visitor.visitMethodReference_lf_primary(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -17151,6 +18357,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitMethodReference_lfno_primary" ):
                 listener.exitMethodReference_lfno_primary(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethodReference_lfno_primary" ):
+                return visitor.visitMethodReference_lfno_primary(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -17317,6 +18529,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitArrayCreationExpression" ):
                 listener.exitArrayCreationExpression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArrayCreationExpression" ):
+                return visitor.visitArrayCreationExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -17421,6 +18639,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitDimExprs" ):
                 listener.exitDimExprs(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDimExprs" ):
+                return visitor.visitDimExprs(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -17485,6 +18709,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitDimExpr" ):
                 listener.exitDimExpr(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDimExpr" ):
+                return visitor.visitDimExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -17540,6 +18770,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitConstantExpression" ):
                 listener.exitConstantExpression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConstantExpression" ):
+                return visitor.visitConstantExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -17583,6 +18819,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitExpression" ):
                 listener.exitExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpression" ):
+                return visitor.visitExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -17644,6 +18886,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitLambdaExpression" ):
                 listener.exitLambdaExpression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLambdaExpression" ):
+                return visitor.visitLambdaExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -17700,6 +18948,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitLambdaParameters" ):
                 listener.exitLambdaParameters(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLambdaParameters" ):
+                return visitor.visitLambdaParameters(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -17783,6 +19037,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitInferredFormalParameterList" ):
                 listener.exitInferredFormalParameterList(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInferredFormalParameterList" ):
+                return visitor.visitInferredFormalParameterList(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -17840,6 +19100,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitLambdaBody" ):
                 listener.exitLambdaBody(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLambdaBody" ):
+                return visitor.visitLambdaBody(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -17896,6 +19162,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAssignmentExpression" ):
                 listener.exitAssignmentExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAssignmentExpression" ):
+                return visitor.visitAssignmentExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -17958,6 +19230,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitAssignment" ):
                 listener.exitAssignment(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAssignment" ):
+                return visitor.visitAssignment(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -18009,6 +19287,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitLeftHandSide" ):
                 listener.exitLeftHandSide(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLeftHandSide" ):
+                return visitor.visitLeftHandSide(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -18101,6 +19385,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitAssignmentOperator" ):
                 listener.exitAssignmentOperator(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAssignmentOperator" ):
+                return visitor.visitAssignmentOperator(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -18160,6 +19450,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitConditionalExpression" ):
                 listener.exitConditionalExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConditionalExpression" ):
+                return visitor.visitConditionalExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -18228,6 +19524,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitConditionalOrExpression" ):
                 listener.exitConditionalOrExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConditionalOrExpression" ):
+                return visitor.visitConditionalOrExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -18301,6 +19603,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitConditionalAndExpression" ):
                 listener.exitConditionalAndExpression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConditionalAndExpression" ):
+                return visitor.visitConditionalAndExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
     def conditionalAndExpression(self, _p:int=0):
@@ -18372,6 +19680,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInclusiveOrExpression" ):
                 listener.exitInclusiveOrExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInclusiveOrExpression" ):
+                return visitor.visitInclusiveOrExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -18445,6 +19759,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitExclusiveOrExpression" ):
                 listener.exitExclusiveOrExpression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExclusiveOrExpression" ):
+                return visitor.visitExclusiveOrExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
     def exclusiveOrExpression(self, _p:int=0):
@@ -18516,6 +19836,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAndExpression" ):
                 listener.exitAndExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAndExpression" ):
+                return visitor.visitAndExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -18591,6 +19917,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitEqualityExpression" ):
                 listener.exitEqualityExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEqualityExpression" ):
+                return visitor.visitEqualityExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -18699,6 +20031,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitRelationalExpression" ):
                 listener.exitRelationalExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRelationalExpression" ):
+                return visitor.visitRelationalExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -18840,6 +20178,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitShiftExpression" ):
                 listener.exitShiftExpression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitShiftExpression" ):
+                return visitor.visitShiftExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
     def shiftExpression(self, _p:int=0):
@@ -18956,6 +20300,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitAdditiveExpression" ):
                 listener.exitAdditiveExpression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAdditiveExpression" ):
+                return visitor.visitAdditiveExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
     def additiveExpression(self, _p:int=0):
@@ -19053,6 +20403,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitMultiplicativeExpression" ):
                 listener.exitMultiplicativeExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMultiplicativeExpression" ):
+                return visitor.visitMultiplicativeExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -19170,6 +20526,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitUnaryExpression" ):
                 listener.exitUnaryExpression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnaryExpression" ):
+                return visitor.visitUnaryExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -19245,6 +20607,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitPreIncrementExpression" ):
                 listener.exitPreIncrementExpression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPreIncrementExpression" ):
+                return visitor.visitPreIncrementExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -19289,6 +20657,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPreDecrementExpression" ):
                 listener.exitPreDecrementExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPreDecrementExpression" ):
+                return visitor.visitPreDecrementExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -19345,6 +20719,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitUnaryExpressionNotPlusMinus" ):
                 listener.exitUnaryExpressionNotPlusMinus(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnaryExpressionNotPlusMinus" ):
+                return visitor.visitUnaryExpressionNotPlusMinus(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -19433,6 +20813,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitPostfixExpression" ):
                 listener.exitPostfixExpression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPostfixExpression" ):
+                return visitor.visitPostfixExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -19511,6 +20897,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitPostIncrementExpression" ):
                 listener.exitPostIncrementExpression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPostIncrementExpression" ):
+                return visitor.visitPostIncrementExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -19551,6 +20943,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPostIncrementExpression_lf_postfixExpression" ):
                 listener.exitPostIncrementExpression_lf_postfixExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPostIncrementExpression_lf_postfixExpression" ):
+                return visitor.visitPostIncrementExpression_lf_postfixExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -19595,6 +20993,12 @@ class Java8Parser ( Parser ):
             if hasattr( listener, "exitPostDecrementExpression" ):
                 listener.exitPostDecrementExpression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPostDecrementExpression" ):
+                return visitor.visitPostDecrementExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -19635,6 +21039,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPostDecrementExpression_lf_postfixExpression" ):
                 listener.exitPostDecrementExpression_lf_postfixExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPostDecrementExpression_lf_postfixExpression" ):
+                return visitor.visitPostDecrementExpression_lf_postfixExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -19704,6 +21114,12 @@ class Java8Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitCastExpression" ):
                 listener.exitCastExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCastExpression" ):
+                return visitor.visitCastExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 

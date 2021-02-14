@@ -1,1 +1,1 @@
-[{"arquivos": ["EmployeeRepository", "PessoaRepository"]}]
+[{"arquivos": ["EmployeeRepository", "PessoaRepository", "RoleRepository", "UserRepository", "VoteRepository", "PollRepository"]}]

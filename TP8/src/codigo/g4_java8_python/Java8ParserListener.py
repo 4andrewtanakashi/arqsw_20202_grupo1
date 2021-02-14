@@ -15,7 +15,7 @@ class Java8ParserListener(ParseTreeListener):
         self.dicionario = {}
         self.dicionario["type"] = []
         self.dicionario["imports"] = []
-        self.annotation = []
+        self.dicionario["annotation"] = []
         self.nome_classe = ""
 
 
@@ -25,16 +25,12 @@ class Java8ParserListener(ParseTreeListener):
 
     # Enter a parse tree produced by Java8Parser#normalClassDeclaration.
     def enterNormalClassDeclaration(self, ctx:Java8Parser.NormalClassDeclarationContext):
-
         for child_class_dec in ctx.getChildren():
-
             if isinstance(child_class_dec, tree.Tree.TerminalNodeImpl) and child_class_dec.getText() != "class":
                 self.dicionario["name_obj"] = child_class_dec.getText()
             if isinstance(child_class_dec, Java8Parser.ClassModifierContext):
                 for child_class_modifier_ctx in child_class_dec.getChildren():
                     if isinstance(child_class_modifier_ctx, Java8Parser.AnnotationContext):
-                        if "annotation" not in self.dicionario:
-                            self.dicionario["annotation"] = []
                         self.dicionario["annotation"].append(child_class_modifier_ctx.getText())
 
 
@@ -65,18 +61,41 @@ class Java8ParserListener(ParseTreeListener):
         for child_methodMod_ctx in ctx.getChildren():
             if isinstance(child_methodMod_ctx, Java8Parser.AnnotationContext):
                 if "annotation" not in self.dicionario:
-                    self.dicionario = []
+                    self.dicionario["annotation"] = []
                 self.dicionario["annotation"].append(child_methodMod_ctx.getText())
 
     # Enter a parse tree produced by Java8Parser#normalInterfaceDeclaration.
     def enterNormalInterfaceDeclaration(self, ctx:Java8Parser.NormalInterfaceDeclarationContext):
         for child_interface_dec in ctx.getChildren():
-
-            if isinstance(child_interface_dec, tree.Tree.TerminalNodeImpl) and child_interface_dec.getText() != "class":
+            print("child_interface_dec: ", child_interface_dec.getText())
+            if isinstance(child_interface_dec, tree.Tree.TerminalNodeImpl) and child_interface_dec.getText() != "interface":
+                print("Entrou aqui child_interface_dec")
                 self.dicionario["name_obj"] = child_interface_dec.getText()
             if isinstance(child_interface_dec, Java8Parser.InterfaceModifierContext):
                 for child_interface_modifier_ctx in child_interface_dec.getChildren():
                     if isinstance(child_interface_modifier_ctx, Java8Parser.AnnotationContext):
-                        if "annotation" not in self.dicionario:
-                            self.dicionario["annotation"] = []
                         self.dicionario["annotation"].append(child_interface_modifier_ctx.getText())
+
+
+    def enterEnumDeclaration(self, ctx:Java8Parser.EnumDeclarationContext):
+        for child_enum_dec in ctx.getChildren():
+            print("child_enum_dec.getText(): ", child_enum_dec.getText())
+            if isinstance(child_enum_dec, tree.Tree.TerminalNodeImpl) and child_enum_dec.getText() != "enum":
+                print("Entrou aqui child_enum_dec.getText()")
+                self.dicionario["name_obj"] = child_enum_dec.getText()
+            if isinstance(child_enum_dec, Java8Parser.ClassModifierContext):
+                for child_enum_modifier_ctx in child_enum_dec.getChildren():
+                    if isinstance(child_enum_modifier_ctx, Java8Parser.AnnotationContext):
+                        self.dicionario["annotation"].append(child_enum_modifier_ctx.getText())
+
+    # Enter a parse tree produced by Java8Parser#annotationTypeDeclaration.
+    def enterAnnotationTypeDeclaration(self, ctx:Java8Parser.AnnotationTypeDeclarationContext):
+        for child_interface_annotation_dec in ctx.getChildren():
+            print("child_interface_annotation_dec.getText(): ", child_interface_annotation_dec.getText())
+            if isinstance(child_interface_annotation_dec, tree.Tree.TerminalNodeImpl)  and (child_interface_annotation_dec.getText() != '@' and child_interface_annotation_dec.getText() != "interface"):
+                print("child_interface_annotation_dec")
+                self.dicionario["name_obj"] = child_interface_annotation_dec.getText()
+            if isinstance(child_interface_annotation_dec, Java8Parser.InterfaceModifierContext):
+                for child_interface_annotation_modifier_ctx in child_interface_annotation_dec.getChildren():
+                    if isinstance(child_interface_annotation_modifier_ctx, Java8Parser.AnnotationContext):
+                        self.dicionario["annotation"].append(child_interface_annotation_modifier_ctx.getText())

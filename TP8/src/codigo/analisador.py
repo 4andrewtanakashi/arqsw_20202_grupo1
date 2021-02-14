@@ -26,7 +26,7 @@ from g4_java8_python.Java8Parser import Java8Parser
 from g4_java8_python.Java8ParserListener import Java8ParserListener
 from antlr4.tree.Trees import *
 from util.utils import save_obj_to_file
-from util.knn_algorithm import *
+from util.clusterization import *
 
 
 if __name__ == '__main__':
@@ -71,7 +71,7 @@ if __name__ == '__main__':
             externalLista[i]["file_name"] = files_name[i]
 
         save_obj_to_file(externalLista, "data.json")
-        knn_algorithm("data.json")
+        clusterization("data.json")
 
     except OSError:
         print('Algum erro aconteceu')
