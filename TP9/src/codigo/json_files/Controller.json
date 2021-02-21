@@ -1,1 +1,1 @@
-[{"arquivos": ["PessoasControl"]}]
+[{"arquivos": ["PessoasControl", "EmployeeController", "AuthController", "UserController", "PollController"]}]
