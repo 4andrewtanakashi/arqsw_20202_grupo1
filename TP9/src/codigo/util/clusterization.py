@@ -71,7 +71,7 @@ def classify(nearest_neighbors, classes):
 def knn_algorithm(X_train, y_train):
     predictions = []
     for x in X_train:
-        nearest_neighbors = get_nearest_neighbors(X_train, y_train, x, k = 8)
+        nearest_neighbors = get_nearest_neighbors(X_train, y_train, x, k = 3)
         print('\nVizinhos mais próximos (Label):\n', nearest_neighbors, '\n')
         y = classify(nearest_neighbors, clusters_names)
         print(y)
@@ -81,30 +81,21 @@ def knn_algorithm(X_train, y_train):
 
 
 def use_database(file):
-    dicionary_data = load_obj_to_file(file)
+    dictionary_data = load_obj_to_file(file)
 
     list_X = []
     list_Y = []
     files_names = []
-    for elem_dict in dicionary_data:
+    for elem_dict in dictionary_data:
         list_internal_X = []
         list_internal_Y = []
         list_internal_X.append(elem_dict['type'])
         list_internal_X.append(elem_dict['imports'])
         list_internal_X.append(elem_dict['annotation'])
-        # i = 0
-        # while (i < len(elem_dict['annotation'])) and list_internal_Y == []:
-        #     if (elem_dict['annotation'][i].__contains__("Repository")):
-        #         list_internal_Y.append("Repository")
-        #     elif (elem_dict['annotation'][i].__contains__("Controller")):
-        #         list_internal_Y.append("Controller")
-        #     elif (elem_dict['annotation'][i].__contains__("Service")):
-        #         list_internal_Y.append("Service")
-        #     elif (elem_dict['annotation'][i].__contains__("Entity")):
-        #         list_internal_Y.append("Model")
-        #     i += 1
-        #
-        # list_internal_Y.append(elem_dict['name_obj'])
+        list_internal_X.append(elem_dict['method_names'])
+        list_internal_X.append(elem_dict['invocation'])
+
+
         list_X.append(list_internal_X)
         list_Y.append(random.randint(0, 2))
         files_names.append(elem_dict['file_name'])
@@ -129,44 +120,3 @@ def clusterization(file):
 
     for result in final_clusters:
         print(result)
-
-
-    # print('Vizinhos mais próximos :', nearest_neighbors)
-    # list_Model = []
-    # list_Repo = []
-    # list_Serv = []
-    # list_Control = []
-    # for nea_nei in nearest_neighbors:
-    #     if len(nea_nei) == 2:
-    #         if nea_nei[0] == "Model":
-    #             list_Model.append(nea_nei[1])
-    #         elif nea_nei[0] == "Repository":
-    #             list_Repo.append(nea_nei[1])
-    #         elif nea_nei[0] == "Service":
-    #             list_Serv.append(nea_nei[1])
-    #         elif nea_nei[0] == "Controller":
-    #             list_Control.append(nea_nei[1])
-    #
-    # obj = []
-    # dict_model = {}
-    # dict_model["arquivos"] = list_Model
-    # obj.append(dict_model)
-    # save_obj_to_file(obj, "Model.json")
-    #
-    # obj = []
-    # dict_repo = {}
-    # dict_repo["arquivos"] = list_Repo
-    # obj.append(dict_repo)
-    # save_obj_to_file(obj, "Repository.json")
-    #
-    # obj = []
-    # dict_serv = {}
-    # dict_serv["arquivos"] = list_Serv
-    # obj.append(dict_serv)
-    # save_obj_to_file(obj, "Service.json")
-    #
-    # obj = []
-    # dict_control = {}
-    # dict_control["arquivos"] = list_Control
-    # obj.append(dict_control)
-    # save_obj_to_file(obj, "Controller.json")
