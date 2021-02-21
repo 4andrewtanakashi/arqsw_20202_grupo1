@@ -31,49 +31,58 @@ from util.Grafo import *
 
 
 if __name__ == '__main__':
-    # global current_path
-    # directory = os.path.join(os.getcwd(), sys.argv[1])
-    #
-    # files_name = []
-    # files_path = []
-    #
-    # dict_templates = {}
-    #
-    # for root, dirs, files in os.walk(directory):
-    #     for name in files:
-    #         if name.endswith(".java"):
-    #             files_name.append(name)
-    #             file_path = os.path.join(root, name)
-    #             files_path.append(file_path)
-    #
-    # print('Nome dos arquivos:\n', files_name, '\n')
-    #
-    # try:
-    #     externalLista = []
-    #     for path in files_path:
-    #         current_path = path
-    #
-    #         input = FileStream(path, "UTF-8")
-    #         lexer = Java8Lexer(input)
-    #         stream = CommonTokenStream(lexer)
-    #
-    #         stream.fill()
-    #
-    #         print("current_path: {}".format(str(current_path)))
-    #         parser = Java8Parser(stream)
-    #         tree = parser.compilationUnit()
-    #         listener = Java8ParserListener()
-    #         walker = ParseTreeWalker()
-    #         walker.walk(listener, tree)
-    #         externalLista.append(listener.dicionario)
-    #
-    #
-    #     for i in range(len(files_name)):
-    #         externalLista[i]["file_name"] = files_name[i]
-    #
-    #     save_obj_to_file(externalLista, "data.json")
-    g = Grafo("data.json")
-        # clusterization(g)
-    #
-    # except OSError:
-    #     print('Algum erro aconteceu')
+    global current_path
+    directory = os.path.join(os.getcwd(), sys.argv[1])
+
+    files_name = []
+    files_path = []
+
+    dict_templates = {}
+
+    for root, dirs, files in os.walk(directory):
+        for name in files:
+            if name.endswith(".java"):
+                files_name.append(name)
+                file_path = os.path.join(root, name)
+                files_path.append(file_path)
+
+    print('Nome dos arquivos:\n', files_name, '\n')
+
+    try:
+        # externalLista = []
+        # for path in files_path:
+        #     current_path = path
+        #
+        #     input = FileStream(path, "UTF-8")
+        #     lexer = Java8Lexer(input)
+        #     stream = CommonTokenStream(lexer)
+        #
+        #     stream.fill()
+        #
+        #     print("current_path: {}".format(str(current_path)))
+        #     parser = Java8Parser(stream)
+        #     tree = parser.compilationUnit()
+        #     listener = Java8ParserListener()
+        #     walker = ParseTreeWalker()
+        #     walker.walk(listener, tree)
+        #     externalLista.append(listener.dicionario)
+        #
+        #
+        # for i in range(len(files_name)):
+        #     externalLista[i]["file_name"] = files_name[i]
+        #
+        # save_obj_to_file(externalLista, "data.json")
+        clusters = clusterization('data2.json')
+
+        for cluster in clusters:
+            print(cluster + ':')
+            for class_name in clusters[cluster]:
+                print('\t' + class_name)
+            print()
+
+        g = Grafo("data2.json")
+        print()
+        print(g.pseudo_adjacent_matrix)
+
+    except OSError:
+        print('Algum erro aconteceu')

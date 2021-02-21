@@ -43,11 +43,11 @@ def calculate_similarity_Jaccard(x1, x2):
     return jaccard
 
 
-def get_nearest_neighbors(X_train, y_train, x, k):
+def get_nearest_neighbors(X_train, y_train, x, files_names, k):
   distances = []
   for i in range(len(X_train)):
       if not (X_train[i] == x).all():
-          distances.append((calculate_similarity_Jaccard(X_train[i], x), y_train[i]))
+          distances.append((calculate_similarity_Jaccard(X_train[i], x), y_train[i], files_names[i]))
 
   print()
   print(X_train)
@@ -68,14 +68,14 @@ def classify(nearest_neighbors, classes):
     return max(count_classes)[1]
 
 
-def knn_algorithm(X_train, y_train):
-    predictions = []
-    for x in X_train:
-        nearest_neighbors = get_nearest_neighbors(X_train, y_train, x, k = 3)
+def knn_algorithm(X_train, y_train, files_names):
+    predictions = {clusters_names[0]: [], clusters_names[1]: [], clusters_names[2]: []}
+    for i in range(len(X_train)):
+        nearest_neighbors = get_nearest_neighbors(X_train, y_train, X_train[i], files_names, k = 5)
         print('\nVizinhos mais próximos (Label):\n', nearest_neighbors, '\n')
         y = classify(nearest_neighbors, clusters_names)
-        print(y)
-        predictions.append(y)
+        print(y, '\n')
+        predictions[clusters_names[y]].append(files_names[i])
 
     return predictions
 
@@ -86,6 +86,8 @@ def use_database(file):
     list_X = []
     list_Y = []
     files_names = []
+    quant_classes = len(dictionary_data)
+    cont = 0
     for elem_dict in dictionary_data:
         list_internal_X = []
         list_internal_Y = []
@@ -97,8 +99,15 @@ def use_database(file):
 
 
         list_X.append(list_internal_X)
+        # if cont <= quant_classes / 3:
+        #     list_Y.append(0)
+        # elif cont > quant_classes / 3 and cont <= (quant_classes / 2):
+        #     list_Y.append(1)
+        # elif cont > (quant_classes / 3):
+        #     list_Y.append(2)
         list_Y.append(random.randint(0, 2))
         files_names.append(elem_dict['file_name'])
+        cont += 1
 
     X_train, y_train = np.array(list_X,dtype=list), np.array(list_Y,dtype=list)
 
@@ -111,12 +120,15 @@ def clusterization(file):
     print(X_train)
     print()
     print(y_train)
+    print()
+    print(files_names)
     # sys.exit()
 
-    predictions = knn_algorithm(X_train, y_train)
-    decod_predictions = [clusters_names[p] for p in predictions]
+    predictions = knn_algorithm(X_train, y_train, files_names)
 
-    final_clusters = sorted(zip(files_names, decod_predictions))
+    # print(predictions)
+    # decod_predictions = [clusters_names[p] for p in predictions]
 
-    for result in final_clusters:
-        print(result)
+    # final_clusters = sorted(zip(files_names, decod_predictions), key=lambda tup: tup[1])
+
+    return predictions

@@ -11,7 +11,7 @@ TYPE = ["byte", "short", "int", "long", "float", "double", "char", "String", "bo
 
 
 def confim_Not_Element (eleToTest):
-    if not (eleToTest.__contains__("System.out.println")) and (eleToTest != '(' and eleToTest != ')' and eleToTest != '.'):
+    if (eleToTest != '(' and eleToTest != ')' and eleToTest != '.'):
         return True
     return False
 
