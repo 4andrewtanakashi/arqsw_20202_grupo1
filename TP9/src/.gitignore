@@ -1,4 +1,8 @@
  
 codigo/g4_java8_python/__pycache__/
 codigo/util/__pycache__/
-
+codigo/g4_java8_python/__pycache__/Java8Lexer.cpython-38.pyc
+codigo/g4_java8_python/__pycache__/Java8Parser.cpython-38.pyc
+codigo/g4_java8_python/__pycache__/Java8ParserListener.cpython-38.pyc
+codigo/util/__pycache__/clusterization.cpython-38.pyc
+codigo/util/__pycache__/utils.cpython-38.pyc
