@@ -1,17 +1,17 @@
-package Controller;
+package Presenter;
 
 import Model.Escola;
 import Model.Estudante;
 import View.EstudanteView;
 
 
-public class EstudanteController {
+public class EstudantePresenter {
 
 	
 	private Estudante estudanteModel;
 	private EstudanteView estudanteView;
 	
-	public EstudanteController(Estudante estudanteModel, EstudanteView estudanteView){
+	public EstudantePresenter(Estudante estudanteModel, EstudanteView estudanteView){
 		this.estudanteModel = estudanteModel;
 		this.estudanteView = estudanteView;	
 	}

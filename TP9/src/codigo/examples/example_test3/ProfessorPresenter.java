@@ -1,16 +1,16 @@
-package Controller;
+package Presenter;
 
 import Model.Escola;
 import Model.Professor;
 import View.ProfessorView;
 
-public class ProfessorController {
+public class ProfessorPresenter {
 
 	
 	private Professor professorModel;
 	private ProfessorView professorView;
 	
-	public ProfessorController(Professor professorModel, ProfessorView professorView){
+	public ProfessorPresenter(Professor professorModel, ProfessorView professorView){
 		this.professorModel = professorModel;
 		this.professorView = professorView;	
 	}

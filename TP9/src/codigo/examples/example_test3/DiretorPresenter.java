@@ -1,15 +1,15 @@
-package Controller;
+package Presenter;
 
 import Model.Diretor;
 import Model.Escola;
 import View.DiretorView;
 
-public class DiretorController{
+public class DiretorPresenter{
 
 	private Diretor diretorModel;
 	private DiretorView diretorView;
 	
-	public DiretorController(Diretor diretorModel, DiretorView diretorView){
+	public DiretorPresenter(Diretor diretorModel, DiretorView diretorView){
 		this.diretorModel = diretorModel;
 		this.diretorView = diretorView;	
 	}
