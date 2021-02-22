@@ -11,8 +11,9 @@ TYPE = ["byte", "short", "int", "long", "float", "double", "char", "String", "bo
 
 
 def confim_Not_Element (eleToTest):
-    if not (eleToTest.__contains__("System.out.println")) and (eleToTest != '(' and eleToTest != ')' and eleToTest != '.'):
-        return True
+    if (eleToTest != '(' and eleToTest != ')' and eleToTest != '.'):
+        if (eleToTest != "class" and eleToTest != '@' and eleToTest != "enum" and "interface" != eleToTest) :
+            return True
     return False
 
 class Java8ParserListener (ParseTreeListener):
@@ -24,17 +25,24 @@ class Java8ParserListener (ParseTreeListener):
         self.dicionario["annotation"] = []
         self.dicionario["method_names"] = []
         self.dicionario["invocation"] = []
-        self.nome_classe = ""
+        self.dicionario["structure"] = {}
+        self.dicionario["structure"]["count_attributes"] = 0
+        self.dicionario["structure"]["count_methods"] = 0
+        self.dicionario["structure"]["count_eleme_view"] = 0
+        self.dicionario["name_obj"] = ''
 
 
     # Enter a parse tree produced by Java8Parser#singleTypeImportDeclaration.
     def enterSingleTypeImportDeclaration (self, ctx:Java8Parser.SingleTypeImportDeclarationContext):
         self.dicionario["imports"].append(ctx.typeName().getText())
+        if (ctx.typeName().getText().__contains__("java.awt") or ctx.typeName().getText().__contains__("javax.swing")):
+            self.dicionario["structure"]["count_eleme_view"] += 1
 
     # Enter a parse tree produced by Java8Parser#normalClassDeclaration.
     def enterNormalClassDeclaration (self, ctx:Java8Parser.NormalClassDeclarationContext):
         for child_class_dec in ctx.getChildren():
-            if isinstance(child_class_dec, tree.Tree.TerminalNodeImpl) and child_class_dec.getText() != "class":
+            print("child_class_dec: ", child_class_dec.getText())
+            if isinstance(child_class_dec, tree.Tree.TerminalNodeImpl) and confim_Not_Element(child_class_dec.getText()) and self.dicionario["name_obj"] == '':
                 self.dicionario["name_obj"] = child_class_dec.getText()
             if isinstance(child_class_dec, Java8Parser.ClassModifierContext):
                 for child_class_modifier_ctx in child_class_dec.getChildren():
@@ -75,7 +83,7 @@ class Java8ParserListener (ParseTreeListener):
     # Enter a parse tree produced by Java8Parser#normalInterfaceDeclaration.
     def enterNormalInterfaceDeclaration (self, ctx:Java8Parser.NormalInterfaceDeclarationContext):
         for child_interface_dec in ctx.getChildren():
-            if isinstance(child_interface_dec, tree.Tree.TerminalNodeImpl) and child_interface_dec.getText() != "interface":
+            if isinstance(child_interface_dec, tree.Tree.TerminalNodeImpl) and confim_Not_Element(child_interface_dec.getText()) and self.dicionario["name_obj"] == '':
                 self.dicionario["name_obj"] = child_interface_dec.getText()
             if isinstance(child_interface_dec, Java8Parser.InterfaceModifierContext):
                 for child_interface_modifier_ctx in child_interface_dec.getChildren():
@@ -85,7 +93,7 @@ class Java8ParserListener (ParseTreeListener):
 
     def enterEnumDeclaration (self, ctx:Java8Parser.EnumDeclarationContext):
         for child_enum_dec in ctx.getChildren():
-            if isinstance(child_enum_dec, tree.Tree.TerminalNodeImpl) and child_enum_dec.getText() != "enum":
+            if isinstance(child_enum_dec, tree.Tree.TerminalNodeImpl) and confim_Not_Element(child_enum_dec.getText()) and self.dicionario["name_obj"] == '':
                 self.dicionario["name_obj"] = child_enum_dec.getText()
             if isinstance(child_enum_dec, Java8Parser.ClassModifierContext):
                 for child_enum_modifier_ctx in child_enum_dec.getChildren():
@@ -95,7 +103,7 @@ class Java8ParserListener (ParseTreeListener):
     # Enter a parse tree produced by Java8Parser#annotationTypeDeclaration.
     def enterAnnotationTypeDeclaration (self, ctx:Java8Parser.AnnotationTypeDeclarationContext):
         for child_interface_annotation_dec in ctx.getChildren():
-            if isinstance(child_interface_annotation_dec, tree.Tree.TerminalNodeImpl)  and (child_interface_annotation_dec.getText() != '@' and child_interface_annotation_dec.getText() != "interface"):
+            if isinstance(child_interface_annotation_dec, tree.Tree.TerminalNodeImpl)  and confim_Not_Element(child_interface_annotation_dec.getText()) and self.dicionario["name_obj"] == '':
                 self.dicionario["name_obj"] = child_interface_annotation_dec.getText()
             if isinstance(child_interface_annotation_dec, Java8Parser.InterfaceModifierContext):
                 for child_interface_annotation_modifier_ctx in child_interface_annotation_dec.getChildren():
@@ -105,22 +113,34 @@ class Java8ParserListener (ParseTreeListener):
     # Exit a parse tree produced by Java8Parser#methodDeclarator.
     def exitMethodDeclarator (self, ctx:Java8Parser.MethodDeclaratorContext):
         for child_methodDec in ctx.getChildren():
-            if isinstance(child_methodDec, tree.Tree.TerminalNodeImpl) and (confim_Not_Element(child_methodDec.getText())):
+            if isinstance(child_methodDec, tree.Tree.TerminalNodeImpl) and confim_Not_Element(child_methodDec.getText()):
                 self.dicionario["method_names"].append(child_methodDec.getText())
+                self.dicionario["structure"]["count_methods"] += 1
 
        # Enter a parse tree produced by Java8Parser#methodInvocation.
     def enterMethodInvocation (self, ctx:Java8Parser.MethodInvocationContext):
         if (confim_Not_Element(ctx.getText())):
+            if (ctx.getText().__contains__("System.out.println")):
+                self.dicionario["structure"]["count_eleme_view"] += 1
             self.dicionario["invocation"].append(ctx.getText())
 
 
     # Enter a parse tree produced by Java8Parser#methodInvocation_lf_primary.
     def enterMethodInvocation_lf_primary (self, ctx:Java8Parser.MethodInvocation_lf_primaryContext):
         if (confim_Not_Element(ctx.getText())):
+            if (ctx.getText().__contains__("System.out.println")):
+                self.dicionario["structure"]["count_eleme_view"] += 1
             self.dicionario["invocation"].append(ctx.getText())
 
 
     # Enter a parse tree produced by Java8Parser#methodInvocation_lfno_primary.
     def enterMethodInvocation_lfno_primary (self, ctx:Java8Parser.MethodInvocation_lfno_primaryContext):
         if (confim_Not_Element(ctx.getText())):
+            if (ctx.getText().__contains__("System.out.println")):
+                self.dicionario["structure"]["count_eleme_view"] += 1
             self.dicionario["invocation"].append(ctx.getText())
+
+    # Enter a parse tree produced by Java8Parser#fieldDeclaration.
+    def enterFieldDeclaration(self, ctx:Java8Parser.FieldDeclarationContext):
+        print("enterFieldDeclaration: ", ctx.getText())
+        self.dicionario["structure"]["count_attributes"] += 1
