@@ -1,0 +1,24 @@
+[
+    {
+        "LibsExternalVerify": ["sql", "swing"],
+        "LigacoesClasses": [],
+        "LigacoesPacotesCamadas": [
+        	"control->dao", "control->model",
+        	"dao->sql", "dao->model",
+        	"View->swing", "View->model", "View->control"
+        ],
+        "LigacoesClassesPacotes": [
+        	"Main->View"
+        ],
+        "RestricaoClasses": [ ],
+        "RestricaoPacotesCamadas": [
+            "Deve", "Pode", 
+            "Deve", "Deve",
+            "Deve", "Pode", "Deve"
+        ],
+        "RestricaoPacotesCamadas": [
+        	"Deve"
+        ]
+    } 
+
+] 
