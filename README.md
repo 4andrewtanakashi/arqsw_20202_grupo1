@@ -7,12 +7,11 @@
 ```
 ## Assuntos relacionados
 
-|---------------------------------------|----------------------------|
-| Análise Estática/Análise Dinâmica     | Remodularização            |
-| Métricas                              | Similaridade               |
-| Refatoração                           | Clusterização              |
-| Padrões de Projeto                    | Descobrimento Arquitetural |
-| Padrão Arquitetural                   | Conformidade Arquitetural  |
+ Análise Estática/Análise Dinâmica,     Remodularização,            
+ Métricas,                               Similaridade,               
+ Refatoração,                            Clusterização,              
+ Padrões de Projeto,                     Descobrimento Arquitetural,
+ Padrão Arquitetural,                    Conformidade Arquitetural
 
 ## Ferramentas utilizadas
 | Ferramentas|  Versão |
