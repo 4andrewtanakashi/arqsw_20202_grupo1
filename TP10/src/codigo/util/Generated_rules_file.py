@@ -4,7 +4,7 @@ from fpdf import FPDF
 
 class Generated_rules_file:
 
-    def rules (obj_unico_pac, obj_rules):
+    def rules (obj_unico_pac, obj_rules, dsm_classifier=""):
         pdf = FPDF(orientation='P', unit='mm', format='A4')
         pdf.add_page()
         pdf.set_xy(50,0)
@@ -40,6 +40,12 @@ class Generated_rules_file:
                         pdf.multi_cell(0, 5, var_aux)
                         pdf.ln(0.15)
                         i += 1
+
+        if dsm_classifier != "":
+            pdf.ln(0.15)
+            pdf.set_text_color(0,0,0)
+            pdf.multi_cell(0, 5, dsm_classifier)
+            pdf.ln(0.15)
 
         pdf.ln(0.15)
         pdf.multi_cell(0, 20, txt="----------------------------------------------------------------------------------------------------------")
