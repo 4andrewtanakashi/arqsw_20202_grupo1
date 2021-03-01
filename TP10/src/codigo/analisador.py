@@ -24,6 +24,7 @@ from g4_java8_python.Java8Lexer import Java8Lexer
 from g4_java8_python.Java8Parser import Java8Parser
 from g4_java8_python.Java8ParserListener import Java8ParserListener
 from antlr4.tree.Trees import *
+<<<<<<< HEAD
 from util.utils import save_obj_to_file, attributes_from_project
 from util.Grafo import *
 
@@ -47,6 +48,36 @@ if __name__ == '__main__':
     print('Nome dos arquivos:\n', files_name, '\n')
 
     try:
+=======
+from util.utils import load_obj_to_file, generated_rules_unique
+from util.clusterization import *
+from util.Generated_rules_file import *
+
+
+if __name__ == '__main__':
+    dict_rules = load_obj_to_file(sys.argv[1])
+    tuple_lig_uni = generated_rules_unique(dict_rules)
+    Generated_rules_file.rules(tuple_lig_uni[0], tuple_lig_uni[1], dict_rules)
+
+    # global current_path
+    # directory = os.path.join(os.getcwd(), sys.argv[2])
+    #
+    # files_name = []
+    # files_path = []
+    #
+    # dict_templates = {}
+    #
+    # for root, dirs, files in os.walk(directory):
+    #     for name in files:
+    #         if name.endswith(".java"):
+    #             files_name.append(name)
+    #             file_path = os.path.join(root, name)
+    #             files_path.append(file_path)
+    #
+    # print('Nome dos arquivos:\n', files_name, '\n')
+
+    # try:
+>>>>>>> e508b2d622b62a7489b119b396eccd928f782b2a
         # externalLista = []
         # for path in files_path:
         #     current_path = path

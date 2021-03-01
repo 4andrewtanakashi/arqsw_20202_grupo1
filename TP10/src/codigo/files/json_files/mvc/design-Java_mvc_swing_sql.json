@@ -1,0 +1,39 @@
+{
+
+	"Pacotes": {
+		"control": ["ClienteControl",  "PedidoControle",  "VendedorControl", "dados", "ProdutoControl"],
+		"dao": ["ClienteDAO", "PedidoDAO", "string", "FabricaConexao", "ProdutoDAO", "VendedorDAO"],
+		"Main": ["Main"],
+		"model": ["Cliente",  "Pedido",  "Produto",  "Vendedor"],
+		"View": [
+			"addProduto",   "NovoPedidoTela",   "PrincipalTela",  "VendedorTela",
+			"ClienteTela",  "PedidoTela", "ProdutoTela", "jTable1", "PesquisaProduto",
+			"string"
+		],
+		"EXTERNAL": ["sql", "swing"]
+	},
+
+	"LigacoesDePacotes": {
+		"control": {
+			"Pode": ["model"],
+	    	"Deve": ["dao"]
+		},
+
+		"dao": {
+			"Deve": ["sql", "model"]
+		},
+
+		"View": {
+			"Pode": ["model"],
+	    	"Deve": ["swing", "control"]
+		}
+
+	},
+
+	"LigacoesClassesComPacotes": {
+        "Main": {
+        	"Deve": ["View"]
+        }
+    }
+
+}
