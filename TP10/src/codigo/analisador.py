@@ -78,6 +78,7 @@ if __name__ == '__main__':
         attributes_from_project(externalLista)
         save_obj_to_file(externalLista, "/files/json_files/" + sys.argv[3])
 
+
         # Gera um grafo contendo os acessos de cada classe do projeto de entrada
         g = Grafo("/files/json_files/" + sys.argv[3])
         for class_name in g.pseudo_adjacent_matrix:
@@ -161,9 +162,10 @@ if __name__ == '__main__':
                     data_text += package_name + '-' + access_package + ':'
                     for access in dsm[package_name][access_package]:
                         print('\t', access)
-                        data_text += ('\t' + access)
+                        data_text += ('\t' + str(access))
             print()
-            Generated_rules_file.rules(tuple_lig_uni, dict_rules, data_text)
+
+        Generated_rules_file.rules(tuple_lig_uni, dict_rules, data_text)
 
 
     except OSError:

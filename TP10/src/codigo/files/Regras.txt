@@ -1,6 +1,3 @@
-R0: Somente o pacote controller Deve acessar o pacote service
-R1: Somente o pacote controller Deve acessar o pacote RestController
-R2: Somente o pacote repository Deve acessar o pacote CrudRepository
-R3: O pacote controller Pode acessar o pacote models
-R4: O pacote repository Deve acessar o pacote models
-R5: O pacote service Deve acessar o pacote models
+R0: Somente o pacote Controller Pode acessar o pacote View
+R1: O pacote Controller Deve acessar o pacote Model
+R2: O pacote View Deve acessar o pacote Model

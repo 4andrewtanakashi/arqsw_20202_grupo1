@@ -43,6 +43,7 @@ class Generated_rules_file:
 
         if dsm_classifier != "":
             pdf.ln(0.15)
+            pdf.set_xy(0,100)
             pdf.set_text_color(0,0,0)
             pdf.multi_cell(0, 5, dsm_classifier)
             pdf.ln(0.15)
