@@ -25,7 +25,6 @@ from g4_java8_python.Java8Parser import Java8Parser
 from g4_java8_python.Java8ParserListener import Java8ParserListener
 from antlr4.tree.Trees import *
 from util.utils import save_obj_to_file, attributes_from_project
-from util.clusterization import *
 from util.Grafo import *
 
 
@@ -48,69 +47,115 @@ if __name__ == '__main__':
     print('Nome dos arquivos:\n', files_name, '\n')
 
     try:
-        externalLista = []
-        for path in files_path:
-            current_path = path
+        # externalLista = []
+        # for path in files_path:
+        #     current_path = path
+        #
+        #     input = FileStream(path, "UTF-8")
+        #     lexer = Java8Lexer(input)
+        #     stream = CommonTokenStream(lexer)
+        #
+        #     stream.fill()
+        #
+        #     print("current_path: {}".format(str(current_path)))
+        #     parser = Java8Parser(stream)
+        #     tree = parser.compilationUnit()
+        #     listener = Java8ParserListener()
+        #     walker = ParseTreeWalker()
+        #     walker.walk(listener, tree)
+        #     externalLista.append(listener.dicionario)
+        #
+        #
+        # for i in range(len(files_name)):
+        #     externalLista[i]["file_name"] = files_name[i]
+        #
+        # attributes_from_project(externalLista)
+        # save_obj_to_file(externalLista, "data_mvc2.json")
 
-            input = FileStream(path, "UTF-8")
-            lexer = Java8Lexer(input)
-            stream = CommonTokenStream(lexer)
 
-            stream.fill()
-
-            print("current_path: {}".format(str(current_path)))
-            parser = Java8Parser(stream)
-            tree = parser.compilationUnit()
-            listener = Java8ParserListener()
-            walker = ParseTreeWalker()
-            walker.walk(listener, tree)
-            externalLista.append(listener.dicionario)
+        # Gera um grafo contendo os acessos de cada classe do projeto de entrada
+        g = Grafo("data_mvc.json")
+        for class_name in g.pseudo_adjacent_matrix:
+            print(class_name + ':', g.pseudo_adjacent_matrix[class_name])
 
 
-        for i in range(len(files_name)):
-            externalLista[i]["file_name"] = files_name[i]
+        # Carrega a arquitetura ideal de um projeto por meio de um arquivo JSON
+        restrictions = load_obj_to_file('arch_mvc2.json')
 
-        attributes_from_project(externalLista)
-        save_obj_to_file(externalLista, "data_mvc.json")
 
-        clusters = clusterization('data_mvp.json')
+        # Inicializa DSM de acordo com os nomes dos pacotes da arquitetura
+        dsm = {}
+        for accessed_package in restrictions['Pacotes']:
+            dsm[accessed_package] = {}
+            for access_package in restrictions['Pacotes']:
+                dsm[accessed_package][access_package] = []
 
-        g = Grafo("data_mvp.json")
 
-        dep_clusters = set()
-        new_names_clusters = {}
-        views_mvc_dep = []
-        for pivo_cluster in clusters:
-            classes_to_remove = []
-            for class_name in clusters[pivo_cluster]:
-                class_deps = g.pseudo_adjacent_matrix[class_name.split('.')[0]]
-                if len(class_deps) > 0:
-                    for dep_name in class_deps:
-                        for cluster in clusters:
-                            if dep_name + '.java' in clusters[cluster]:
-                                dep_clusters.add(cluster)
+        # Inicia a análise de conformidade arquitetural
+        for class_name in g.pseudo_adjacent_matrix:
+            class_package = ''
+            for package_name in restrictions['Pacotes']:
+                if class_name in restrictions['Pacotes'][package_name]:
+                    class_package = package_name
 
-                    not_dep_clusters = set(clusters_names) - dep_clusters
-                    if len(not_dep_clusters) == 1 and list(not_dep_clusters)[0] != pivo_cluster:
-                        clusters[list(not_dep_clusters)[0]].append(class_name)
-                        classes_to_remove.append(class_name)
+            class_deps_packs = set()
+            for dependency_class in g.pseudo_adjacent_matrix[class_name]:
+                for package_name in restrictions['Pacotes']:
+                    if dependency_class in restrictions['Pacotes'][package_name]:
+                        class_deps_packs.add(package_name)
+                        dsm[package_name][class_package].append({'accessed_class': dependency_class, 'access_class': class_name, 'situation': ''})
 
-                        for pivo_dep_name in class_deps:
-                            for dep_name in class_deps:
-                                if pivo_dep_name != dep_name:
-                                    if dep_name in g.pseudo_adjacent_matrix[pivo_dep_name]:
-                                         views_mvc_dep.append(dep_name)
+            # Verifica as existências das restrições 'Pode' e 'Deve'
+            have_can = 'Pode' in restrictions['LigacoesDePacotes'][class_package].keys()
+            have_must = 'Deve' in restrictions['LigacoesDePacotes'][class_package].keys()
+            package_restrictions = set()
+            if have_can and have_must:
+                package_restrictions = set(restrictions['LigacoesDePacotes'][class_package]['Pode']) | set(restrictions['LigacoesDePacotes'][class_package]['Deve'])
+            elif have_can:
+                package_restrictions = set(restrictions['LigacoesDePacotes'][class_package]['Pode'])
+            elif have_must:
+                package_restrictions = set(restrictions['LigacoesDePacotes'][class_package]['Deve'])
 
-            for class_name in classes_to_remove:
-                for pivo_class_name in clusters[pivo_cluster]:
-                    if class_name == pivo_class_name:
-                        clusters[pivo_cluster].remove(class_name)
+            # Verifica se há restrições de acesso impróprio ou alguma ausência de acesso para poder classificar corretamente
+            if len(package_restrictions.symmetric_difference(class_deps_packs)) > 0:
+                improper_access = class_deps_packs - package_restrictions
+                appropriate_access = class_deps_packs & package_restrictions
+                if len(improper_access) > 0:
+                    for improper_access_pack in improper_access:
+                        for access in dsm[improper_access_pack][class_package]:
+                            if access['access_class'] == class_name:
+                                access['situation'] = 'D'
+
+                absence_access = package_restrictions - class_deps_packs
+                for absence_access_pack in absence_access:
+                    if have_must and absence_access_pack in restrictions['LigacoesDePacotes'][class_package]['Deve']:
+                        dsm[absence_access_pack][class_package].append({'accessed_class': 'A', 'access_class': class_name, 'situation': 'A'})
+                    if have_can and absence_access_pack in restrictions['LigacoesDePacotes'][class_package]['Pode']:
+                        dsm[absence_access_pack][class_package].append({'accessed_class': '?', 'access_class': class_name, 'situation': '?'})
+
+                for appropriate_access_pack in appropriate_access:
+                    for access in dsm[appropriate_access_pack][class_package]:
+                        if access['access_class'] == class_name:
+                            access['situation'] = 'C'
+
+
+            else:
+                for package_restriction in package_restrictions:
+                    for access in dsm[package_restriction][class_package]:
+                        if access['access_class'] == class_name:
+                            access['situation'] = 'C'
+
 
         print()
-        if len(views_mvc_dep) == 0:
-            print('Projeto se assemelha à arquitetura MVP, pois a partir de possíveis Presenters verificou-se que suas dependencias não acessam outras classes, ou seja, não há Views acessando Models')
-        else:
-            print('Projeto se assemelha à arquitetura MVC, pois a partir de possíveis Controllers verificou-se que suas dependências utilizam outras classes também, ou seja, há Views acessando Models')
+        print('***************** // DSM Final // *****************')
+        for package_name in dsm:
+            for access_package in dsm[package_name]:
+                if len(dsm[package_name][access_package]) > 0:
+                    print(package_name + '-' + access_package + ':')
+                    for access in dsm[package_name][access_package]:
+                        print('\t', access)
+            print()
+
 
     except OSError:
         print('Algum erro aconteceu')
