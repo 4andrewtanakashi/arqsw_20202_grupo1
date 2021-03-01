@@ -1,8 +1,7 @@
-R0: Somente o pacote control Deve acessar o pacote dao
-R1: Somente o pacote dao Deve acessar o pacote sql
-R2: Somente o pacote View Deve acessar o pacote swing
-R3: Somente o pacote View Deve acessar o pacote control
-R4: Somente a classeMain Deve acessar o pacote View
-R5: O pacote control Pode acessar o pacote model
-R6: O pacote dao Deve acessar o pacote model
-R7: O pacote View Pode acessar o pacote model
+R0: Somente o pacote controller Deve acessar o pacote service
+R1: Somente o pacote controller Deve acessar o pacote RestController
+R2: Somente o pacote repository Deve acessar o pacote CrudRepository
+R3: Somente o pacote service Deve acessar o pacote repository
+R4: O pacote controller Pode acessar o pacote models
+R5: O pacote repository Deve acessar o pacote models
+R6: O pacote service Deve acessar o pacote models

@@ -1,0 +1,28 @@
+{
+
+	"Pacotes": {
+		"cadastropessoas": ["CadastropessoaApplication"],
+		"controller": ["PessoasControl"],
+		"models": ["Pessoa"],
+		"repository": ["PessoaRepository"],
+		"service": [ "PessoasService"],
+		"EXTERNAL": ["CrudRepository", "RestController"]
+	},
+
+	"LigacoesDePacotes": {
+		"controller": {
+			"Pode": ["models"],
+	    	"Deve": ["service", "RestController"]
+		},
+
+		"repository": {
+			"Deve": ["CrudRepository", "models"]
+		},
+
+		"service": {
+	    	"Deve": ["repository", "models"]
+		}
+
+	}
+
+}

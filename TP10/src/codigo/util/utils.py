@@ -30,16 +30,16 @@ def load_obj_to_file (path_name_file):
     except OSError:
         print(B_Colors.FAIL + 'Algum erro aconteceu ao carregar no arquivo de JSON' + B_Colors.ENDC)
 
-# def attributes_from_project (externalList):
-#     for elem_dict in externalList:
-#         elem_dict["structure"]["count_attr_from_proj"] = 0
-#         for elem_dictII in externalList:
-#             if elem_dict["name_obj"] != elem_dictII["name_obj"]:
-#                  if elem_dict["type"].__contains__(elem_dictII["name_obj"]):
-#                     elem_dict["structure"]["count_attr_from_proj"] += 1
-#                     continue
-#             else:
-#                 continue
+def attributes_from_project (externalList):
+    for elem_dict in externalList:
+        elem_dict["structure"]["count_attr_from_proj"] = 0
+        for elem_dictII in externalList:
+            if elem_dict["name_obj"] != elem_dictII["name_obj"]:
+                 if elem_dict["type"].__contains__(elem_dictII["name_obj"]):
+                    elem_dict["structure"]["count_attr_from_proj"] += 1
+                    continue
+            else:
+                continue
 
 def delete_elems_from_dict (dict_obj, key, content):
     dict_obj[key].remove(content)
@@ -90,21 +90,9 @@ def load_ligacoesUnicas (LigacoesUnicas, Ligacoes_rules):
 
 def generated_rules_unique (obj):
     LigacoesUnicasPacotes = {}
-    LigacoesUnicasClassComPac = {}
     LigacoesDePacotes = obj["LigacoesDePacotes"]
-    LigacoesClassesComPacotes = obj["LigacoesClassesComPacotes"]
     load_ligacoesUnicas(LigacoesUnicasPacotes, LigacoesDePacotes)
-    load_ligacoesUnicas(LigacoesUnicasClassComPac, LigacoesClassesComPacotes)
-
-    copy_LigacoesUnicasPacotes = copy_content(LigacoesUnicasPacotes)
-    for k_lig_uni_pac, cont_lig_uni_pac in copy_LigacoesUnicasPacotes.items():
-        for k_lig_uni_pac_inter, cont_lig_uni_pac_inter in cont_lig_uni_pac.items():
-            for elem_content in cont_lig_uni_pac_inter:
-                if not if_not_exist_rule_in_others_sessions(k_lig_uni_pac_inter, elem_content, LigacoesUnicasClassComPac):
-                    delete_elems_from_dict(LigacoesUnicasPacotes[k_lig_uni_pac], k_lig_uni_pac_inter, elem_content, True)
 
     clean_emptys(LigacoesUnicasPacotes)
-    clean_emptys(LigacoesUnicasClassComPac)
     clean_emptys(LigacoesDePacotes)
-    clean_emptys(LigacoesClassesComPacotes)
-    return (LigacoesUnicasPacotes, LigacoesUnicasClassComPac)
+    return LigacoesUnicasPacotes

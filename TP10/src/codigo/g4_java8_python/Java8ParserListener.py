@@ -41,7 +41,6 @@ class Java8ParserListener (ParseTreeListener):
     # Enter a parse tree produced by Java8Parser#normalClassDeclaration.
     def enterNormalClassDeclaration (self, ctx:Java8Parser.NormalClassDeclarationContext):
         for child_class_dec in ctx.getChildren():
-            print("child_class_dec: ", child_class_dec.getText())
             if isinstance(child_class_dec, tree.Tree.TerminalNodeImpl) and confim_Not_Element(child_class_dec.getText()) and self.dicionario["name_obj"] == '':
                 self.dicionario["name_obj"] = child_class_dec.getText()
             if isinstance(child_class_dec, Java8Parser.ClassModifierContext):
@@ -142,5 +141,4 @@ class Java8ParserListener (ParseTreeListener):
 
     # Enter a parse tree produced by Java8Parser#fieldDeclaration.
     def enterFieldDeclaration(self, ctx:Java8Parser.FieldDeclarationContext):
-        print("enterFieldDeclaration: ", ctx.getText())
         self.dicionario["structure"]["count_attributes"] += 1

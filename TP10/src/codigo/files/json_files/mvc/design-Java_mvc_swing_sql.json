@@ -28,12 +28,6 @@
 	    	"Deve": ["swing", "control"]
 		}
 
-	},
-
-	"LigacoesClassesComPacotes": {
-        "Main": {
-        	"Deve": ["View"]
-        }
-    }
+	}
 
 }
