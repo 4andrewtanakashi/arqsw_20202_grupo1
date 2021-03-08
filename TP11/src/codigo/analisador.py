@@ -25,6 +25,7 @@ from g4_java8_python.Java8Parser import Java8Parser
 from g4_java8_python.Java8ParserListener import Java8ParserListener
 from antlr4.tree.Trees import *
 from util.utils import load_obj_to_file, attributes_from_project, generated_rules_unique
+from util.circos import *
 from util.Generated_rules_file import *
 from util.Grafo import *
 
@@ -38,10 +39,6 @@ def scale_calc(x, x_max, x_min, delta=0.1):
     return result
 
 if __name__ == '__main__':
-    # dict_rules = load_obj_to_file(sys.argv[1])
-    # tuple_lig_uni = generated_rules_unique(dict_rules)
-    # Generated_rules_file.rules(tuple_lig_uni, dict_rules)
-
 
     global current_path
     directory = os.path.join(os.getcwd(), sys.argv[2])
@@ -64,47 +61,48 @@ if __name__ == '__main__':
     print('Nome dos arquivos:\n', files_name, '\n')
 
     try:
-        externalLista = []
-        for path in files_path:
-            current_path = path
+        # externalLista = []
+        # for path in files_path:
+        #     current_path = path
+        #
+        #     input = FileStream(path, "UTF-8")
+        #     lexer = Java8Lexer(input)
+        #     stream = CommonTokenStream(lexer)
+        #
+        #     stream.fill()
+        #
+        #     print("current_path: {}".format(str(current_path)))
+        #     parser = Java8Parser(stream)
+        #     tree = parser.compilationUnit()
+        #     listener = Java8ParserListener()
+        #     walker = ParseTreeWalker()
+        #     walker.walk(listener, tree)
+        #     externalLista.append(listener.dicionario)
+        #
+        #
+        # for i in range(len(files_name)):
+        #     externalLista[i]["file_name"] = files_name[i]
+        #
+        # for elem_dict in externalLista:
+        #     packages[elem_dict["package"]].append(elem_dict["name_obj"])
+        #
+        # print("packages: ", packages)
+        #
+        # attributes_from_project(externalLista)
+        # save_obj_to_file(externalLista, "/files/json_files/" + sys.argv[3])
+        #
+        # # Gera um grafo contendo os acessos de cada classe do projeto de entrada
+        # g = Grafo("/files/json_files/" + sys.argv[3])
+        # for class_name in g.pseudo_adjacent_matrix:
+        #     print(class_name + ':', g.pseudo_adjacent_matrix[class_name])
+        #
+        # obj_json = {}
+        # obj_json["packages"] = packages
+        # obj_json["LigacoesDeClasses"] = g.pseudo_adjacent_matrix
+        #
+        # save_obj_to_file(obj_json, sys.argv[1])
 
-            input = FileStream(path, "UTF-8")
-            lexer = Java8Lexer(input)
-            stream = CommonTokenStream(lexer)
-
-            stream.fill()
-
-            print("current_path: {}".format(str(current_path)))
-            parser = Java8Parser(stream)
-            tree = parser.compilationUnit()
-            listener = Java8ParserListener()
-            walker = ParseTreeWalker()
-            walker.walk(listener, tree)
-            externalLista.append(listener.dicionario)
-
-
-        for i in range(len(files_name)):
-            externalLista[i]["file_name"] = files_name[i]
-
-        for elem_dict in externalLista:
-            packages[elem_dict["package"]].append(elem_dict["name_obj"])
-
-        print("packages: ", packages)
-
-        attributes_from_project(externalLista)
-        save_obj_to_file(externalLista, "/files/json_files/" + sys.argv[3])
-
-        # Gera um grafo contendo os acessos de cada classe do projeto de entrada
-        g = Grafo("/files/json_files/" + sys.argv[3])
-        for class_name in g.pseudo_adjacent_matrix:
-            print(class_name + ':', g.pseudo_adjacent_matrix[class_name])
-
-        obj_json = {}
-        obj_json["packages"] = packages
-        obj_json["LigacoesDeClasses"] = g.pseudo_adjacent_matrix
-
-        save_obj_to_file(obj_json, sys.argv[1])
-
+        initialize_circos_plot(load_obj_to_file(sys.argv[1]))
 
         ### VisuCity
         # Carrega arquivo JSON com as dependências de um projeto
