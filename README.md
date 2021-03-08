@@ -6,65 +6,129 @@
     Gabriel Henrique Silva Amorim (ghamorim)
 ```
 ## Assuntos relacionados
-Análise Estática/Análise Dinâmica, ...
 
-<!--## Ferramentas utilizadas
-| Ferramentas| Versão|
-|------------|-------|
-| SQLite 3   | 3.28.0|
-| Django     | 2.2.7 |
-| Python     | 3.7.3 |
-| HTML + CSS |-------|-->
+ Análise Estática/Análise Dinâmica,     Remodularização,            
+ Métricas,                               Similaridade,               
+ Refatoração,                            Clusterização,              
+ Padrões de Projeto,                     Descobrimento Arquitetural,
+ Padrão Arquitetural,                    Conformidade Arquitetural
+
+## Ferramentas utilizadas
+| Ferramentas|  Versão |
+|------------|---------|
+| Python     |  3.7.3  |
+| ANTLR4     |  4.9.1  |
+| JSON       |    -    |
+| Java       |  1.8    |
 
 ## Estrutura do diretório
 ```
 Arquitetura de Software/
 ├── TP1 - Análise Estática/Dinâmica
 |   ├── apresentacao.mp4
-|   ├── apresentacao.mp4
+|   ├── apresentacao.pdf
 │   └── src/
 │        ├── README.md
 │        └── codigo/
 │               ├── g4/
-│               ├── exaples/
+│               ├── examples/
 │               ├── requeriments.txt
 │               └── analisador.py
 |
 ├── TP2 - Métricas
 |   ├── apresentacao.mp4
-|   ├── apresentacao.mp4
+|   ├── apresentacao.pdf
 │   └── src/
 │        ├── README.md
 │        └── codigo/
 │               ├── g4/
-│               ├── exaples/
+│               ├── examples/
 │               ├── requeriments.txt
 │               └── analisador.py
 |
 ├── TP3 - Refatoração
 |   ├── apresentacao.mp4
-|   ├── apresentacao.mp4
+|   ├── apresentacao.pdf
 │   └── src/
 │        ├── README.md
 │        └── codigo/
 │               ├── g4/
-│               ├── exaples/
+│               ├── examples/
 │               ├── requeriments.txt
 │               └── analisador.py
 |
-├── TP4
-│   └── src
-├── TP5
-│   └── src
-├── TP6
-│   └── src
-├── TP7
-│   └── src
-├── TP8
-│   └── src
-├── TP9
-│   └── src
-├── TP10
+├── TP4 - Padrões de Projeto
+|   ├── apresentacao.mp4
+|   ├── apresentacao.pdf
+│   └── src/
+│        ├── README.md
+│        └── codigo/
+│               ├── g4/
+│               ├── examples/
+│               ├── requeriments.txt
+│               └── analisador.py
+|
+|
+├── TP5 - Padrão Arquitetural
+|   ├── apresentacao.mp4
+|   ├── apresentacao.pdf
+│   └── src/
+│        ├── README.md
+│        └── codigo/
+│               ├── g4/
+│               ├── examples/
+│               ├── requeriments.txt
+│               └── analisador.py
+|
+|
+├── TP6 - Remodularização
+|   ├── apresentacao.mp4
+|   ├── apresentacao.pdf
+│   └── src/
+│        ├── README.md
+│        └── codigo/
+│               ├── g4/
+│               ├── examples/
+│               ├── requeriments.txt
+│               └── analisador.py
+|
+|
+├── TP7 - Similaridade
+|   ├── apresentacao.pdf
+│   └── src/
+│        ├── README.md
+│        └── codigo/
+│               ├── g4/
+│               ├── examples/
+│               ├── requeriments.txt
+│               └── analisador.py
+|
+|
+├── TP8 - Clusterização
+|   ├── apresentacao.mp4
+|   ├── apresentacao.pdf
+│   └── src/
+│        ├── README.md
+│        └── codigo/
+│               ├── g4/
+│               ├── examples/
+│               ├── requeriments.txt
+│               └── analisador.py
+|
+|
+├── TP9 - Descobrimento Arquitetural
+|   ├── apresentacao.mp4
+|   ├── apresentacao.pdf
+│   └── src/
+│        ├── README.md
+│        └── codigo/
+│               ├── g4/
+│               ├── examples/
+│               ├── requeriments.txt
+│               └── analisador.py
+|
+|
+├── TP10 - Conformidade Arquitetural
 │   └── src
 ├── TP11
 │   └── src
@@ -76,12 +140,12 @@ Arquitetura de Software/
 - [X] TP1
 - [X] TP2
 - [X] TP3
-- [ ] TP4
-- [ ] TP5
-- [ ] TP6
-- [ ] TP7
-- [ ] TP8
-- [ ] TP9
+- [X] TP4
+- [X] TP5
+- [X] TP6
+- [X] TP7 :finnadie:
+- [X] TP8
+- [X] TP9
 - [ ] TP10
 - [ ] TP11
 - [ ] TP12
