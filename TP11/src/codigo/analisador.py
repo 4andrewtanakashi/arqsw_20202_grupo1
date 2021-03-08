@@ -61,50 +61,50 @@ if __name__ == '__main__':
     print('Nome dos arquivos:\n', files_name, '\n')
 
     try:
-        # externalLista = []
-        # for path in files_path:
-        #     current_path = path
-        #
-        #     input = FileStream(path, "UTF-8")
-        #     lexer = Java8Lexer(input)
-        #     stream = CommonTokenStream(lexer)
-        #
-        #     stream.fill()
-        #
-        #     print("current_path: {}".format(str(current_path)))
-        #     parser = Java8Parser(stream)
-        #     tree = parser.compilationUnit()
-        #     listener = Java8ParserListener()
-        #     walker = ParseTreeWalker()
-        #     walker.walk(listener, tree)
-        #     externalLista.append(listener.dicionario)
-        #
-        #
-        # for i in range(len(files_name)):
-        #     externalLista[i]["file_name"] = files_name[i]
-        #
-        # for elem_dict in externalLista:
-        #     packages[elem_dict["package"]].append(elem_dict["name_obj"])
-        #
-        # print("packages: ", packages)
-        #
-        # attributes_from_project(externalLista)
-        # save_obj_to_file(externalLista, "/files/json_files/" + sys.argv[3])
-        #
-        # # Gera um grafo contendo os acessos de cada classe do projeto de entrada
-        # g = Grafo("/files/json_files/" + sys.argv[3])
-        # for class_name in g.pseudo_adjacent_matrix:
-        #     print(class_name + ':', g.pseudo_adjacent_matrix[class_name])
-        #
-        # obj_json = {}
-        # obj_json["packages"] = packages
-        # obj_json["LigacoesDeClasses"] = g.pseudo_adjacent_matrix
-        #
-        # save_obj_to_file(obj_json, sys.argv[1])
+        externalLista = []
+        for path in files_path:
+            current_path = path
+        
+            input = FileStream(path, "UTF-8")
+            lexer = Java8Lexer(input)
+            stream = CommonTokenStream(lexer)
+        
+            stream.fill()
+        
+            print("current_path: {}".format(str(current_path)))
+            parser = Java8Parser(stream)
+            tree = parser.compilationUnit()
+            listener = Java8ParserListener()
+            walker = ParseTreeWalker()
+            walker.walk(listener, tree)
+            externalLista.append(listener.dicionario)
+        
+        
+        for i in range(len(files_name)):
+            externalLista[i]["file_name"] = files_name[i]
+        
+        for elem_dict in externalLista:
+            packages[elem_dict["package"]].append(elem_dict["name_obj"])
+        
+        print("packages: ", packages)
+        
+        attributes_from_project(externalLista)
+        save_obj_to_file(externalLista, "/files/json_files/" + sys.argv[3])
+        
+        # Gera um grafo contendo os acessos de cada classe do projeto de entrada
+        g = Grafo("/files/json_files/" + sys.argv[3])
+        for class_name in g.pseudo_adjacent_matrix:
+            print(class_name + ':', g.pseudo_adjacent_matrix[class_name])
+        
+        obj_json = {}
+        obj_json["packages"] = packages
+        obj_json["LigacoesDeClasses"] = g.pseudo_adjacent_matrix
+        
+        save_obj_to_file(obj_json, sys.argv[1])
 
         initialize_circos_plot(load_obj_to_file(sys.argv[1]))
 
-        ### VisuCity
+        ### VisuArch
         # Carrega arquivo JSON com as dependências de um projeto
         dictionary_data = load_obj_to_file("/files/json_files/" + sys.argv[3])
 
@@ -138,7 +138,6 @@ if __name__ == '__main__':
                 intern_counter += 1
             extern_counter += 2
 
-        mlab.savefig("visuarch.png")
         mlab.show()
 
 
