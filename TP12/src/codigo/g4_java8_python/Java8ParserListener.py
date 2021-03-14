@@ -30,7 +30,17 @@ class Java8ParserListener (ParseTreeListener):
         self.dicionario["structure"]["count_methods"] = 0
         self.dicionario["structure"]["count_eleme_view"] = 0
         self.dicionario["name_obj"] = ''
+        self.dicionario["package"] = ''
+        self.dicionario["parent"] = ''
 
+    # Enter a parse tree produced by Java8Parser#typeBound.
+    def enterTypeBound(self, ctx:Java8Parser.TypeBoundContext):
+        print("enterTypeBound: ", ctx.getText())
+        self.dicionario["parent"] = ctx.getText()
+
+    # Enter a parse tree produced by Java8Parser#packageName.
+    def enterPackageName(self, ctx:Java8Parser.PackageNameContext):
+        self.dicionario["package"] = ctx.getText()
 
     # Enter a parse tree produced by Java8Parser#singleTypeImportDeclaration.
     def enterSingleTypeImportDeclaration (self, ctx:Java8Parser.SingleTypeImportDeclarationContext):

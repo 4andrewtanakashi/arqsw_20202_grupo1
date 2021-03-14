@@ -1,17 +1,43 @@
 {
 	"Pacotes": {
-		"Controller": ["DiretorController",  "EscolaController",  "EstudanteController", "ProfessorController", "ProjetoMVC"],
-		"Model": ["Diretor", "Disciplina", "Escola", "Estudante", "Pessoa", "Professor", "TrabalhaEscola"],
-		"View": ["DiretorView", "EscolaView", "EstudanteView", "ProfessorView"]
+		"Controller": [
+			"DiretorController",
+			"EscolaController",
+			"EstudanteController",
+			"ProfessorController",
+			"ProjetoMVC"
+		],
+		"Model": [
+			"Diretor",
+			"Disciplina",
+			"Escola",
+			"Estudante",
+			"Pessoa",
+			"Professor",
+			"TrabalhaEscola",
+			"EscolaView"
+		],
+		"View": [
+			"DiretorView",
+			"EstudanteView",
+			"ProfessorView"
+		]
 	},
 	"LigacoesDePacotes": {
 		"Controller": {
-    	"Deve": ["Model"],
-      "Pode": ["View"]
+			"Deve": [
+				"Model",
+				"View"
+			]
 		},
 		"View": {
-			"Deve": ["Model"]
+			"Deve": [
+				"Model"
+			],
+			"Pode": [
+				"Controller"
+			]
 		},
-    "Model": {}
+		"Model": {}
 	}
 }
