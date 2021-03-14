@@ -1,0 +1,20 @@
+{
+	"Pacotes": {
+		"controllers": ["HomeController",  "UsuariosController"],
+		"models": ["Usuarios"],
+		"repositories": ["UsuariosRepository"],
+		"services": ["UsuariosService"]
+	},
+	"LigacoesDePacotes": {
+		"Controller": {
+    		"Deve": ["services"],
+      		"Pode": ["models", "repositories"]
+		},
+		"repositories": {
+			"Deve": ["models"]
+		},
+    	"services": {
+    		"Deve": ["repositories", "models"]
+		}
+	}
+}

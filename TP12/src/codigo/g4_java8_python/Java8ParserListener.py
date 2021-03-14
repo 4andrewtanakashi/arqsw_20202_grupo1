@@ -53,6 +53,10 @@ class Java8ParserListener (ParseTreeListener):
         for child_class_dec in ctx.getChildren():
             if isinstance(child_class_dec, tree.Tree.TerminalNodeImpl) and confim_Not_Element(child_class_dec.getText()) and self.dicionario["name_obj"] == '':
                 self.dicionario["name_obj"] = child_class_dec.getText()
+            if isinstance(child_class_dec, Java8Parser.SuperclassContext):
+                print("SuperclassContext: ", child_class_dec.getText())
+            if  isinstance(child_class_dec, Java8Parser.SuperinterfacesContext):
+                print("SuperclassContext: ", child_class_dec.getText())
             if isinstance(child_class_dec, Java8Parser.ClassModifierContext):
                 for child_class_modifier_ctx in child_class_dec.getChildren():
                     if isinstance(child_class_modifier_ctx, Java8Parser.AnnotationContext):
@@ -94,6 +98,10 @@ class Java8ParserListener (ParseTreeListener):
         for child_interface_dec in ctx.getChildren():
             if isinstance(child_interface_dec, tree.Tree.TerminalNodeImpl) and confim_Not_Element(child_interface_dec.getText()) and self.dicionario["name_obj"] == '':
                 self.dicionario["name_obj"] = child_interface_dec.getText()
+            if isinstance(child_interface_dec, Java8Parser.SuperclassContext):
+                print("child_interface_dec SuperclassContext: ", child_interface_dec.getText())
+            if  isinstance(child_interface_dec, Java8Parser.SuperinterfacesContext):
+                print("child_interface_dec SuperinterfacesContext: ", child_interface_dec.getText())
             if isinstance(child_interface_dec, Java8Parser.InterfaceModifierContext):
                 for child_interface_modifier_ctx in child_interface_dec.getChildren():
                     if isinstance(child_interface_modifier_ctx, Java8Parser.AnnotationContext):
@@ -104,6 +112,10 @@ class Java8ParserListener (ParseTreeListener):
         for child_enum_dec in ctx.getChildren():
             if isinstance(child_enum_dec, tree.Tree.TerminalNodeImpl) and confim_Not_Element(child_enum_dec.getText()) and self.dicionario["name_obj"] == '':
                 self.dicionario["name_obj"] = child_enum_dec.getText()
+            if isinstance(child_enum_dec, Java8Parser.SuperclassContext):
+                print("SuperclassContext: ", child_enum_dec.getText())
+            if  isinstance(child_enum_dec, Java8Parser.SuperinterfacesContext):
+                print("SuperclassContext: ", child_enum_dec.getText())
             if isinstance(child_enum_dec, Java8Parser.ClassModifierContext):
                 for child_enum_modifier_ctx in child_enum_dec.getChildren():
                     if isinstance(child_enum_modifier_ctx, Java8Parser.AnnotationContext):
