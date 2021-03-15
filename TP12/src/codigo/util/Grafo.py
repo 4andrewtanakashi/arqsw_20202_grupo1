@@ -51,3 +51,9 @@ class Grafo:
                                 if ele_dict_data_compare["method_names"].__contains__(method_outs[i_met]):
                                     self.pseudo_adjacent_matrix[name_class].append(ele_dict_data_compare["name_obj"])
                                 i_met += 1
+            if ele_dict_data["extends"] != []:
+                for parent in ele_dict_data["extends"]:
+                    self.pseudo_adjacent_matrix[name_class].append(parent)            
+            if ele_dict_data["implements"] != []:
+                for parent in ele_dict_data["implements"]:
+                    self.pseudo_adjacent_matrix[name_class].append(parent)

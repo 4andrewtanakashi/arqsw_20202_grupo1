@@ -18,44 +18,31 @@ import os
 import sys
 import io
 
-import numpy as np
-
 from antlr4 import *
 from g4_java8_python.Java8Lexer import Java8Lexer
 from g4_java8_python.Java8Parser import Java8Parser
 from g4_java8_python.Java8ParserListener import Java8ParserListener
 from antlr4.tree.Trees import *
+import numpy as np
+
 from util.utils import load_obj_to_file, attributes_from_project, generated_rules_unique
 from util.Generated_rules_file import *
 from util.Grafo import *
 
-def use_database(file):
-    dictionary_data = load_obj_to_file(file)
 
-    list_X = []
-    for elem_dict in dictionary_data:
-        list_internal_X = []
-        list_internal_X.append(elem_dict['type'])
-        list_internal_X.append(elem_dict['imports'])
-        list_internal_X.append(elem_dict['annotation'])
-        list_internal_X.append(elem_dict['method_names'])
-        list_internal_X.append(elem_dict['invocation'])
-        list_internal_X.append(elem_dict['structure'])
-
-        list_X.append(list_internal_X)
- 
-    X_train = np.array(list_X,dtype=list)
-
-    return X_train
+class bcolors:
+    HEADER = '\033[97m'
+    DIVERGENCE = '\033[93m'
+    ABSENSE = '\033[91m'
+    CONVERGENCE = '\033[92m'
+    WARNING = '\033[96m'
+    TITLE = '\033[95m'
+    ENDC = '\033[0m'
 
 
 def find_class_deps(class_name, classes_dependences, classes_names):
     class_index = classes_names.index(class_name)
     class_deps = classes_dependences[class_index]
-    print()
-    print()
-    print()
-    print(class_deps)
     return class_deps
 
 
@@ -101,17 +88,13 @@ def calculate_similarity_Jaccard(x1, x2):
     return jaccard
 
 
-def get_nearest_neighbors(X_train, y_train, x, files_names, k):
+def get_nearest_neighbors(X_train, y_train, x, classes_names, k):
     distances = []
     for i in range(len(X_train)):
         if not (X_train[i] == np.array(x, dtype="object")).all():
-            distances.append((calculate_similarity_Jaccard(X_train[i], x), y_train[i], files_names[i]))
+            distances.append((calculate_similarity_Jaccard(X_train[i], x), y_train[i], classes_names[i]))
 
-    print()
-    print('\n', x)
-    print('\nDistancias:\n', distances)
     nearest_neighbors = sorted(distances, reverse=True, key=lambda tup: tup[0])[:k]
-    print('\nVizinhos mais próximos:\n', nearest_neighbors)
 
     return list(zip(*nearest_neighbors))[1]
 
@@ -124,23 +107,116 @@ def classify(nearest_neighbors, classes):
     return max(count_classes)[1]
 
 
-def knn_algorithm(X_train, y_train, files_names):
-    # predictions = {clusters_names[0]: [], clusters_names[1]: [], clusters_names[2]: []}
-    # for i in range(len(X_train)):
+def load_deps(path, packages):
+    dictionary_data = load_obj_to_file(path)
+    classes_dependences = []
+    classes_names = []
+    classes_extends_implements = []
+    for elem_dict in dictionary_data:
+        dep_intern = []
+        dep_intern.append(elem_dict['type'])
+        dep_intern.append(elem_dict['imports'])
+        dep_intern.append(elem_dict['annotation'])
+        dep_intern.append(elem_dict['method_names'])
+        dep_intern.append(elem_dict['invocation'])
+        dep_intern.append(elem_dict['structure'])
 
-    nearest_neighbors = get_nearest_neighbors(X_train, y_train, X_train[i], files_names, k = 3)
-    y = classify(nearest_neighbors, clusters_names)
-    # predictions[clusters_names[y]].append(files_names[i])
+        classes_names.append(elem_dict['name_obj'])
+        classes_extends_implements.append({'extends': elem_dict['extends'], 'implements': elem_dict['implements']})
 
-    return y
+        classes_dependences.append(dep_intern)
+
+    package_classes = []
+    for class_name in classes_names:
+        for package in packages:
+            if class_name in packages[package]:
+                package_classes.append(package)
+
+    return package_classes, classes_names, classes_dependences, classes_extends_implements
+
+
+def dsm(restrictions, classes_connections):
+    dsm = {}
+    for accessed_package in restrictions['Pacotes']:
+        dsm[accessed_package] = {}
+        for access_package in restrictions['Pacotes']:
+            dsm[accessed_package][access_package] = []
+
+
+    # Inicia a análise de conformidade arquitetural
+    for class_name in g.pseudo_adjacent_matrix:
+        class_package = ''
+        for package_name in restrictions['Pacotes']:
+            if class_name in restrictions['Pacotes'][package_name]:
+                class_package = package_name
+
+        class_deps_packs = set()
+        for dependency_class in g.pseudo_adjacent_matrix[class_name]:
+            for package_name in restrictions['Pacotes']:
+                if dependency_class in restrictions['Pacotes'][package_name]:
+                    class_deps_packs.add(package_name)
+                    dsm[package_name][class_package].append({'accessed_class': dependency_class, 'access_class': class_name, 'situation': ''})
+
+        # Verifica as existências das restrições 'Pode' e 'Deve'
+        have_can = 'Pode' in restrictions['LigacoesDePacotes'][class_package].keys()
+        have_must = 'Deve' in restrictions['LigacoesDePacotes'][class_package].keys()
+        package_restrictions = set()
+        if have_can and have_must:
+            package_restrictions = set(restrictions['LigacoesDePacotes'][class_package]['Pode']) | set(restrictions['LigacoesDePacotes'][class_package]['Deve'])
+        elif have_can:
+            package_restrictions = set(restrictions['LigacoesDePacotes'][class_package]['Pode'])
+        elif have_must:
+            package_restrictions = set(restrictions['LigacoesDePacotes'][class_package]['Deve'])
+
+        # Verifica se há restrições de acesso impróprio ou alguma ausência de acesso para poder classificar corretamente
+        if len(package_restrictions.symmetric_difference(class_deps_packs)) > 0:
+            improper_access = class_deps_packs - package_restrictions
+            appropriate_access = class_deps_packs & package_restrictions
+            if len(improper_access) > 0:
+                for improper_access_pack in improper_access:
+                    for access in dsm[improper_access_pack][class_package]:
+                        if access['access_class'] == class_name:
+                            access['situation'] = 'D'
+
+            absence_access = package_restrictions - class_deps_packs
+            for absence_access_pack in absence_access:
+                if have_must and absence_access_pack in restrictions['LigacoesDePacotes'][class_package]['Deve']:
+                    dsm[absence_access_pack][class_package].append({'accessed_class': 'A', 'access_class': class_name, 'situation': 'A'})
+                if have_can and absence_access_pack in restrictions['LigacoesDePacotes'][class_package]['Pode']:
+                    dsm[absence_access_pack][class_package].append({'accessed_class': '?', 'access_class': class_name, 'situation': '?'})
+
+            for appropriate_access_pack in appropriate_access:
+                for access in dsm[appropriate_access_pack][class_package]:
+                    if access['access_class'] == class_name:
+                        access['situation'] = 'C'
+
+        else:
+            for package_restriction in package_restrictions:
+                for access in dsm[package_restriction][class_package]:
+                    if access['access_class'] == class_name:
+                        access['situation'] = 'C'
+
+
+    # Imprime classificação das relações
+    print(bcolors.TITLE + '***************** // Classificação das Relações // *****************' + bcolors.ENDC)
+    for package_name in dsm:
+        for access_package in dsm[package_name]:
+            if len(dsm[package_name][access_package]) > 0:
+                print('\n', bcolors.HEADER + access_package, '->', package_name + ':')
+                for access in dsm[package_name][access_package]:
+                    if access['situation'] == 'D':
+                        print('\t' + bcolors.DIVERGENCE + access['access_class'], '->', access['accessed_class'] + bcolors.ENDC)
+                    elif access['situation'] == 'A':
+                        print('\t' + bcolors.ABSENSE + access['access_class'], '->', access['accessed_class'] + bcolors.ENDC)
+                    elif access['situation'] == '?':
+                        print('\t' + bcolors.WARNING + access['access_class'], '->', access['accessed_class'] + bcolors.ENDC)
+                    else:
+                        print('\t' + bcolors.CONVERGENCE + access['access_class'], '->', access['accessed_class'] + bcolors.ENDC)
+
+    return dsm
 
 
 if __name__ == '__main__':
-    # dict_rules = load_obj_to_file(sys.argv[1])
-    # tuple_lig_uni = generated_rules_unique(dict_rules)
-    # Generated_rules_file.rules(tuple_lig_uni, dict_rules)
-
-
     global current_path
     directory = os.path.join(os.getcwd(), sys.argv[1])
 
@@ -177,148 +253,56 @@ if __name__ == '__main__':
             walker.walk(listener, tree)
             externalLista.append(listener.dicionario)
 
-        # help(Java8Parser)
-        for x in externalLista[0]:
-            print(x)
-        sys.exit()
+        for i in range(len(files_name)):
+            externalLista[i]["file_name"] = files_name[i]
 
+        attributes_from_project(externalLista)
+        save_obj_to_file(externalLista, "/files/json_files/deps/" + sys.argv[2])
 
-        # for i in range(len(files_name)):
-        #     externalLista[i]["file_name"] = files_name[i]
-
-        # attributes_from_project(externalLista)
-        # save_obj_to_file(externalLista, "/files/json_files/" + sys.argv[3])
-
+        path_data_deps = "/files/json_files/deps/" + sys.argv[4]
 
         # Gera um grafo contendo os acessos de cada classe do projeto de entrada
-        g = Grafo("/files/json_files/" + sys.argv[3])
+        g = Grafo(path_data_deps)
         for class_name in g.pseudo_adjacent_matrix:
             print(class_name + ':', g.pseudo_adjacent_matrix[class_name])
 
 
         # Carrega a arquitetura ideal de um projeto por meio de um arquivo JSON
-        restrictions = load_obj_to_file(sys.argv[2])
+        restrictions = load_obj_to_file(sys.argv[3])
 
 
-        # Inicializa DSM de acordo com os nomes dos pacotes da arquitetura
-        dsm = {}
-        for accessed_package in restrictions['Pacotes']:
-            dsm[accessed_package] = {}
-            for access_package in restrictions['Pacotes']:
-                dsm[accessed_package][access_package] = []
+        # dsm = DSM(restrictions=restrictions, classes_connections=g.pseudo_adjacent_matrix)
+        dsm = dsm(restrictions, g.pseudo_adjacent_matrix)
 
 
-        # Inicia a análise de conformidade arquitetural
-        for class_name in g.pseudo_adjacent_matrix:
-            class_package = ''
-            for package_name in restrictions['Pacotes']:
-                if class_name in restrictions['Pacotes'][package_name]:
-                    class_package = package_name
-
-            class_deps_packs = set()
-            for dependency_class in g.pseudo_adjacent_matrix[class_name]:
-                for package_name in restrictions['Pacotes']:
-                    if dependency_class in restrictions['Pacotes'][package_name]:
-                        class_deps_packs.add(package_name)
-                        dsm[package_name][class_package].append({'accessed_class': dependency_class, 'access_class': class_name, 'situation': ''})
-
-            # Verifica as existências das restrições 'Pode' e 'Deve'
-            have_can = 'Pode' in restrictions['LigacoesDePacotes'][class_package].keys()
-            have_must = 'Deve' in restrictions['LigacoesDePacotes'][class_package].keys()
-            package_restrictions = set()
-            if have_can and have_must:
-                package_restrictions = set(restrictions['LigacoesDePacotes'][class_package]['Pode']) | set(restrictions['LigacoesDePacotes'][class_package]['Deve'])
-            elif have_can:
-                package_restrictions = set(restrictions['LigacoesDePacotes'][class_package]['Pode'])
-            elif have_must:
-                package_restrictions = set(restrictions['LigacoesDePacotes'][class_package]['Deve'])
-
-            # Verifica se há restrições de acesso impróprio ou alguma ausência de acesso para poder classificar corretamente
-            if len(package_restrictions.symmetric_difference(class_deps_packs)) > 0:
-                improper_access = class_deps_packs - package_restrictions
-                appropriate_access = class_deps_packs & package_restrictions
-                if len(improper_access) > 0:
-                    for improper_access_pack in improper_access:
-                        for access in dsm[improper_access_pack][class_package]:
-                            if access['access_class'] == class_name:
-                                access['situation'] = 'D'
-
-                absence_access = package_restrictions - class_deps_packs
-                for absence_access_pack in absence_access:
-                    if have_must and absence_access_pack in restrictions['LigacoesDePacotes'][class_package]['Deve']:
-                        dsm[absence_access_pack][class_package].append({'accessed_class': 'A', 'access_class': class_name, 'situation': 'A'})
-                    if have_can and absence_access_pack in restrictions['LigacoesDePacotes'][class_package]['Pode']:
-                        dsm[absence_access_pack][class_package].append({'accessed_class': '?', 'access_class': class_name, 'situation': '?'})
-
-                for appropriate_access_pack in appropriate_access:
-                    for access in dsm[appropriate_access_pack][class_package]:
-                        if access['access_class'] == class_name:
-                            access['situation'] = 'C'
+        # Carrega pacotes e dependências de todas as classes do projeto de entrada
+        package_classes, classes_names, classes_dependences, classes_extends_implements = load_deps(path_data_deps, restrictions['Pacotes'])
 
 
-            else:
-                for package_restriction in package_restrictions:
-                    for access in dsm[package_restriction][class_package]:
-                        if access['access_class'] == class_name:
-                            access['situation'] = 'C'
-
-
-        data_text = "***************** // DSM Final // *****************\n"
-        print()
-        print('***************** // DSM Final // *****************')
-        for package_name in dsm:
-            for access_package in dsm[package_name]:
-                if len(dsm[package_name][access_package]) > 0:
-                    print(package_name + '-' + access_package + ':')
-                    data_text += package_name + '-' + access_package + ':'
-                    for access in dsm[package_name][access_package]:
-                        print('\t', access)
-                        data_text += ('\t' + str(access))
-            print()
-
-
-        print()
-
-        dictionary_data = load_obj_to_file("/files/json_files/" + sys.argv[3])
-        classes_dependences = []
-        classes_names = []
-        package_classes = []
-        for elem_dict in dictionary_data:
-            dep_intern = []
-            dep_intern.append(elem_dict['type'])
-            dep_intern.append(elem_dict['imports'])
-            dep_intern.append(elem_dict['annotation'])
-            dep_intern.append(elem_dict['method_names'])
-            dep_intern.append(elem_dict['invocation'])
-            dep_intern.append(elem_dict['structure'])
-
-            classes_names.append(elem_dict['name_obj'])
-            package_classes.append(elem_dict['package'])
-
-            classes_dependences.append(dep_intern)
-    
-        for x in classes_dependences:
-            print(x)
-        print(set(package_classes))
-
-        for package_name in dsm:
-            for access_package in dsm[package_name]:
-                if len(dsm[package_name][access_package]) > 0:
-                    for access in dsm[package_name][access_package]:
+        # Inicia lógica de recomendações de reparação arquitetural considerando cada tipo de violação
+        for accessed_package in dsm:
+            for access_package in dsm[accessed_package]:
+                if len(dsm[accessed_package][access_package]) > 0:
+                    for access in dsm[accessed_package][access_package]:
                         if access['situation'] == 'D':
-                            access_class_dep = find_class_deps(access['access_class'], classes_dependences, classes_names)
+                            access_class = access['access_class']
+                            accessed_class = access['accessed_class']
+                            access_class_deps = find_class_deps(access_class, classes_dependences, classes_names)
                             
-                            nearest_neighbors = get_nearest_neighbors(np.array(classes_dependences,dtype=list), np.array(package_classes,dtype=list), access_class_dep, classes_names, k = 3)
-                            y = classify(nearest_neighbors, set(package_classes))
+                            # X Recomendação: Mover classe para pacote de maior similaridade
+                            nearest_neighbors = get_nearest_neighbors(np.array(classes_dependences, dtype=list), np.array(package_classes, dtype=list), access_class_deps, classes_names, k = 3)
+                            ideal_package = classify(nearest_neighbors, set(package_classes))
+                            if access_package != ideal_package:
+                                print("Recomenda-se mover a classe", access_class, "para o pacote:", ideal_package)
 
-                            if package_name != y:
-                                print("Recomenda-se mover esta classe para o pacote:", y)
+                            # X Recomendação: Substuição de classe pai em decorrer de violação de derivação
+                            parent_accessed_class = classes_extends_implements[classes_names.index(accessed_class)]['extends']
+                            if len(parent_accessed_class) > 0:
+                                parent_class_index = classes_names.index(parent_accessed_class[0])
+                                package_parent_class = package_classes[parent_class_index]
 
-                            # sys.exit()
-
-
-
-        # Generated_rules_file.rules(tuple_lig_uni, dict_rules, data_text)
+                                if package_parent_class != accessed_package:
+                                    print("Recomenda-se substituir a classe acessada", accessed_class, "pela sua classe pai", parent_accessed_class[0], "que está no pacote", package_parent_class)
 
 
     except OSError:

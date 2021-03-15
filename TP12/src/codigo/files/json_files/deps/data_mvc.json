@@ -29,24 +29,31 @@
       "count_attr_from_proj": 2
     },
     "name_obj": "EscolaController",
+    "package": "Controller",
+    "extends": [],
+    "implements": [],
     "file_name": "EscolaController.java"
   },
   {
     "type": [
       "Estudante",
+      "EstudanteView",
       "Estudante",
+      "EstudanteView",
       "Escola"
     ],
     "imports": [
       "Model.Escola",
-      "Model.Estudante"
+      "Model.Estudante",
+      "View.EstudanteView"
     ],
     "annotation": [],
     "method_names": [
       "setEscola",
       "getEscola",
       "getNome",
-      "getAnoEscolar"
+      "getAnoEscolar",
+      "printEstudanteDetalhe"
     ],
     "invocation": [
       "estudanteModel.setEscola(escola)",
@@ -54,15 +61,22 @@
       ".getNome()",
       "estudanteModel.getNome()",
       "Integer.toString(estudanteModel.getAnoEscolar())",
-      "estudanteModel.getAnoEscolar()"
+      "estudanteModel.getAnoEscolar()",
+      "estudanteView.printProfessorDetalhe(this.getNome(),this.getEscola(),this.getAnoEscolar())",
+      ".getNome()",
+      ".getEscola()",
+      ".getAnoEscolar()"
     ],
     "structure": {
-      "count_attributes": 1,
-      "count_methods": 4,
+      "count_attributes": 2,
+      "count_methods": 5,
       "count_eleme_view": 0,
       "count_attr_from_proj": 2
     },
     "name_obj": "EstudanteController",
+    "package": "Controller",
+    "extends": [],
+    "implements": [],
     "file_name": "EstudanteController.java"
   },
   {
@@ -100,9 +114,12 @@
       "count_attributes": 0,
       "count_methods": 1,
       "count_eleme_view": 0,
-      "count_attr_from_proj": 12
+      "count_attr_from_proj": 11
     },
     "name_obj": "ProjetoMVC",
+    "package": "Controller",
+    "extends": [],
+    "implements": [],
     "file_name": "ProjetoMVC.java"
   },
   {
@@ -144,33 +161,50 @@
       "count_attr_from_proj": 3
     },
     "name_obj": "ProfessorController",
+    "package": "Controller",
+    "extends": [],
+    "implements": [],
     "file_name": "ProfessorController.java"
   },
   {
     "type": [
       "Diretor",
       "DiretorView",
-      "DiretorView"
+      "Diretor",
+      "DiretorView",
+      "Escola"
     ],
     "imports": [
+      "Model.Diretor",
+      "Model.Escola",
       "View.DiretorView"
     ],
     "annotation": [],
     "method_names": [
+      "setEscola",
+      "getEscola",
       "getNome",
       "printDiretorDetalhe"
     ],
     "invocation": [
-      "diretorView.printDiretorDetalhe(this.getNome())",
-      ".getNome()"
+      "diretorModel.setEscola(escola)",
+      "diretorModel.getEscola()",
+      ".getNome()",
+      "diretorModel.getNome()",
+      "diretorView.printDiretorDetalhe(this.getNome(),this.getEscola())",
+      ".getNome()",
+      ".getEscola()"
     ],
     "structure": {
       "count_attributes": 2,
-      "count_methods": 2,
+      "count_methods": 4,
       "count_eleme_view": 0,
-      "count_attr_from_proj": 2
+      "count_attr_from_proj": 3
     },
     "name_obj": "DiretorController",
+    "package": "Controller",
+    "extends": [],
+    "implements": [],
     "file_name": "DiretorController.java"
   },
   {
@@ -191,6 +225,9 @@
       "count_attr_from_proj": 0
     },
     "name_obj": "Pessoa",
+    "package": "Model",
+    "extends": [],
+    "implements": [],
     "file_name": "Pessoa.java"
   },
   {
@@ -209,6 +246,9 @@
       "count_attr_from_proj": 0
     },
     "name_obj": "Disciplina",
+    "package": "Model",
+    "extends": [],
+    "implements": [],
     "file_name": "Disciplina.java"
   },
   {
@@ -228,6 +268,9 @@
       "count_attr_from_proj": 1
     },
     "name_obj": "TrabalhaEscola",
+    "package": "Model",
+    "extends": [],
+    "implements": [],
     "file_name": "TrabalhaEscola.java"
   },
   {
@@ -253,7 +296,36 @@
       "count_attr_from_proj": 1
     },
     "name_obj": "Estudante",
+    "package": "Model",
+    "extends": [
+      "Pessoa"
+    ],
+    "implements": [],
     "file_name": "Estudante.java"
+  },
+  {
+    "type": [],
+    "imports": [],
+    "annotation": [],
+    "method_names": [
+      "falseModel"
+    ],
+    "invocation": [
+      "System.out.println(str)"
+    ],
+    "structure": {
+      "count_attributes": 0,
+      "count_methods": 1,
+      "count_eleme_view": 1,
+      "count_attr_from_proj": 0
+    },
+    "name_obj": "FalseModel",
+    "package": "Model",
+    "extends": [
+      "MainView"
+    ],
+    "implements": [],
+    "file_name": "FalseModel.java"
   },
   {
     "type": [
@@ -278,6 +350,13 @@
       "count_attr_from_proj": 1
     },
     "name_obj": "Professor",
+    "package": "Model",
+    "extends": [
+      "Pessoa"
+    ],
+    "implements": [
+      "TrabalhaEscola"
+    ],
     "file_name": "Professor.java"
   },
   {
@@ -296,6 +375,9 @@
       "count_attr_from_proj": 0
     },
     "name_obj": "Escola",
+    "package": "Model",
+    "extends": [],
+    "implements": [],
     "file_name": "Escola.java"
   },
   {
@@ -319,6 +401,13 @@
       "count_attr_from_proj": 1
     },
     "name_obj": "Diretor",
+    "package": "Model",
+    "extends": [
+      "Pessoa"
+    ],
+    "implements": [
+      "TrabalhaEscola"
+    ],
     "file_name": "Diretor.java"
   },
   {
@@ -347,6 +436,9 @@
       "count_attr_from_proj": 1
     },
     "name_obj": "ProfessorView",
+    "package": "View",
+    "extends": [],
+    "implements": [],
     "file_name": "ProfessorView.java"
   },
   {
@@ -373,6 +465,9 @@
       "count_attr_from_proj": 1
     },
     "name_obj": "EscolaView",
+    "package": "View",
+    "extends": [],
+    "implements": [],
     "file_name": "EscolaView.java"
   },
   {
@@ -380,7 +475,8 @@
       "Diretor"
     ],
     "imports": [
-      "Model.Diretor"
+      "Model.Diretor",
+      "View.GeneralView.MainView"
     ],
     "annotation": [],
     "method_names": [
@@ -399,34 +495,58 @@
       "count_attr_from_proj": 1
     },
     "name_obj": "DiretorView",
+    "package": "View",
+    "extends": [
+      "MainView"
+    ],
+    "implements": [],
     "file_name": "DiretorView.java"
   },
   {
-    "type": [
-      "Estudante"
-    ],
-    "imports": [
-      "Model.Estudante"
-    ],
+    "type": [],
+    "imports": [],
     "annotation": [],
     "method_names": [
-      "printProfessorDetalhe"
+      "printDiretorDetalhe"
     ],
     "invocation": [
-      "System.out.println(\" \\n --DADOS DO ESTUDANTE--\")",
-      "System.out.println(\"Nome:\"+nome)",
-      "System.out.println(\"Professor na Escola:\"+estudante.getEscola())",
-      "estudante.getEscola()",
-      "System.out.println(\"Ano Escolar:\"+estudante.getAnoEscolar())",
-      "estudante.getAnoEscolar()"
+      "System.out.println(\"\\n --DADOS DO VICE DIRETOR--\")",
+      "System.out.println(\"Nome:\"+nome)"
     ],
     "structure": {
       "count_attributes": 0,
       "count_methods": 1,
-      "count_eleme_view": 4,
-      "count_attr_from_proj": 1
+      "count_eleme_view": 2,
+      "count_attr_from_proj": 0
     },
-    "name_obj": "EstudanteView",
-    "file_name": "EstudanteView.java"
+    "name_obj": "ViceDiretorView",
+    "package": "View",
+    "extends": [
+      "DiretorView"
+    ],
+    "implements": [],
+    "file_name": "ViceDiretorView.java"
+  },
+  {
+    "type": [],
+    "imports": [],
+    "annotation": [],
+    "method_names": [
+      "printDiretorDetalhe"
+    ],
+    "invocation": [
+      "System.out.println(\"\\n --PRINCIPAL--\")"
+    ],
+    "structure": {
+      "count_attributes": 0,
+      "count_methods": 1,
+      "count_eleme_view": 1,
+      "count_attr_from_proj": 0
+    },
+    "name_obj": "MainView",
+    "package": "View",
+    "extends": [],
+    "implements": [],
+    "file_name": "MainView.java"
   }
 ]

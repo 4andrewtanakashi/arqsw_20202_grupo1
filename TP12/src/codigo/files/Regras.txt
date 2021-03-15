@@ -1,3 +1,0 @@
-R0: Somente o pacote Controller Pode acessar o pacote View
-R1: O pacote Controller Deve acessar o pacote Model
-R2: O pacote View Deve acessar o pacote Model

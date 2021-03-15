@@ -15,29 +15,40 @@
 			"Pessoa",
 			"Professor",
 			"TrabalhaEscola",
-			"EscolaView"
+			"FalseModel"
 		],
-		"View": [
+		"GeneralView": [
+			"MainView"
+		],
+		"SpecificView": [
 			"DiretorView",
 			"EstudanteView",
-			"ProfessorView"
+			"ProfessorView",
+			"EscolaView",
+			"ViceDiretorView"
 		]
 	},
 	"LigacoesDePacotes": {
 		"Controller": {
 			"Deve": [
 				"Model",
-				"View"
+				"SpecificView"
 			]
 		},
-		"View": {
+		"SpecificView": {
 			"Deve": [
-				"Model"
+				"GeneralView"
 			],
 			"Pode": [
+				"Model",
 				"Controller"
 			]
 		},
-		"Model": {}
+		"Model": {
+			"Pode": [
+				"Model"
+			]
+		},
+		"GeneralView": {}
 	}
 }

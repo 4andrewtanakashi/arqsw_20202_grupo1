@@ -1,4 +1,4 @@
-package View;
+package View.SpecificView;
 
 import Model.Professor;
 

@@ -31,12 +31,9 @@ class Java8ParserListener (ParseTreeListener):
         self.dicionario["structure"]["count_eleme_view"] = 0
         self.dicionario["name_obj"] = ''
         self.dicionario["package"] = ''
-        self.dicionario["parent"] = ''
+        self.dicionario["extends"] = []
+        self.dicionario["implements"] = []
 
-    # Enter a parse tree produced by Java8Parser#typeBound.
-    def enterTypeBound(self, ctx:Java8Parser.TypeBoundContext):
-        print("enterTypeBound: ", ctx.getText())
-        self.dicionario["parent"] = ctx.getText()
 
     # Enter a parse tree produced by Java8Parser#packageName.
     def enterPackageName(self, ctx:Java8Parser.PackageNameContext):
@@ -54,9 +51,10 @@ class Java8ParserListener (ParseTreeListener):
             if isinstance(child_class_dec, tree.Tree.TerminalNodeImpl) and confim_Not_Element(child_class_dec.getText()) and self.dicionario["name_obj"] == '':
                 self.dicionario["name_obj"] = child_class_dec.getText()
             if isinstance(child_class_dec, Java8Parser.SuperclassContext):
-                print("SuperclassContext: ", child_class_dec.getText())
+                print(child_class_dec.getText().split("extends")[1])
+                self.dicionario["extends"].append(child_class_dec.getText().split("extends")[1])
             if  isinstance(child_class_dec, Java8Parser.SuperinterfacesContext):
-                print("SuperinterfacesContext: ", child_class_dec.getText())
+                self.dicionario["implements"].append(child_class_dec.getText().split("implements")[1])
             if isinstance(child_class_dec, Java8Parser.ClassModifierContext):
                 for child_class_modifier_ctx in child_class_dec.getChildren():
                     if isinstance(child_class_modifier_ctx, Java8Parser.AnnotationContext):
@@ -100,8 +98,7 @@ class Java8ParserListener (ParseTreeListener):
                 self.dicionario["name_obj"] = child_interface_dec.getText()
             print("child_interface_dec.getText(): ", child_interface_dec.getText(), "type: ", type(child_interface_dec))
             if  isinstance(child_interface_dec, Java8Parser.ExtendsInterfacesContext):
-                print("ExtendsInterfacesContext: ", child_interface_dec.getText().split("extends")[1])
-                self.dicionario["parent"] = child_interface_dec.getText().split("extends")[1]
+                self.dicionario["extends"].append(child_interface_dec.getText().split("extends")[1].split("<")[0])
             if isinstance(child_interface_dec, Java8Parser.InterfaceModifierContext):
                 for child_interface_modifier_ctx in child_interface_dec.getChildren():
                     if isinstance(child_interface_modifier_ctx, Java8Parser.AnnotationContext):
@@ -113,7 +110,7 @@ class Java8ParserListener (ParseTreeListener):
             if isinstance(child_enum_dec, tree.Tree.TerminalNodeImpl) and confim_Not_Element(child_enum_dec.getText()) and self.dicionario["name_obj"] == '':
                 self.dicionario["name_obj"] = child_enum_dec.getText()
             if  isinstance(child_enum_dec, Java8Parser.SuperinterfacesContext):
-                print("SuperclassContext: ", child_enum_dec.getText())
+                self.dicionario["extends"].append(child_class_dec.getText().split("extends")[1])
             if isinstance(child_enum_dec, Java8Parser.ClassModifierContext):
                 for child_enum_modifier_ctx in child_enum_dec.getChildren():
                     if isinstance(child_enum_modifier_ctx, Java8Parser.AnnotationContext):
