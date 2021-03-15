@@ -1,0 +1,54 @@
+{
+	"Pacotes": {
+		"Controller": [
+			"DiretorController",
+			"EscolaController",
+			"EstudanteController",
+			"ProfessorController",
+			"ProjetoMVC"
+		],
+		"Model": [
+			"Diretor",
+			"Disciplina",
+			"Escola",
+			"Estudante",
+			"Pessoa",
+			"Professor",
+			"TrabalhaEscola",
+			"FalseModel"
+		],
+		"GeneralView": [
+			"MainView"
+		],
+		"SpecificView": [
+			"DiretorView",
+			"EstudanteView",
+			"ProfessorView",
+			"EscolaView",
+			"ViceDiretorView"
+		]
+	},
+	"LigacoesDePacotes": {
+		"Controller": {
+			"Deve": [
+				"Model",
+				"SpecificView"
+			]
+		},
+		"SpecificView": {
+			"Deve": [
+				"GeneralView"
+			],
+			"Pode": [
+				"Model",
+				"Controller"
+			]
+		},
+		"Model": {
+			"Pode": [
+				"Model"
+			]
+		},
+		"GeneralView": {}
+	}
+}
